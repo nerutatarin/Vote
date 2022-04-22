@@ -3,6 +3,7 @@
 /build/
 /out/
 /out/production/classes/
-/src/resources/Tor_Browser/
 /.idea/
 /gradle/
+/src/resources/tor/
+/src/resources/logs/
