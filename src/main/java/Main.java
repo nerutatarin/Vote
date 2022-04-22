@@ -8,12 +8,4 @@ public class Main {
             thread.start();
         }
     }
-
-    public String setPropertyDependsOnOS() {
-        if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-            return System.setProperty("webdriver.chrome.driver", "driverFolder/chromedriver");
-        } else {
-            return System.setProperty("webdriver.chrome.driver", "driverFolder/chromedriverLinux");
-        }
-    }
 }

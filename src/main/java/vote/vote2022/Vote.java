@@ -6,6 +6,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
+import utils.OSValidator;
+import vote.vote2022.driver.Driver;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -29,11 +31,12 @@ import static utils.Thesaurus.SUBMIT_VOTE;
 
 public abstract class Vote extends Thread implements VoteImpl {
     public WebDriver driver;
+    private final Driver geckoDriver = new Driver();
 
     @Override
     public void run() {
         out.println("I'm Thread! My name is " + getName());
-        init(1);
+        init(1000);
     }
 
     public void init(int voteCount) {
@@ -51,6 +54,7 @@ public abstract class Vote extends Thread implements VoteImpl {
     protected void vote() {
 //        this.driver = webDriver;
         try {
+            geckoDriver.initGecko();
             getOptions();
             writeToLog();
             startPage(getBaseUrl(), "Запуск страницы голосования");
@@ -59,12 +63,12 @@ public abstract class Vote extends Thread implements VoteImpl {
         } catch (WebDriverException wde) {
             out.println("Произошла сетевая ошибка при инициализации сеанса WebDriver: " + wde.getMessage());
         } catch (Exception e) {
-            out.println("Какая то ошибка" + e.getMessage());
+            out.println("Какая то ошибка: " + e.getMessage());
         } finally {
             try{
                 shutdown();
             } catch (Exception e) {
-                out.println("Какая то ошибка" + e.getMessage());
+                out.println("При попытке закрыть браузер возникла ошибка: " + e.getMessage());
                 Runtime rt = Runtime.getRuntime();
                 try {
                     Process p = rt.exec("killall geckodriver_0.31");
@@ -78,23 +82,6 @@ public abstract class Vote extends Thread implements VoteImpl {
     }
 
     private void getOptions() {
-        out.println("Init Firefox drivers...");
-        //String geckoDriverPath = "src/resources/geckodriver_old";
-        //String geckoDriverPath = "src/resources/geckodriver_0.31";
-        //String geckoDriverPath = "src\\main\\resources\\geckodriver_0.28.0.exe";
-        URL res = getClass().getClassLoader().getResource("geckodriver_0.31.0.exe");
-        File file = null;
-        try {
-            assert res != null;
-            file = Paths.get(res.toURI()).toFile();
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
-        String geckoDriverPath = file.getAbsolutePath();
-        out.println("geckoDriverPath: " + geckoDriverPath);
-
-        setProperty("webdriver.gecko.driver", geckoDriverPath);
-
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("network.proxy.type", 1);
         firefoxProfile.setPreference("network.proxy.socks", "127.0.0.1");
