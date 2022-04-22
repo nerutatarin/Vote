@@ -7,9 +7,14 @@ import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,7 +33,7 @@ public abstract class Vote extends Thread implements VoteImpl {
     @Override
     public void run() {
         out.println("I'm Thread! My name is " + getName());
-        init(10000);
+        init(1);
     }
 
     public void init(int voteCount) {
@@ -75,7 +80,19 @@ public abstract class Vote extends Thread implements VoteImpl {
     private void getOptions() {
         out.println("Init Firefox drivers...");
         //String geckoDriverPath = "src/resources/geckodriver_old";
-        String geckoDriverPath = "src/resources/geckodriver_0.31";
+        //String geckoDriverPath = "src/resources/geckodriver_0.31";
+        //String geckoDriverPath = "src\\main\\resources\\geckodriver_0.28.0.exe";
+        URL res = getClass().getClassLoader().getResource("geckodriver_0.31.0.exe");
+        File file = null;
+        try {
+            assert res != null;
+            file = Paths.get(res.toURI()).toFile();
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+        String geckoDriverPath = file.getAbsolutePath();
+        out.println("geckoDriverPath: " + geckoDriverPath);
+
         setProperty("webdriver.gecko.driver", geckoDriverPath);
 
         FirefoxProfile firefoxProfile = new FirefoxProfile();
@@ -102,7 +119,7 @@ public abstract class Vote extends Thread implements VoteImpl {
 
     public void writeToLog() {
         String timeStamp = new SimpleDateFormat(PATTERN_DDMMYYYYHHMMSS).format(new Date());
-        String logFile = "src/resources/Logs/" + ".log";
+        String logFile = "src/resources/logs/" + "log.log";
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
 
             writer.write(timeStamp + " ip: " + getIpAddress() + "\n");
