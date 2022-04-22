@@ -1,5 +1,7 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -95,17 +97,28 @@ public class Main {
     }
 
     private static void getVoteCount() throws IOException {
-/*        Document page = getpage();
+        Document page = getpage();
         Element blockVote = page.select("div[class=all_poll-new]").first();
-        System.out.println(blockVote);*/
-        List<WebElement> listResultMo = driver.findElements(By.className("unicredit_poll_results_block"));
+        Elements names = blockVote.select("div[class=questiondata]");
+        //System.out.println(names);
+
+        Elements Elements = names.select(
+                "div.unicredit_poll_results_block > span.unicredit_poll_results_answer"
+        );
+
+        for (Element E : Elements) {
+
+            System.out.println(E.attr("unicredit_poll_results_count"));
+        }
+
+        /*List<WebElement> listResultMo = driver.findElements(By.className("unicredit_poll_results_block"));
         for (WebElement elMo : listResultMo) {
             String elTextMo = elMo.getText();
             if (elTextMo.contains(voteMo)) {
                 String elTextCount = elMo.findElement(By.className("unicredit_poll_results_count")).getText();
                 System.out.println(voteMo + " - " + elTextCount);
             }
-        }
+        }*/
     }
 
     private static void killFirefox() {
