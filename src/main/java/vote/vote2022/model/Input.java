@@ -1,4 +1,4 @@
-package vote.model;
+package vote.vote2022.model;
 
 public class Input {
     int id;

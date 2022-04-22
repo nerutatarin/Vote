@@ -1,4 +1,4 @@
-package vote;
+package vote.vote2022;
 
 public interface VoteImpl {
     void init(int voteCount);

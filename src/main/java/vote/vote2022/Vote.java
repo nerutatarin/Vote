@@ -1,4 +1,4 @@
-package vote;
+package vote.vote2022;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;

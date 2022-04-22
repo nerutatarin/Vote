@@ -1,4 +1,4 @@
-package vote2021;
+package vote.vote2021;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

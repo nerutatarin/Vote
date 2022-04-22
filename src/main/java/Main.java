@@ -1,5 +1,5 @@
-import vote.Vote;
-import vote.VoteKP;
+import vote.vote2022.Vote;
+import vote.vote2022.VoteKP;
 
 public class Main {
     public static void main(String[] args) {

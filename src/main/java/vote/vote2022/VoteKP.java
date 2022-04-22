@@ -1,4 +1,4 @@
-package vote;
+package vote.vote2022;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package test;
+package vote.vote2021.test;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

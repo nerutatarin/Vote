@@ -1,4 +1,4 @@
-package vote.browsers;
+package vote.vote2022.browsers;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
