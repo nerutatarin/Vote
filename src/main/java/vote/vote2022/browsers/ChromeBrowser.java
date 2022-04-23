@@ -1,5 +1,6 @@
 package vote.vote2022.browsers;
 
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -39,10 +40,16 @@ public class ChromeBrowser extends Browsers {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--proxy-server=socks5://" + PROXY_IP_ADDRESS + ":" + PROXY_PORT);
         chromeOptions.addArguments("enable-automation");
+        chromeOptions.addArguments("incognito");
         //chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--disable-extensions");
         chromeOptions.addArguments("--dns-prefetch-disable");
         chromeOptions.addArguments("--disable-gpu");
+
+        /*Proxy proxy = new Proxy();
+        proxy.setSocksProxy(PROXY_IP_ADDRESS);
+        chromeOptions.setProxy(proxy);*/
+
         chromeOptions.setAcceptInsecureCerts(true);
         chromeOptions.setHeadless(false);
         chromeOptions.setPageLoadStrategy(NORMAL);

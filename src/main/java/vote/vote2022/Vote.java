@@ -57,6 +57,8 @@ public abstract class Vote extends Thread implements VoteImpl {
             out.println("Элемент полностью удален или больше не привязан к DOM.: " + e);
         } catch (NoSuchSessionException e) {
             out.println("Ошибка инициализации сеанса браузера: " + e);
+        } catch (WebDriverException e) {
+            out.println("Ошибка чтения страницы: " + e);
         } finally {
             shutdown();
         }
