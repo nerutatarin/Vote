@@ -44,7 +44,7 @@ public class ChromeBrowser extends Browsers {
         chromeOptions.addArguments("--dns-prefetch-disable");
         chromeOptions.addArguments("--disable-gpu");
         chromeOptions.setAcceptInsecureCerts(true);
-        chromeOptions.setHeadless(true);
+        chromeOptions.setHeadless(false);
         chromeOptions.setPageLoadStrategy(NORMAL);
         return chromeOptions;
     }

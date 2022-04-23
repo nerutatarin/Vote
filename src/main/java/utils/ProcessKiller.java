@@ -1,7 +1,5 @@
 package utils;
 
-import vote.vote2022.browsers.model.BrowserProcess;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,14 +15,14 @@ public class ProcessKiller {
     private static final String WIN_KILL_PID = "taskkill /PID ";
     private static final String UNIX_KILL = "killall ";
 
-    public void killer(BrowserProcess process) {
-        String processName = process.getProcessName();
+    public void killer(String processName) {
+        //String processName = process.getProcessName();
         boolean isRunning = isProcessRunning(processName);
         out.println("is " + processName + " running : " + isRunning);
         if (isRunning) {
             killProcess(processName);
         } else {
-            out.println("Not able to find the process : " + process);
+            out.println("Not able to find the process : " + processName);
         }
     }
 

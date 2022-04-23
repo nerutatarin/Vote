@@ -18,7 +18,7 @@ public class Thesaurus {
         public static final String GECKO_DRIVER_VALUE = "geckodriver_0.31.0";
 
         public static final String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
-        public static final String CHROME_DRIVER_VALUE = "chromedriver_101.0.4951.15";
+        public static final String CHROME_DRIVER_VALUE = "chromedriver_100.0.4896.60";
     }
 
     public static class MozCapabilities {

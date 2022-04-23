@@ -19,13 +19,10 @@ public abstract class Browsers implements BrowsersImpl {
 
     private WebDriver settingBrowser() {
         webDriver = getDriverInstance();
+        webDriver.manage().deleteAllCookies();
         webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
         return webDriver;
     }
-
-/*    public Capabilities getCapabilities() {
-        return ((HasCapabilities) webDriver).getCapabilities();
-    }*/
 
     protected Capabilities getCapabilities() {
         return ((RemoteWebDriver) webDriver).getCapabilities();

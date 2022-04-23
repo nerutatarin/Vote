@@ -5,7 +5,7 @@ public interface VoteImpl {
 
     void writeToLog();
 
-    void startPage(String url, String message);
+    void startPage();
 
     void chkVoteMo();
 

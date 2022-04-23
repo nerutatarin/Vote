@@ -1,8 +1,11 @@
 package vote.vote2022;
 
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import utils.IPAddressGetter;
 import utils.ProcessKiller;
+import vote.vote2022.browsers.Browsers;
+import vote.vote2022.browsers.ChromeBrowser;
+import vote.vote2022.browsers.FirefoxBrowser;
 import vote.vote2022.browsers.model.BrowserProcess;
 
 import java.io.FileWriter;
@@ -16,6 +19,7 @@ import java.util.List;
 import static java.lang.System.out;
 import static org.openqa.selenium.By.id;
 import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
+import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 import static utils.Thesaurus.SUBMIT_VOTE;
 
 public abstract class Vote extends Thread implements VoteImpl {
@@ -25,24 +29,34 @@ public abstract class Vote extends Thread implements VoteImpl {
     @Override
     public void run() {
         out.println("Thread: " + getName());
-        init(1);
+        init(1000);
     }
 
     public void init(int voteCount) {
         for (int i = 0; i < voteCount; i++) {
             out.println("Начало работы: " + i);
-            vote();
+            List<Browsers> browsers = new ArrayList<>();
+            //browsers.add(new ChromeBrowser());
+            browsers.add(new FirefoxBrowser());
+            //browsers.parallelStream().forEach(this::vote);
+            browsers.forEach(this::vote);
         }
     }
 
-    protected void vote() {
+    protected void vote(Browsers browser) {
+        webDriver = browser.getWebDriver();
+        process = browser.getProcess();
         try {
-            writeToLog();
-            startPage(getBaseUrl(), "Запуск страницы голосования");
+            startPage();
             chkVoteMo();
             btnVote();
-        } catch (Exception e) {
-            out.println("Какая то ошибка: " + e.getMessage());
+            writeToLog();
+        } catch (TimeoutException e) {
+            out.println("Превышено время ожидания загрузки страницы: " + e);
+        } catch (NoSuchElementException e) {
+            out.println("Элемент полностью удален или больше не привязан к DOM.: " + e);
+        } catch (NoSuchSessionException e) {
+            out.println("Ошибка инициализации сеанса браузера: " + e);
         } finally {
             shutdown();
         }
@@ -57,8 +71,8 @@ public abstract class Vote extends Thread implements VoteImpl {
         String logFile = "src/resources/logs/" + "log.log";
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
             writer.write(timeStamp + " ip: " + ipAddress + "\n");
-        } catch (IOException ex) {
-            out.println(ex.getMessage());
+        } catch (IOException e) {
+            out.println("Ошибка операции ввода-вывода: " + e);
         }
     }
 
@@ -71,9 +85,9 @@ public abstract class Vote extends Thread implements VoteImpl {
 
     protected abstract String getCssSelector();
 
-    public void startPage(String url, String message) {
-        out.println(message);
-        webDriver.get(url);
+    public void startPage() {
+        out.println("Запуск страницы голосования");
+        webDriver.get(getBaseUrl());
         out.println("Запуск страницы завершен: ");
     }
 
@@ -81,7 +95,8 @@ public abstract class Vote extends Thread implements VoteImpl {
 
     public void chkVoteMo() {
         for (String inp : inputs()) {
-            webDriver.findElement(id(inp)).click();
+            WebElement webElement = webDriver.findElement(id(inp));
+            webElement.click();
             out.println("Проставлен input: " + inp);
         }
     }
@@ -90,7 +105,8 @@ public abstract class Vote extends Thread implements VoteImpl {
 
     public void btnVote() {
         out.println("Нажимаем кнопку голосования: ");
-        webDriver.findElement(id(SUBMIT_VOTE)).click();
+        WebElement webElement = webDriver.findElement(id(SUBMIT_VOTE));
+        webElement.click();
         out.println("Голоса приняты: ");
     }
 
@@ -100,7 +116,7 @@ public abstract class Vote extends Thread implements VoteImpl {
             webDriver.quit();
             out.println("Закрыт браузер: ");
         } catch (Exception e) {
-            out.println("При попытке закрыть браузер возникла ошибка: " + e.getMessage());
+            out.println("При попытке закрыть браузер возникла ошибка: " + e);
             out.println("Пытаемся прибить процесс...: ");
             killProcess();
         }
@@ -108,6 +124,7 @@ public abstract class Vote extends Thread implements VoteImpl {
 
     private void killProcess() {
         ProcessKiller processKiller = new ProcessKiller();
-        processKiller.killer(process);
+        processKiller.killer(process.getProcessName());
+        processKiller.killer(GECKO_DRIVER_VALUE +  ".exe");
     }
 }

@@ -18,7 +18,7 @@ public class IPAddressGetter {
             webDriver.get(url);
             return webDriver.findElement(cssSelector(cssSelector)).getText();
         } catch (Exception e) {
-            out.println("Произошла сетевая ошибка при инициализации сеанса WebDriver: " + e.getMessage());
+            out.println("Превышено время ожидания загрузки страницы: " + e);
         }
         return null;
     }

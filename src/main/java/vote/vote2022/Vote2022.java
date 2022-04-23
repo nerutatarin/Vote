@@ -1,16 +1,8 @@
 package vote.vote2022;
 
-import vote.vote2022.browsers.Browsers;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Vote2022 extends Vote {
-
-    public Vote2022(Browsers browsers) {
-        this.webDriver = browsers.getWebDriver();
-        this.process = browsers.getProcess();
-    }
 
     @Override
     protected String getMyIpUrl() {
