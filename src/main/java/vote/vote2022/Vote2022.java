@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 public class Vote2022 extends Vote {
 
-
     @Override
     protected String getMyIpUrl() {
         return "https://myip.ru/";

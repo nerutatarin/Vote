@@ -37,7 +37,7 @@ public abstract class Vote extends Thread implements VoteImpl {
 
     @Override
     public void run() {
-        out.println("I'm Thread! My name is " + getName());
+        out.println("Thread: " + getName());
         init(1000);
     }
 
@@ -67,19 +67,7 @@ public abstract class Vote extends Thread implements VoteImpl {
         } catch (Exception e) {
             out.println("Какая то ошибка: " + e.getMessage());
         } finally {
-            try{
-                shutdown();
-            } catch (Exception e) {
-                out.println("При попытке закрыть браузер возникла ошибка: " + e.getMessage());
-                Runtime rt = Runtime.getRuntime();
-                try {
-                    Process p = rt.exec("killall geckodriver_0.31");
-                    p.destroy();
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                }
-
-            }
+            shutdown();
         }
     }
 
@@ -121,7 +109,7 @@ public abstract class Vote extends Thread implements VoteImpl {
     private String getIpAddress() {
         String cssSelector = "#ipcontent > table > tbody > tr:nth-child(2) > td";
 
-        startPage(getMyIpUrl(), "Получаем IP");
+        startPage(getMyIpUrl(), "Получаем IP...: ");
         String ip = driver.findElement(cssSelector(cssSelector)).getText();
 
         out.println(ip);
@@ -133,7 +121,7 @@ public abstract class Vote extends Thread implements VoteImpl {
     public void startPage(String url, String message) {
         out.println(message);
         driver.get(url);
-        out.println("Запуск страницы завершен");
+        out.println("Запуск страницы завершен: ");
     }
 
     protected abstract String getBaseUrl();
@@ -148,14 +136,30 @@ public abstract class Vote extends Thread implements VoteImpl {
     protected abstract ArrayList<String> inputs();
 
     public void btnVote() {
-        out.println("Нажимаем кнопку голосования");
+        out.println("Нажимаем кнопку голосования: ");
         driver.findElement(id(SUBMIT_VOTE)).click();
-        out.println("Голоса приняты");
+        out.println("Голоса приняты: ");
     }
 
     public void shutdown() {
-        out.println("Закрываем браузер");
-        driver.quit();
-        out.println("Закрыт браузер");
+        try{
+            out.println("Закрываем браузер: ");
+            driver.quit();
+            out.println("Закрыт браузер: ");
+        } catch (Exception e) {
+            out.println("При попытке закрыть браузер возникла ошибка: " + e.getMessage());
+            out.println("Пытаемся прибить процесс...: ");
+            killProcess();
+        }
+    }
+
+    private void killProcess() {
+        Runtime rt = Runtime.getRuntime();
+        try {
+            Process p = rt.exec("killall geckodriver_0.31");
+            p.destroy();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }

@@ -18,7 +18,6 @@ public class FirefoxBrowser extends Browsers {
         setProperty(WEBDRIVER_GECKO_DRIVER, "src/resources/geckodriver_0.31");
     }
 
-
     @Override
     protected WebDriver getDriverInstance() {
         return new FirefoxDriver(getOptions());

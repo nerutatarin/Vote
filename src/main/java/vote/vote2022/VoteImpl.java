@@ -11,6 +11,5 @@ public interface VoteImpl {
 
     void btnVote();
 
-
     void shutdown();
 }
