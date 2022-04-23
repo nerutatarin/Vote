@@ -3,11 +3,13 @@ package vote.vote2022.browsers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import vote.vote2022.driver.Driver;
+import vote.vote2022.browsers.model.BrowserProcess;
 
 import static java.lang.System.out;
-import static java.lang.System.setProperty;
 import static org.openqa.selenium.PageLoadStrategy.NORMAL;
-import static utils.Thesaurus.Drivers.WEBDRIVER_CHROME_DRIVER;
+import static utils.Thesaurus.Drivers.CHROME_DRIVER_KEY;
+import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
@@ -15,8 +17,16 @@ public class ChromeBrowser extends Browsers {
 
     @Override
     protected void setDriverProperty() {
-        out.println("Init Chrome drivers...");
-        setProperty(WEBDRIVER_CHROME_DRIVER, "src/resources/chromedriver_100.0.4896.60");
+        out.println("Init Chrome Drivers...");
+        Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
+        driver.setPropertyDependsOnOS();
+    }
+
+    public BrowserProcess getProcess() {
+        BrowserProcess process = new BrowserProcess();
+        /*process.setProcessId(getCapabilities().getCapability(MOZ_PROCESS_ID).toString());*/
+        process.setProcessName(getCapabilities().getBrowserName());
+        return process;
     }
 
     @Override
@@ -24,13 +34,12 @@ public class ChromeBrowser extends Browsers {
         return new ChromeDriver(getOptions());
     }
 
-    protected ChromeOptions getOptions() {
+    private ChromeOptions getOptions() {
         out.println("Chrome options...");
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--proxy-server=socks5://" + PROXY_IP_ADDRESS + ":" + PROXY_PORT);
         chromeOptions.addArguments("enable-automation");
         //chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("window-size=1024,768");
         chromeOptions.addArguments("--disable-extensions");
         chromeOptions.addArguments("--dns-prefetch-disable");
         chromeOptions.addArguments("--disable-gpu");

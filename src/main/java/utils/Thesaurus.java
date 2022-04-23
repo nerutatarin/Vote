@@ -14,10 +14,14 @@ public class Thesaurus {
     }
 
     public static class Drivers {
-        public static final String GECKO_DRIVER_NAME = "geckodriver_0.31.0";
-        public static final String WEBDRIVER_GECKO_DRIVER = "webdriver.gecko.driver";
+        public static final String GECKO_DRIVER_KEY = "webdriver.gecko.driver";
+        public static final String GECKO_DRIVER_VALUE = "geckodriver_0.31.0";
 
-        public static final String CHROME_DRIVER_NAME = "chromedriver_101.0.4951.15";
-        public static final String WEBDRIVER_CHROME_DRIVER = "webdriver.chrome.driver";
+        public static final String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
+        public static final String CHROME_DRIVER_VALUE = "chromedriver_101.0.4951.15";
+    }
+
+    public static class MozCapabilities {
+        public static final String MOZ_PROCESS_ID = "moz:processID";
     }
 }

@@ -3,10 +3,13 @@ package vote.vote2022.browsers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import vote.vote2022.driver.Driver;
+import vote.vote2022.browsers.model.BrowserProcess;
 
 import static java.lang.System.out;
-import static java.lang.System.setProperty;
-import static utils.Thesaurus.Drivers.WEBDRIVER_GECKO_DRIVER;
+import static utils.Thesaurus.Drivers.GECKO_DRIVER_KEY;
+import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
+import static utils.Thesaurus.MozCapabilities.MOZ_PROCESS_ID;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
@@ -14,8 +17,16 @@ public class FirefoxBrowser extends Browsers {
 
     @Override
     protected void setDriverProperty() {
-        out.println("Init Firefox drivers...");
-        setProperty(WEBDRIVER_GECKO_DRIVER, "src/resources/geckodriver_0.31");
+        out.println("Init Firefox Driver...");
+        Driver driver = new Driver(GECKO_DRIVER_KEY, GECKO_DRIVER_VALUE);
+        driver.setPropertyDependsOnOS();
+    }
+
+    public BrowserProcess getProcess(){
+        BrowserProcess process = new BrowserProcess();
+        process.setProcessId(getCapabilities().getCapability(MOZ_PROCESS_ID).toString());
+        process.setProcessName(getCapabilities().getBrowserName());
+        return process;
     }
 
     @Override
@@ -23,7 +34,7 @@ public class FirefoxBrowser extends Browsers {
         return new FirefoxDriver(getOptions());
     }
 
-    protected FirefoxOptions getOptions() {
+    private FirefoxOptions getOptions() {
         out.println("Firefox options...");
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.addPreference("network.proxy.type", 1);
