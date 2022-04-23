@@ -1,6 +1,7 @@
 package vote.vote2022;
 
 import org.openqa.selenium.*;
+import org.openqa.selenium.remote.UnreachableBrowserException;
 import utils.IPAddressGetter;
 import utils.ProcessKiller;
 import vote.vote2022.browsers.Browsers;
@@ -59,6 +60,8 @@ public abstract class Vote extends Thread implements VoteImpl {
             out.println("Ошибка инициализации сеанса браузера: " + e);
         } catch (WebDriverException e) {
             out.println("Ошибка чтения страницы: " + e);
+        } catch (Exception e) {
+            out.println("Неизвестная ошибка: " + e);
         } finally {
             shutdown();
         }
@@ -127,6 +130,6 @@ public abstract class Vote extends Thread implements VoteImpl {
     private void killProcess() {
         ProcessKiller processKiller = new ProcessKiller();
         processKiller.killer(process.getProcessName());
-        processKiller.killer(GECKO_DRIVER_VALUE +  ".exe");
+        processKiller.killer(GECKO_DRIVER_VALUE);
     }
 }

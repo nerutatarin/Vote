@@ -11,7 +11,7 @@ import static utils.OSValidator.isWindows;
 
 public class ProcessKiller {
     private static final String TASKLIST = "tasklist";
-    private static final String WIN_KILL_IM = "taskkill /IM ";
+    private static final String WIN_KILL_IM = "taskkill /F /IM ";
     private static final String WIN_KILL_PID = "taskkill /PID ";
     private static final String UNIX_KILL = "killall ";
 
@@ -44,7 +44,7 @@ public class ProcessKiller {
 
     private void killProcess(String processName) {
         if (isWindows()) {
-            kill(WIN_KILL_IM, processName);
+            kill(WIN_KILL_IM, processName + ".exe");
         } else if (isUnix()) {
             kill(UNIX_KILL, processName);
         }
