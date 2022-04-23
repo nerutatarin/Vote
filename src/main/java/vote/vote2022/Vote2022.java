@@ -2,7 +2,7 @@ package vote.vote2022;
 
 import java.util.ArrayList;
 
-public class VoteKP extends Vote {
+public class Vote2022 extends Vote {
 
 
     @Override

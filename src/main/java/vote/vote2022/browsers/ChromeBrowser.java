@@ -19,7 +19,6 @@ public class ChromeBrowser extends Browsers {
         setProperty(WEBDRIVER_CHROME_DRIVER, "src/resources/chromedriver_100.0.4896.60");
     }
 
-
     @Override
     protected WebDriver getDriverInstance() {
         return new ChromeDriver(getOptions());
