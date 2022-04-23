@@ -27,6 +27,8 @@ import static java.lang.System.setProperty;
 import static org.openqa.selenium.By.cssSelector;
 import static org.openqa.selenium.By.id;
 import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
+import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
+import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 import static utils.Thesaurus.SUBMIT_VOTE;
 
 public abstract class Vote extends Thread implements VoteImpl {
@@ -56,7 +58,7 @@ public abstract class Vote extends Thread implements VoteImpl {
         try {
             geckoDriver.initGecko();
             getOptions();
-            writeToLog();
+            //writeToLog();
             startPage(getBaseUrl(), "Запуск страницы голосования");
             chkVoteMo();
             btnVote();
@@ -84,8 +86,8 @@ public abstract class Vote extends Thread implements VoteImpl {
     private void getOptions() {
         FirefoxProfile firefoxProfile = new FirefoxProfile();
         firefoxProfile.setPreference("network.proxy.type", 1);
-        firefoxProfile.setPreference("network.proxy.socks", "127.0.0.1");
-        firefoxProfile.setPreference("network.proxy.socks_port", 9050);
+        firefoxProfile.setPreference("network.proxy.socks", PROXY_IP_ADDRESS);
+        firefoxProfile.setPreference("network.proxy.socks_port", PROXY_PORT);
         firefoxProfile.setPreference("network.proxy.socks_remote_dns", true);
         firefoxProfile.setPreference("toolkit.startup.max_resumed_crashes", "-1");
         firefoxProfile.setPreference("privacy.clearOnShutdown.cookies", true);

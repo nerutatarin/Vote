@@ -7,15 +7,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static java.lang.System.out;
 import static java.lang.System.setProperty;
 import static org.openqa.selenium.PageLoadStrategy.NORMAL;
-import static utils.Thesaurus.PROXY_IP_ADDRESS;
-import static utils.Thesaurus.PROXY_PORT;
+import static utils.Thesaurus.Drivers.WEBDRIVER_CHROME_DRIVER;
+import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
+import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public class ChromeBrowser extends Browsers {
 
     @Override
     protected void setDriverProperty() {
         out.println("Init Chrome drivers...");
-        setProperty("webdriver.chrome.driver", "src/resources/chromedriver_100.0.4896.60");
+        setProperty(WEBDRIVER_CHROME_DRIVER, "src/resources/chromedriver_100.0.4896.60");
     }
 
 

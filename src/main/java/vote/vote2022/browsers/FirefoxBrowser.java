@@ -6,15 +6,16 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import static java.lang.System.out;
 import static java.lang.System.setProperty;
-import static utils.Thesaurus.PROXY_IP_ADDRESS;
-import static utils.Thesaurus.PROXY_PORT;
+import static utils.Thesaurus.Drivers.WEBDRIVER_GECKO_DRIVER;
+import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
+import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public class FirefoxBrowser extends Browsers {
 
     @Override
     protected void setDriverProperty() {
         out.println("Init Firefox drivers...");
-        setProperty("webdriver.gecko.driver", "src/resources/geckodriver_0.31");
+        setProperty(WEBDRIVER_GECKO_DRIVER, "src/resources/geckodriver_0.31");
     }
 
 

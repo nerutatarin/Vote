@@ -1,8 +1,5 @@
 package vote.vote2022.driver;
 
-import utils.OSValidator;
-import vote.vote2022.exceptions.DriverNotFoundException;
-
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -12,6 +9,8 @@ import static java.lang.System.setProperty;
 import static java.nio.file.Paths.get;
 import static utils.OSValidator.isUnix;
 import static utils.OSValidator.isWindows;
+import static utils.Thesaurus.Drivers.GECKO_DRIVER_NAME;
+import static utils.Thesaurus.Drivers.WEBDRIVER_GECKO_DRIVER;
 
 public class Driver {
 
@@ -21,11 +20,12 @@ public class Driver {
     }
 
     private void setPropertyDependsOnOS() {
+
         if (isWindows()) {
-            setProperty("webdriver.gecko.driver", getDriverPath("geckodriver_0.31.0.exe"));
+            setProperty(WEBDRIVER_GECKO_DRIVER, getDriverPath(GECKO_DRIVER_NAME + ".exe"));
         }
         if (isUnix()) {
-            setProperty("webdriver.gecko.driver", getDriverPath("geckodriver_0.31.0"));
+            setProperty(WEBDRIVER_GECKO_DRIVER, getDriverPath(GECKO_DRIVER_NAME));
         }
     }
 
