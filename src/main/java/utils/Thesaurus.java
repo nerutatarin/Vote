@@ -19,9 +19,16 @@ public class Thesaurus {
 
         public static final String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
         public static final String CHROME_DRIVER_VALUE = "chromedriver_100.0.4896.60";
+
+        public static final String OPERA_DRIVER_KEY = "webdriver.opera.driver";
+        public static final String OPERA_DRIVER_VALUE = "operadriver_99.0.4844.51";
+
+        public static final String EDGE_DRIVER_KEY = "webdriver.edge.driver";
+        public static final String EDGE_DRIVER_VALUE = "msedgedriver_100.0.1185.50";
     }
 
-    public static class MozCapabilities {
+    public static class Capabilities {
         public static final String MOZ_PROCESS_ID = "moz:processID";
+        public static final String MOZ_GECKODRIVER_VERSION = "moz:geckodriverVersion";
     }
 }

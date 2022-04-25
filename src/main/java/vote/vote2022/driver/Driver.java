@@ -20,10 +20,10 @@ public class Driver {
 
     public void setPropertyDependsOnOS() {
         if (isWindows()) {
-            setProperty(webDriverKey, getDriverPath(webDriverValue + ".exe"));
+            setProperty(webDriverKey, getDriverPath("win/" + webDriverValue + ".exe"));
         }
         if (isUnix()) {
-            setProperty(webDriverKey, getDriverPath(webDriverValue));
+            setProperty(webDriverKey, getDriverPath("unix/" + webDriverValue));
         }
     }
 

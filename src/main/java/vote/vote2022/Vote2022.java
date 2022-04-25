@@ -1,8 +1,27 @@
 package vote.vote2022;
 
+import vote.vote2022.browsers.*;
+
 import java.util.ArrayList;
+import java.util.List;
+
+import static java.lang.System.out;
 
 public class Vote2022 extends Vote {
+    private static final int voteCount = 1;
+
+    public void init() {
+        for (int i = 0; i < voteCount; i++) {
+            out.println("Начало работы: " + i);
+            List<Browsers> browsers = new ArrayList<>();
+            browsers.add(new FirefoxBrowser());
+            //browsers.add(new EdgeBrowser());
+            //browsers.add(new ChromeBrowser());
+            //browsers.add(new OperaBrowser());
+            //browsers.parallelStream().forEach(this::vote);
+            browsers.forEach(this::vote);
+        }
+    }
 
     @Override
     protected String getMyIpUrl() {

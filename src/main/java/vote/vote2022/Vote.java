@@ -1,11 +1,9 @@
 package vote.vote2022;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.remote.UnreachableBrowserException;
 import utils.IPAddressGetter;
 import utils.ProcessKiller;
 import vote.vote2022.browsers.Browsers;
-import vote.vote2022.browsers.ChromeBrowser;
 import vote.vote2022.browsers.FirefoxBrowser;
 import vote.vote2022.browsers.model.BrowserProcess;
 
@@ -17,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static java.lang.System.out;
+import static java.lang.System.*;
 import static org.openqa.selenium.By.id;
 import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
 import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
@@ -30,28 +28,19 @@ public abstract class Vote extends Thread implements VoteImpl {
     @Override
     public void run() {
         out.println("Thread: " + getName());
-        init(1000);
-    }
-
-    public void init(int voteCount) {
-        for (int i = 0; i < voteCount; i++) {
-            out.println("Начало работы: " + i);
-            List<Browsers> browsers = new ArrayList<>();
-            //browsers.add(new ChromeBrowser());
-            browsers.add(new FirefoxBrowser());
-            //browsers.parallelStream().forEach(this::vote);
-            browsers.forEach(this::vote);
-        }
+        init();
     }
 
     protected void vote(Browsers browser) {
-        webDriver = browser.getWebDriver();
-        process = browser.getProcess();
         try {
+            webDriver = browser.getWebDriver();
+            process = browser.getProcess();
+            writeToLog();
             startPage();
             chkVoteMo();
             btnVote();
-            writeToLog();
+        } catch (SessionNotCreatedException e) {
+            out.println("Невозможно создать сессию. Вероятно версия драйвера не совпадает с версией браузера : " + e);
         } catch (TimeoutException e) {
             out.println("Превышено время ожидания загрузки страницы: " + e);
         } catch (NoSuchElementException e) {
@@ -92,7 +81,14 @@ public abstract class Vote extends Thread implements VoteImpl {
 
     public void startPage() {
         out.println("Запуск страницы голосования");
+        long startTime = nanoTime();
+        out.println(startTime);
+
         webDriver.get(getBaseUrl());
+
+        long estimatedTime = nanoTime() - startTime;
+        double seconds = (double)estimatedTime / 1000000000.0;
+        out.println(seconds);
         out.println("Запуск страницы завершен: ");
     }
 
@@ -130,6 +126,6 @@ public abstract class Vote extends Thread implements VoteImpl {
     private void killProcess() {
         ProcessKiller processKiller = new ProcessKiller();
         processKiller.killer(process.getProcessName());
-        processKiller.killer(GECKO_DRIVER_VALUE);
+        processKiller.killer(process.getDriverName());
     }
 }
