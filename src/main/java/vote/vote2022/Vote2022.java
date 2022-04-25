@@ -1,26 +1,29 @@
 package vote.vote2022;
 
 import org.apache.log4j.Logger;
-import vote.vote2022.browsers.Browsers;
-import vote.vote2022.browsers.FirefoxBrowser;
+import utils.IPAddressGetter;
+import vote.vote2022.browsers.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.log4j.Logger.getLogger;
+
 public class Vote2022 extends Vote {
-    private static final Logger log = Logger.getLogger(Vote2022.class);
-    private static final int voteCount = 1;
+    private static final Logger log = getLogger(Vote2022.class);
+    private static final int voteCount = 2;
 
     public void init() {
+        log.info("Начало работы...");
         for (int i = 0; i < voteCount; i++) {
-            log.info("Начало работы: " + i);
             List<Browsers> browsers = new ArrayList<>();
             browsers.add(new FirefoxBrowser());
-            //browsers.add(new EdgeBrowser());
-            //browsers.add(new ChromeBrowser());
-            //browsers.add(new OperaBrowser());
-            //browsers.parallelStream().forEach(this::vote);
-            browsers.forEach(this::vote);
+            browsers.add(new EdgeBrowser());
+            browsers.add(new ChromeBrowser());
+            browsers.add(new ChromiumBrowser());
+            browsers.add(new OperaBrowser());
+            browsers.parallelStream().forEach(this::vote);
+            //browsers.forEach(this::vote);
         }
     }
 
@@ -40,7 +43,13 @@ public class Vote2022 extends Vote {
     }
 
     @Override
-    protected ArrayList<String> inputs() {
+    protected String getIpAddress() {
+        IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver);
+        return ipAddressGetter.getIpAddress(getCssSelector(), getMyIpUrl());
+    }
+
+    @Override
+    protected ArrayList<String> getInputs() {
         ArrayList<String> inputs = new ArrayList<>();
 
         String G1_KUVATOVO = "inp4";
@@ -57,10 +66,10 @@ public class Vote2022 extends Vote {
         inputs.add(G1_KUVATOVO);
         inputs.add(G2_RKIB);
         inputs.add(G3_DRKB);
-        //inputs.add(G4_GB1);
-        //inputs.add(G5_RD3);
+        inputs.add(G4_GB1);
+        inputs.add(G5_RD3);
         inputs.add(G9_BUBNOVSKY);
-        //inputs.add(G13_DP4);
+        inputs.add(G13_DP4);
         inputs.add(G14_KUVATOVO);
         inputs.add(G15_BUBNOVSKY);
         inputs.add(G16_KUVATOVO);

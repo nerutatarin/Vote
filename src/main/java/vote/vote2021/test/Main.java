@@ -1,3 +1,4 @@
+/*
 package vote.vote2021.test;
 
 import org.openqa.selenium.By;
@@ -38,8 +39,10 @@ public class Main {
             initTor();
             settingBrowser();
             startBrowserAndPage(url);
-           /* clickInputs();
-            clickBtnVote();*/
+           */
+/* clickInputs();
+            clickBtnVote();*//*
+
         } catch (Exception e) {
             System.out.println("WTF: " + e.getMessage());
         } finally {
@@ -117,7 +120,8 @@ public class Main {
         }
     }
 
-   /* public static void clickInputs() {
+   */
+/* public static void clickInputs() {
         try {
             for (String inp : getInputs()) {
                 WebDriverWait wait = new WebDriverWait(firefoxDriver, 10);
@@ -128,7 +132,8 @@ public class Main {
         } catch (NoSuchElementException e) {
             System.out.println("Inputs not found: " + e);
         }
-    }*/
+    }*//*
+
 
     public static ArrayList<String> getInputs() {
         ArrayList<String> inputs = new ArrayList<>();
@@ -146,7 +151,8 @@ public class Main {
         return inputs;
     }
 
-    /*public static void clickBtnVote() {
+    */
+/*public static void clickBtnVote() {
         WebDriverWait wait = new WebDriverWait(firefoxDriver, 10);
         WebElement btnVote = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("submit_vote")));
         try {
@@ -158,7 +164,8 @@ public class Main {
         } catch (NoSuchElementException e) {
             System.out.println("button vote not found: " + e);
         }
-    }*/
+    }*//*
+
 
     public static void shutdown() {
         try {
@@ -215,3 +222,4 @@ public class Main {
 
     }
 }
+*/

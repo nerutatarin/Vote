@@ -15,16 +15,16 @@ public class Thesaurus {
 
     public static class Drivers {
         public static final String GECKO_DRIVER_KEY = "webdriver.gecko.driver";
-        public static final String GECKO_DRIVER_VALUE = "geckodriver_0.31.0";
+        public static final String GECKO_DRIVER_VALUE = "geckodriver";
 
         public static final String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
-        public static final String CHROME_DRIVER_VALUE = "chromedriver_100.0.4896.60";
+        public static final String CHROME_DRIVER_VALUE = "chromedriver";
 
         public static final String OPERA_DRIVER_KEY = "webdriver.opera.driver";
-        public static final String OPERA_DRIVER_VALUE = "operadriver_99.0.4844.51";
+        public static final String OPERA_DRIVER_VALUE = "operadriver";
 
         public static final String EDGE_DRIVER_KEY = "webdriver.edge.driver";
-        public static final String EDGE_DRIVER_VALUE = "msedgedriver_100.0.1185.50";
+        public static final String EDGE_DRIVER_VALUE = "msedgedriver";
     }
 
     public static class Capabilities {

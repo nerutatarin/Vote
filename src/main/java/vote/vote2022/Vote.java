@@ -2,29 +2,20 @@ package vote.vote2022;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
-import utils.IPAddressGetter;
-import utils.ProcessKiller;
 import vote.vote2022.browsers.Browsers;
 import vote.vote2022.browsers.model.BrowserProcess;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import static java.lang.System.nanoTime;
 import static org.apache.log4j.Logger.getLogger;
-import static org.openqa.selenium.By.id;
-import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
-import static utils.Thesaurus.SUBMIT_VOTE;
+import static vote.vote2022.WriteToLog.writeToLog;
 
 public abstract class Vote extends Thread implements VoteImpl {
     private static final Logger log = getLogger(Vote.class);
 
     protected WebDriver webDriver;
     protected BrowserProcess process;
+    protected PageManager pageManager;
 
     @Override
     public void run() {
@@ -35,16 +26,18 @@ public abstract class Vote extends Thread implements VoteImpl {
         try {
             webDriver = browser.getWebDriver();
             process = browser.getProcess();
-            startPage();
-            chkVoteMo();
-            btnVote();
-            writeToLog();
+            pageManager = new PageManager(webDriver, process);
+            pageManager.startPage(getBaseUrl());
+            pageManager.chkVoteMo(getInputs());
+            pageManager.btnVote();
+
+            writeToLog(getIpAddress());
         } catch (SessionNotCreatedException e) {
             log.debug("Невозможно создать сессию. Вероятно версия драйвера не совпадает с версией браузера : " + e);
         } catch (TimeoutException e) {
-            log.debug("Превышено время ожидания загрузки страницы: " + e);
+            log.debug("Превышено время ожидания появления элемента. Либо что-то не так в сценарии, либо увеличить время для ожидания ответа: " + e);
         } catch (NoSuchElementException e) {
-            log.debug("Элемент полностью удален или больше не привязан к DOM.: " + e);
+            log.debug("Не найден элемент. Или элемент реально отсутствует на странице или к нему не правильно указан доступ: " + e);
         } catch (NoSuchSessionException e) {
             log.debug("Ошибка инициализации сеанса браузера: " + e);
         } catch (WebDriverException e) {
@@ -52,77 +45,17 @@ public abstract class Vote extends Thread implements VoteImpl {
         } catch (Exception e) {
             log.debug("Неизвестная ошибка: " + e);
         } finally {
-            shutdown();
+            pageManager.shutdown();
         }
     }
 
-    public void writeToLog() {
-        String ipAddress = getIpAddress();
-        if (ipAddress == null) return;
-        log.info("ipAddress: " + ipAddress);
-
-        String timeStamp = new SimpleDateFormat(PATTERN_DDMMYYYYHHMMSS).format(new Date());
-        String logFile = "src/resources/logs/" + "log.log";
-        try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
-            writer.write(timeStamp + " ip: " + ipAddress + "\n");
-        } catch (IOException e) {
-            log.debug("Ошибка операции ввода-вывода: " + e);
-        }
-    }
-
-    private String getIpAddress() {
-        IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver);
-        return ipAddressGetter.getIpAddress(getCssSelector(), getMyIpUrl());
-    }
+    protected abstract String getIpAddress();
 
     protected abstract String getMyIpUrl();
 
     protected abstract String getCssSelector();
 
-    public void startPage() {
-        log.info("Запуск страницы голосования");
-        long startTime = nanoTime();
-        webDriver.get(getBaseUrl());
-        long estimatedTime = nanoTime() - startTime;
-        double seconds = (double) estimatedTime / 1000000000.0;
-        log.info(seconds);
-        log.info("Запуск страницы завершен: ");
-    }
-
     protected abstract String getBaseUrl();
 
-    public void chkVoteMo() {
-        for (String inp : inputs()) {
-            WebElement webElement = webDriver.findElement(id(inp));
-            webElement.click();
-            log.info("Проставлен input: " + inp);
-        }
-    }
-
-    protected abstract ArrayList<String> inputs();
-
-    public void btnVote() {
-        log.info("Нажимаем кнопку голосования: ");
-        WebElement webElement = webDriver.findElement(id(SUBMIT_VOTE));
-        webElement.click();
-        log.info("Голоса приняты: ");
-    }
-
-    public void shutdown() {
-        try {
-            log.info("Закрываем браузер: ");
-            webDriver.quit();
-            log.info("Закрыт браузер: ");
-        } catch (Exception e) {
-            log.debug("При попытке закрыть браузер возникла ошибка: " + e);
-            log.info("Пытаемся прибить процесс...: ");
-            killProcess();
-        }
-    }
-
-    private void killProcess() {
-        ProcessKiller processKiller = new ProcessKiller();
-        processKiller.killer(process.getProcessName());
-        processKiller.killer(process.getDriverName());
-    }
+    protected abstract ArrayList<String> getInputs();
 }

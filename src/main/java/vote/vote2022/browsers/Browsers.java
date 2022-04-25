@@ -6,7 +6,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import vote.vote2022.browsers.model.BrowserProcess;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
@@ -24,9 +23,6 @@ public abstract class Browsers implements BrowsersImpl {
     private WebDriver settingBrowser() {
         webDriver = getDriverInstance();
         webDriver.manage().deleteAllCookies();
-        //webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
-        webDriver.manage().timeouts().pageLoadTimeout(120, SECONDS);
-        webDriver.manage().timeouts().implicitlyWait(120, SECONDS);
         return webDriver;
     }
 
@@ -35,7 +31,6 @@ public abstract class Browsers implements BrowsersImpl {
         process.setProcessName(getCapabilities().getBrowserName());
         process.setProcessId(getProcessId());
         process.setDriverName(getDriverName());
-        //process.setDriverName(getCapabilities().getCapability(MOZ_GECKODRIVER_VERSION).toString(); //0.31.0
         return process;
     }
 

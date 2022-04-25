@@ -1,16 +1,15 @@
 package vote.vote2022.browsers;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
-import vote.vote2022.driver.Driver;
 
-import static java.lang.System.out;
 import static org.apache.log4j.Logger.getLogger;
+import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
-import static utils.Thesaurus.Drivers.GECKO_DRIVER_KEY;
 import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 
 public class FirefoxBrowser extends Browsers {
@@ -19,8 +18,9 @@ public class FirefoxBrowser extends Browsers {
     @Override
     protected void setDriverProperty() {
         log.info("Init Firefox Driver...");
-        Driver driver = new Driver(GECKO_DRIVER_KEY, GECKO_DRIVER_VALUE);
-        driver.setPropertyDependsOnOS();
+        /*Driver driver = new Driver(GECKO_DRIVER_KEY, GECKO_DRIVER_VALUE);
+        driver.setPropertyDependsOnOS();*/
+        WebDriverManager.firefoxdriver().setup();
     }
 
     @Override
@@ -50,6 +50,7 @@ public class FirefoxBrowser extends Browsers {
         options.addPreference("media.peerconnection.enabled", false);
         options.addPreference("webgl.max-contexts", 1500);
 
+        options.setCapability(PAGE_LOAD_STRATEGY, "eager");
         options.setAcceptInsecureCerts(true);
         options.setHeadless(true);
         options.setCapability(PROXY, getProxy());

@@ -1,16 +1,13 @@
 package vote.vote2022.browsers;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import vote.vote2022.driver.Driver;
 
 import static org.apache.log4j.Logger.getLogger;
-import static org.openqa.selenium.PageLoadStrategy.NORMAL;
 import static org.openqa.selenium.remote.CapabilityType.*;
-import static org.openqa.selenium.remote.CapabilityType.HAS_NATIVE_EVENTS;
-import static utils.Thesaurus.Drivers.EDGE_DRIVER_KEY;
 import static utils.Thesaurus.Drivers.EDGE_DRIVER_VALUE;
 
 public class EdgeBrowser extends Browsers {
@@ -19,8 +16,9 @@ public class EdgeBrowser extends Browsers {
     @Override
     protected void setDriverProperty() {
         log.info("Init Edge Driver...");
-        Driver driver = new Driver(EDGE_DRIVER_KEY, EDGE_DRIVER_VALUE);
-        driver.setPropertyDependsOnOS();
+        /*Driver driver = new Driver(EDGE_DRIVER_KEY, EDGE_DRIVER_VALUE);
+        driver.setPropertyDependsOnOS();*/
+        WebDriverManager.edgedriver().setup();
     }
 
     @Override
@@ -52,9 +50,7 @@ public class EdgeBrowser extends Browsers {
         options.addArguments("--enable-precise-memory-info");
 
         options.setAcceptInsecureCerts(true);
-        options.setPageLoadStrategy(NORMAL);
-
-        //options.setCapability(CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
+        options.setCapability(PAGE_LOAD_STRATEGY, "eager");
         options.setCapability(SUPPORTS_JAVASCRIPT, true);
         options.setCapability(ELEMENT_SCROLL_BEHAVIOR, true);
         options.setCapability(HAS_NATIVE_EVENTS, true);

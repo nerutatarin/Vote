@@ -3,7 +3,8 @@ package vote.vote2022;
 public interface VoteImpl {
     void init();
 
-    void writeToLog();
+    /*
+    void writeToLog(String ipAddress);
 
     void startPage();
 
@@ -12,4 +13,7 @@ public interface VoteImpl {
     void btnVote();
 
     void shutdown();
+    */
+
+
 }

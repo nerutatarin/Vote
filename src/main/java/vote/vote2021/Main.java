@@ -1,3 +1,4 @@
+/*
 package vote.vote2021;
 
 import org.jsoup.Jsoup;
@@ -78,9 +79,12 @@ public class Main {
                 }
             }
         }
-        /*============================================*/
+        */
+/*============================================*//*
+
         //List<WebElement> list = driver.findElements(By.cssSelector("div.answer>label"));
-        /*List<WebElement> list = driver.findElements(By.xpath("//label[@for]"));
+        */
+/*List<WebElement> list = driver.findElements(By.xpath("//label[@for]"));
         for (int i = 0; i < list.size(); i++) {
             String txtList = list.get(i).getText();
             if (txtList.contains(voteMo)) {
@@ -90,7 +94,8 @@ public class Main {
                     chkInput.click();
                 }
             }
-        }*/
+        }*//*
+
     }
 
     private static void btnVote() {
@@ -113,14 +118,16 @@ public class Main {
             System.out.println(E.attr("unicredit_poll_results_count"));
         }
 
-        /*List<WebElement> listResultMo = driver.findElements(By.className("unicredit_poll_results_block"));
+        */
+/*List<WebElement> listResultMo = driver.findElements(By.className("unicredit_poll_results_block"));
         for (WebElement elMo : listResultMo) {
             String elTextMo = elMo.getText();
             if (elTextMo.contains(voteMo)) {
                 String elTextCount = elMo.findElement(By.className("unicredit_poll_results_count")).getText();
                 System.out.println(voteMo + " - " + elTextCount);
             }
-        }*/
+        }*//*
+
     }
 
     private static void killFirefox() {
@@ -164,3 +171,4 @@ public class Main {
         return page;
     }
 }
+*/
