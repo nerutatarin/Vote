@@ -35,10 +35,10 @@ public abstract class Vote extends Thread implements VoteImpl {
         try {
             webDriver = browser.getWebDriver();
             process = browser.getProcess();
-            writeToLog();
             startPage();
             chkVoteMo();
             btnVote();
+            writeToLog();
         } catch (SessionNotCreatedException e) {
             out.println("Невозможно создать сессию. Вероятно версия драйвера не совпадает с версией браузера : " + e);
         } catch (TimeoutException e) {
