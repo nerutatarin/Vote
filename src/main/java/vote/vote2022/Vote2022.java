@@ -1,19 +1,19 @@
 package vote.vote2022;
 
+import org.apache.log4j.Logger;
 import vote.vote2022.browsers.Browsers;
 import vote.vote2022.browsers.FirefoxBrowser;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.System.out;
-
 public class Vote2022 extends Vote {
+    private static final Logger log = Logger.getLogger(Vote2022.class);
     private static final int voteCount = 1;
 
     public void init() {
         for (int i = 0; i < voteCount; i++) {
-            out.println("Начало работы: " + i);
+            log.info("Начало работы: " + i);
             List<Browsers> browsers = new ArrayList<>();
             browsers.add(new FirefoxBrowser());
             //browsers.add(new EdgeBrowser());

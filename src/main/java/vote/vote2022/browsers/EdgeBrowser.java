@@ -1,18 +1,24 @@
 package vote.vote2022.browsers;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import vote.vote2022.driver.Driver;
 
-import static java.lang.System.out;
+import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.PageLoadStrategy.NORMAL;
-import static utils.Thesaurus.Drivers.*;
+import static org.openqa.selenium.remote.CapabilityType.*;
+import static org.openqa.selenium.remote.CapabilityType.HAS_NATIVE_EVENTS;
+import static utils.Thesaurus.Drivers.EDGE_DRIVER_KEY;
+import static utils.Thesaurus.Drivers.EDGE_DRIVER_VALUE;
 
-public class EdgeBrowser extends Browsers{
+public class EdgeBrowser extends Browsers {
+    private static final Logger log = getLogger(EdgeBrowser.class);
+
     @Override
     protected void setDriverProperty() {
-        out.println("Init Edge Driver...");
+        log.info("Init Edge Driver...");
         Driver driver = new Driver(EDGE_DRIVER_KEY, EDGE_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();
     }
@@ -33,22 +39,26 @@ public class EdgeBrowser extends Browsers{
     }
 
     private EdgeOptions getOptions() {
-        out.println("Edge options...");
-        EdgeOptions edgeOptions = new EdgeOptions();
-        //edgeOptions.addArguments("--incognito");
-        edgeOptions.addArguments("--disable-gpu");
-        edgeOptions.addArguments("--start-maximized");
-        edgeOptions.addArguments("--ignore-ssl-errors");
-        edgeOptions.addArguments("--disable-extensions");
-        edgeOptions.addArguments("--dns-prefetch-disable");
-        edgeOptions.addArguments("--disable-popup-blocking");
-        edgeOptions.addArguments("--ignore-certificate-errors");
-        edgeOptions.addArguments("--enable-precise-memory-info");
+        log.info("Edge options...");
+        EdgeOptions options = new EdgeOptions();
+        options.addArguments("--incognito");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--start-maximized");
+        options.addArguments("--ignore-ssl-errors");
+        options.addArguments("--disable-extensions");
+        options.addArguments("--dns-prefetch-disable");
+        options.addArguments("--disable-popup-blocking");
+        options.addArguments("--ignore-certificate-errors");
+        options.addArguments("--enable-precise-memory-info");
 
-        edgeOptions.setAcceptInsecureCerts(true);
-        //edgeOptions.setHeadless(false);
-        edgeOptions.setPageLoadStrategy(NORMAL);
-        edgeOptions.setCapability("proxy", getProxy());
-        return edgeOptions;
+        options.setAcceptInsecureCerts(true);
+        options.setPageLoadStrategy(NORMAL);
+
+        //options.setCapability(CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
+        options.setCapability(SUPPORTS_JAVASCRIPT, true);
+        options.setCapability(ELEMENT_SCROLL_BEHAVIOR, true);
+        options.setCapability(HAS_NATIVE_EVENTS, true);
+        options.setCapability(PROXY, getProxy());
+        return options;
     }
 }

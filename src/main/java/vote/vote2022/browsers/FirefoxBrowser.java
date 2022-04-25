@@ -1,20 +1,24 @@
 package vote.vote2022.browsers;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import vote.vote2022.driver.Driver;
 
 import static java.lang.System.out;
+import static org.apache.log4j.Logger.getLogger;
+import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
 import static utils.Thesaurus.Drivers.GECKO_DRIVER_KEY;
 import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 
 public class FirefoxBrowser extends Browsers {
+    private static final Logger log = getLogger(FirefoxBrowser.class);
 
     @Override
     protected void setDriverProperty() {
-        out.println("Init Firefox Driver...");
+        log.info("Init Firefox Driver...");
         Driver driver = new Driver(GECKO_DRIVER_KEY, GECKO_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();
     }
@@ -35,24 +39,21 @@ public class FirefoxBrowser extends Browsers {
     }
 
     private FirefoxOptions getOptions() {
-        out.println("Firefox options...");
-        FirefoxOptions firefoxOptions = new FirefoxOptions();
-        //firefoxOptions.addPreference("network.proxy.type", 1);
-        //firefoxOptions.addPreference("network.proxy.socks", PROXY_IP_ADDRESS);
-        //firefoxOptions.addPreference("network.proxy.socks_port", PROXY_PORT);
-        firefoxOptions.addPreference("network.proxy.socks_remote_dns", true);
-        firefoxOptions.addPreference("toolkit.startup.max_resumed_crashes", "-1");
-        firefoxOptions.addPreference("privacy.clearOnShutdown.cookies", true);
-        firefoxOptions.addPreference("privacy.sanitize.sanitizeOnShutdown", true);
-        firefoxOptions.addPreference("webgl.can-lose-context-in-foreground", false);
-        firefoxOptions.addPreference("webgl.lose-context-on-memory-pressure", false);
-        firefoxOptions.addPreference("media.peerconnection.enabled", false);
-        firefoxOptions.addPreference("webgl.max-contexts", 1500);
+        log.info("Firefox options...");
+        FirefoxOptions options = new FirefoxOptions();
+        options.addPreference("network.proxy.socks_remote_dns", true);
+        options.addPreference("toolkit.startup.max_resumed_crashes", "-1");
+        options.addPreference("privacy.clearOnShutdown.cookies", true);
+        options.addPreference("privacy.sanitize.sanitizeOnShutdown", true);
+        options.addPreference("webgl.can-lose-context-in-foreground", false);
+        options.addPreference("webgl.lose-context-on-memory-pressure", false);
+        options.addPreference("media.peerconnection.enabled", false);
+        options.addPreference("webgl.max-contexts", 1500);
 
-        firefoxOptions.setAcceptInsecureCerts(true);
-        firefoxOptions.setHeadless(true);
-        firefoxOptions.setCapability("proxy", getProxy());
-        return firefoxOptions;
+        options.setAcceptInsecureCerts(true);
+        options.setHeadless(true);
+        options.setCapability(PROXY, getProxy());
+        return options;
     }
 
 

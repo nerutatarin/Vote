@@ -1,15 +1,19 @@
 package utils;
 
+import org.apache.log4j.Logger;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
 import static java.lang.Runtime.getRuntime;
-import static java.lang.System.out;
+import static org.apache.log4j.Logger.getLogger;
 import static utils.OSValidator.isUnix;
 import static utils.OSValidator.isWindows;
 
 public class ProcessKiller {
+    private static final Logger log = getLogger(ProcessKiller.class);
+
     private static final String TASKLIST = "tasklist";
     private static final String WIN_KILL_IM = "taskkill /F /IM ";
     private static final String WIN_KILL_PID = "taskkill /PID ";
@@ -18,11 +22,11 @@ public class ProcessKiller {
     public void killer(String processName) {
         //String processName = process.getProcessName();
         boolean isRunning = isProcessRunning(processName);
-        out.println("is " + processName + " running : " + isRunning);
+        log.info("is " + processName + " running : " + isRunning);
         if (isRunning) {
             killProcess(processName);
         } else {
-            out.println("Not able to find the process : " + processName);
+            log.info("Not able to find the process : " + processName);
         }
     }
 
@@ -37,7 +41,7 @@ public class ProcessKiller {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            log.debug("При поиске процесса произошла ошибка: " + e.getMessage());
         }
         return false;
     }
@@ -53,9 +57,9 @@ public class ProcessKiller {
     private void kill(String commandKill, String processName) {
         try {
             getRuntime().exec(commandKill + processName);
-            out.println(processName + " killed successfully!");
+            log.info(processName + " killed successfully!");
         } catch (IOException e) {
-            e.printStackTrace();
+            log.debug("Не получилось прибить процесс: " + e.getMessage());
         }
     }
 }

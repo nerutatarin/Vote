@@ -26,7 +26,7 @@ public abstract class Browsers implements BrowsersImpl {
         webDriver.manage().deleteAllCookies();
         //webDriver.manage().timeouts().implicitlyWait(10, SECONDS);
         webDriver.manage().timeouts().pageLoadTimeout(120, SECONDS);
-        webDriver.manage().timeouts().implicitlyWait(30, SECONDS);
+        webDriver.manage().timeouts().implicitlyWait(120, SECONDS);
         return webDriver;
     }
 
