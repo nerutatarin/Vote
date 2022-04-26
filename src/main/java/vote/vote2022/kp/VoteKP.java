@@ -1,30 +1,19 @@
-package vote.vote2022;
+package vote.vote2022.kp;
 
-import org.apache.log4j.Logger;
-import utils.IPAddressGetter;
-import vote.vote2022.browsers.*;
+import vote.Vote;
+import vote.browsers.Browsers;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.apache.log4j.Logger.getLogger;
+public class VoteKP extends Vote {
+    protected int voteCount = 3;
 
-public class Vote2022 extends Vote {
-    private static final Logger log = getLogger(Vote2022.class);
-    private static final int voteCount = 2;
-
-    public void init() {
-        log.info("Начало работы...");
-        for (int i = 0; i < voteCount; i++) {
-            List<Browsers> browsers = new ArrayList<>();
-            browsers.add(new FirefoxBrowser());
-            browsers.add(new EdgeBrowser());
-            browsers.add(new ChromeBrowser());
-            browsers.add(new ChromiumBrowser());
-            browsers.add(new OperaBrowser());
-            browsers.parallelStream().forEach(this::vote);
-            //browsers.forEach(this::vote);
-        }
+    public void vote(Browsers browser) {
+        pageManager = new PageManagerKP(browser);
+        pageManager.startPage(getBaseUrl());
+        pageManager.chkVoteMo(getInputs());
+        pageManager.btnVote();
+        //writeToLog(getIpAddress());
     }
 
     @Override
@@ -43,9 +32,15 @@ public class Vote2022 extends Vote {
     }
 
     @Override
+    protected int getVoteCount() {
+        return voteCount;
+    }
+
+    @Override
     protected String getIpAddress() {
-        IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver);
-        return ipAddressGetter.getIpAddress(getCssSelector(), getMyIpUrl());
+        /*IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver);
+        return ipAddressGetter.getIpAddress(getCssSelector(), getMyIpUrl());*/
+        return null;
     }
 
     @Override

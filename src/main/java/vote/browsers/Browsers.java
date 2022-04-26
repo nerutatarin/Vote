@@ -1,10 +1,10 @@
-package vote.vote2022.browsers;
+package vote.browsers;
 
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import vote.vote2022.browsers.model.BrowserProcess;
+import vote.browsers.model.BrowserProcess;
 
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;

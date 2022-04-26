@@ -1,4 +1,4 @@
-package vote.vote2022.browsers.model;
+package vote.browsers.model;
 
 public class BrowserProcess {
     private String processName;

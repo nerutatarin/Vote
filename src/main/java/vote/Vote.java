@@ -1,37 +1,38 @@
-package vote.vote2022;
+package vote;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
-import vote.vote2022.browsers.Browsers;
-import vote.vote2022.browsers.model.BrowserProcess;
+import vote.browsers.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.apache.log4j.Logger.getLogger;
-import static vote.vote2022.WriteToLog.writeToLog;
 
 public abstract class Vote extends Thread implements VoteImpl {
     private static final Logger log = getLogger(Vote.class);
-
-    protected WebDriver webDriver;
-    protected BrowserProcess process;
     protected PageManager pageManager;
 
     @Override
     public void run() {
-        init();
+        log.info("Начало работы...");
+        for (int i = 0; i < getVoteCount(); i++) {
+            init();
+        }
     }
 
-    protected void vote(Browsers browser) {
-        try {
-            webDriver = browser.getWebDriver();
-            process = browser.getProcess();
-            pageManager = new PageManager(webDriver, process);
-            pageManager.startPage(getBaseUrl());
-            pageManager.chkVoteMo(getInputs());
-            pageManager.btnVote();
+    protected abstract int getVoteCount();
 
-            writeToLog(getIpAddress());
+    public void init() {
+        try {
+            List<Browsers> browsers = new ArrayList<>();
+            browsers.add(new FirefoxBrowser());
+            browsers.add(new EdgeBrowser());
+            browsers.add(new ChromeBrowser());
+            //browsers.add(new ChromiumBrowser());
+            //browsers.add(new OperaBrowser());
+            browsers.parallelStream().forEach(this::vote);
+            //browsers.forEach(this::vote);
         } catch (SessionNotCreatedException e) {
             log.debug("Невозможно создать сессию. Вероятно версия драйвера не совпадает с версией браузера : " + e);
         } catch (TimeoutException e) {

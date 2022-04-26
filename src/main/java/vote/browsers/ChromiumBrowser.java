@@ -1,24 +1,24 @@
-package vote.vote2022.browsers;
+package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chromium.ChromiumOptions;
 
 import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.remote.CapabilityType.*;
-import static utils.Thesaurus.Drivers.EDGE_DRIVER_VALUE;
+import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
-public class EdgeBrowser extends Browsers {
-    private static final Logger log = getLogger(EdgeBrowser.class);
+public class ChromiumBrowser extends Browsers {
+    private static final Logger log = getLogger(ChromeBrowser.class);
 
     @Override
     protected void setDriverProperty() {
-        log.info("Init Edge Driver...");
-        /*Driver driver = new Driver(EDGE_DRIVER_KEY, EDGE_DRIVER_VALUE);
+        log.info("Init Chromium Drivers...");
+        /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
-        WebDriverManager.edgedriver().setup();
+        WebDriverManager.chromiumdriver().setup();
     }
 
     @Override
@@ -28,17 +28,22 @@ public class EdgeBrowser extends Browsers {
 
     @Override
     protected String getDriverName() {
-        return EDGE_DRIVER_VALUE;
+        return CHROME_DRIVER_VALUE;
     }
 
     @Override
     protected WebDriver getDriverInstance() {
-        return new EdgeDriver(getOptions());
+        //return new ChromiumDriver(getOptions());
+        return null;
     }
 
-    private EdgeOptions getOptions() {
-        log.info("Edge options...");
-        EdgeOptions options = new EdgeOptions();
+    private ChromiumOptions<ChromeOptions> getOptions() {
+        log.info("Chromium options...");
+
+        //ChromiumOptions options = new ChromiumOptions();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--enable-automation");
+        //options.addArguments("--headless");
         options.addArguments("--incognito");
         options.addArguments("--disable-gpu");
         options.addArguments("--start-maximized");

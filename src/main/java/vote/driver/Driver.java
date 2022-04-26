@@ -1,4 +1,4 @@
-package vote.vote2022.driver;
+package vote.driver;
 
 import java.io.File;
 import java.net.URISyntaxException;

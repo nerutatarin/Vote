@@ -1,7 +1,7 @@
-package vote.vote2022.browsers;
+package vote.browsers;
 
 import org.openqa.selenium.WebDriver;
-import vote.vote2022.browsers.model.BrowserProcess;
+import vote.browsers.model.BrowserProcess;
 
 public interface BrowsersImpl {
     WebDriver getWebDriver();

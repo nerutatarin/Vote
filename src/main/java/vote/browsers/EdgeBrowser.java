@@ -1,24 +1,24 @@
-package vote.vote2022.browsers;
+package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.edge.EdgeOptions;
 
 import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.remote.CapabilityType.*;
-import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
+import static utils.Thesaurus.Drivers.EDGE_DRIVER_VALUE;
 
-public class ChromiumBrowser extends Browsers {
-    private static final Logger log = getLogger(ChromeBrowser.class);
+public class EdgeBrowser extends Browsers {
+    private static final Logger log = getLogger(EdgeBrowser.class);
 
     @Override
     protected void setDriverProperty() {
-        log.info("Init Chromium Drivers...");
-        /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
+        log.info("Init Edge Driver...");
+        /*Driver driver = new Driver(EDGE_DRIVER_KEY, EDGE_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
-        WebDriverManager.chromiumdriver().setup();
+        WebDriverManager.edgedriver().setup();
     }
 
     @Override
@@ -28,19 +28,19 @@ public class ChromiumBrowser extends Browsers {
 
     @Override
     protected String getDriverName() {
-        return CHROME_DRIVER_VALUE;
+        return EDGE_DRIVER_VALUE;
     }
 
     @Override
     protected WebDriver getDriverInstance() {
-        return new ChromeDriver(getOptions());
+        return new EdgeDriver(getOptions());
     }
 
-    private ChromeOptions getOptions() {
-        log.info("Chromium options...");
-        ChromeOptions options = new ChromeOptions();
+    private EdgeOptions getOptions() {
+        log.info("Edge options...");
+        EdgeOptions options = new EdgeOptions();
         options.addArguments("--enable-automation");
-        //options.addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--incognito");
         options.addArguments("--disable-gpu");
         options.addArguments("--start-maximized");

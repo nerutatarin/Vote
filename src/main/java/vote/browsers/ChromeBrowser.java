@@ -1,24 +1,24 @@
-package vote.vote2022.browsers;
+package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
-import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
+import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.remote.CapabilityType.*;
-import static utils.Thesaurus.Drivers.OPERA_DRIVER_VALUE;
+import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
-public class OperaBrowser extends Browsers {
-    private static final Logger log = Logger.getLogger(OperaBrowser.class);
+public class ChromeBrowser extends Browsers {
+    private static final Logger log = getLogger(ChromeBrowser.class);
 
     @Override
     protected void setDriverProperty() {
-        log.info("Init Opera Driver...");
-        /*Driver driver = new Driver(OPERA_DRIVER_KEY, OPERA_DRIVER_VALUE);
+        log.info("Init Chrome Drivers...");
+        /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
-        WebDriverManager.operadriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @Override
@@ -28,17 +28,17 @@ public class OperaBrowser extends Browsers {
 
     @Override
     protected String getDriverName() {
-        return OPERA_DRIVER_VALUE;
+        return CHROME_DRIVER_VALUE;
     }
 
     @Override
     protected WebDriver getDriverInstance() {
-        return new OperaDriver(getOptions());
+        return new ChromeDriver(getOptions());
     }
 
-    private Capabilities getOptions() {
-        log.info("Opera options...");
-        OperaOptions options = new OperaOptions();
+    private ChromeOptions getOptions() {
+        log.info("Chrome options...");
+        ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
         options.addArguments("--headless");
         options.addArguments("--incognito");
@@ -57,6 +57,7 @@ public class OperaBrowser extends Browsers {
         options.setCapability(ELEMENT_SCROLL_BEHAVIOR, true);
         options.setCapability(HAS_NATIVE_EVENTS, true);
         options.setCapability(PROXY, getProxy());
+        //options.setCapability(CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
         return options;
     }
 }

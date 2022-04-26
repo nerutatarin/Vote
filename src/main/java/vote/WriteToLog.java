@@ -1,4 +1,4 @@
-package vote.vote2022;
+package vote;
 
 import org.apache.log4j.Logger;
 
