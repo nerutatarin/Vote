@@ -27,7 +27,7 @@ public abstract class PageManager implements PageManagerImpl {
 
     public void startPage(String baseUrl) {
         wait = new WebDriverWait(webDriver, ofSeconds(30));
-        webDriver.manage().timeouts().implicitlyWait(30, SECONDS);
+        //webDriver.manage().timeouts().implicitlyWait(30, SECONDS);
         //webDriver.manage().timeouts().pageLoadTimeout(10, SECONDS);
         log.info("Запуск страницы голосования");
         webDriver.get(baseUrl);
@@ -71,7 +71,7 @@ public abstract class PageManager implements PageManagerImpl {
 
     public void killProcess() {
         ProcessKiller processKiller = new ProcessKiller();
-        processKiller.killer(process.getProcessName());
         processKiller.killer(process.getDriverName());
+        processKiller.killer(process.getProcessName());
     }
 }

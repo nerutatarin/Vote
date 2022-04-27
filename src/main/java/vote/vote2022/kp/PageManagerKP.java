@@ -9,7 +9,7 @@ import static utils.Thesaurus.SUBMIT_VOTE;
 public class PageManagerKP extends PageManager {
 
     public PageManagerKP(Browsers browser) {
-        this.webDriver = browser.webDriver;
+        this.webDriver = browser.getWebDriver();
         this.process = browser.getProcess();
     }
 

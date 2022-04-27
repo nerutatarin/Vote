@@ -6,7 +6,7 @@ import vote.browsers.Browsers;
 import java.util.ArrayList;
 
 public class VoteOrgZdrav extends Vote {
-    protected int voteCount = 10000;
+    protected int voteCount = 1;
 
     public void vote(Browsers browser) {
         pageManager = new PageManagerOrgZdrav(browser);
