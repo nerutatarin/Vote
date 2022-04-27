@@ -20,14 +20,16 @@ public class ProcessKiller {
     private static final String UNIX_KILL = "killall ";
 
     public void killer(String processName) {
-        //String processName = process.getProcessName();
-        boolean isRunning = isProcessRunning(processName);
-        log.info("is " + processName + " running : " + isRunning);
-        if (isRunning) {
-            killProcess(processName);
-        } else {
-            log.info("Not able to find the process : " + processName);
+        if (isWindows()) {
+            boolean isRunning = isProcessRunning(processName);
+            log.info("is " + processName + " running : " + isRunning);
+            if (isRunning) {
+                killProcess(processName);
+            } else {
+                log.info("Not able to find the process : " + processName);
+            }
         }
+        killProcess(processName);
     }
 
     private boolean isProcessRunning(String processName) {
