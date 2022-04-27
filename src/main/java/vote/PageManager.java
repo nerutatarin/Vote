@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 import static java.lang.Thread.sleep;
 import static java.time.Duration.ofSeconds;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
@@ -29,7 +28,7 @@ public abstract class PageManager implements PageManagerImpl {
         wait = new WebDriverWait(webDriver, ofSeconds(30));
         //webDriver.manage().timeouts().implicitlyWait(30, SECONDS);
         //webDriver.manage().timeouts().pageLoadTimeout(10, SECONDS);
-        log.info("Запуск страницы голосования");
+        log.info("Запуск страницы голосования " + baseUrl);
         webDriver.get(baseUrl);
     }
 

@@ -61,10 +61,10 @@ public class VoteKP extends Vote {
         inputs.add(G1_KUVATOVO);
         inputs.add(G2_RKIB);
         inputs.add(G3_DRKB);
-        inputs.add(G4_GB1);
-        inputs.add(G5_RD3);
+        //inputs.add(G4_GB1);
+        //inputs.add(G5_RD3);
         inputs.add(G9_BUBNOVSKY);
-        inputs.add(G13_DP4);
+        //inputs.add(G13_DP4);
         inputs.add(G14_KUVATOVO);
         inputs.add(G15_BUBNOVSKY);
         inputs.add(G16_KUVATOVO);
