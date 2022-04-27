@@ -6,7 +6,7 @@ import vote.browsers.Browsers;
 import java.util.ArrayList;
 
 public class VoteKP extends Vote {
-    protected int voteCount = 1;
+    protected int voteCount = 10000;
 
     public void vote(Browsers browser) {
         pageManager = new PageManagerKP(browser);
