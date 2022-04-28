@@ -1,17 +1,17 @@
 package vote.vote2022.orgzdrav;
 
-import vote.Vote;
-import vote.browsers.Browsers;
+import vote.VoteImpl;
+import vote.browsers.BrowsersImpl;
 
 import java.util.ArrayList;
 
-public class VoteOrgZdrav extends Vote {
+public class VoteOrgZdrav extends VoteImpl {
     protected int voteCount = 10000;
 
-    public void vote(Browsers browser) {
-        pageManager = new PageManagerOrgZdrav(browser);
-        pageManager.startPage(getBaseUrl());
-        pageManager.btnVote();
+    public void vote(BrowsersImpl browser) {
+        pageManagerImpl = new PageManagerOrgZdrav(browser);
+        pageManagerImpl.startPage(getBaseUrl());
+        pageManagerImpl.btnVote();
         //writeToLog(getIpAddress());
     }
 

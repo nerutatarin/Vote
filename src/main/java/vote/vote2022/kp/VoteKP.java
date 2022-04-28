@@ -1,18 +1,18 @@
 package vote.vote2022.kp;
 
-import vote.Vote;
-import vote.browsers.Browsers;
+import vote.VoteImpl;
+import vote.browsers.BrowsersImpl;
 
 import java.util.ArrayList;
 
-public class VoteKP extends Vote {
+public class VoteKP extends VoteImpl {
     protected int voteCount = 10000;
 
-    public void vote(Browsers browser) {
-        pageManager = new PageManagerKP(browser);
-        pageManager.startPage(getBaseUrl());
-        pageManager.chkVoteMo(getInputs());
-        pageManager.btnVote();
+    public void vote(BrowsersImpl browser) {
+        pageManagerImpl = new PageManagerKP(browser);
+        pageManagerImpl.startPage(getBaseUrl());
+        pageManagerImpl.chkVoteMo(getInputs());
+        pageManagerImpl.btnVote();
         //writeToLog(getIpAddress());
     }
 

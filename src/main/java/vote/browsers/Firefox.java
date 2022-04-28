@@ -12,8 +12,8 @@ import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
 import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 
-public class FirefoxBrowser extends Browsers {
-    private static final Logger log = getLogger(FirefoxBrowser.class);
+public class Firefox extends BrowsersImpl {
+    private static final Logger log = getLogger(Firefox.class);
 
     @Override
     protected void setDriverProperty() {

@@ -10,8 +10,8 @@ import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.remote.CapabilityType.*;
 import static utils.Thesaurus.Drivers.EDGE_DRIVER_VALUE;
 
-public class EdgeBrowser extends Browsers {
-    private static final Logger log = getLogger(EdgeBrowser.class);
+public class Edge extends BrowsersImpl {
+    private static final Logger log = getLogger(Edge.class);
 
     @Override
     protected void setDriverProperty() {

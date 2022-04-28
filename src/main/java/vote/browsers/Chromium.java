@@ -3,21 +3,22 @@ package vote.browsers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.opera.OperaDriver;
-import org.openqa.selenium.opera.OperaOptions;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.chromium.ChromiumOptions;
 
+import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.remote.CapabilityType.*;
-import static utils.Thesaurus.Drivers.OPERA_DRIVER_VALUE;
+import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
-public class OperaBrowser extends Browsers {
-    private static final Logger log = Logger.getLogger(OperaBrowser.class);
+public class Chromium extends BrowsersImpl {
+    private static final Logger log = getLogger(Chrome.class);
 
     @Override
     protected void setDriverProperty() {
-        log.info("Init Opera Driver...");
-        /*Driver driver = new Driver(OPERA_DRIVER_KEY, OPERA_DRIVER_VALUE);
+        log.info("Init Chromium Drivers...");
+        /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
-        WebDriverManager.operadriver().setup();
+        WebDriverManager.chromiumdriver().setup();
     }
 
     @Override
@@ -27,17 +28,20 @@ public class OperaBrowser extends Browsers {
 
     @Override
     protected String getDriverName() {
-        return OPERA_DRIVER_VALUE;
+        return CHROME_DRIVER_VALUE;
     }
 
     @Override
     protected WebDriver getDriverInstance() {
-        return new OperaDriver(getOptions());
+        //return new ChromiumDriver(getOptions());
+        return null;
     }
 
-    private OperaOptions getOptions() {
-        log.info("Opera options...");
-        OperaOptions options = new OperaOptions();
+    private ChromiumOptions<ChromeOptions> getOptions() {
+        log.info("Chromium options...");
+
+        //ChromiumOptions options = new ChromiumOptions();
+        ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
         //options.addArguments("--headless");
         options.addArguments("--incognito");

@@ -3,22 +3,22 @@ package vote.browsers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.chromium.ChromiumOptions;
 
 import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.remote.CapabilityType.*;
 import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
-public class ChromiumBrowser extends Browsers {
-    private static final Logger log = getLogger(ChromeBrowser.class);
+public class Chrome extends BrowsersImpl {
+    private static final Logger log = getLogger(Chrome.class);
 
     @Override
     protected void setDriverProperty() {
-        log.info("Init Chromium Drivers...");
+        log.info("Init Chrome Drivers...");
         /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
-        WebDriverManager.chromiumdriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @Override
@@ -33,17 +33,14 @@ public class ChromiumBrowser extends Browsers {
 
     @Override
     protected WebDriver getDriverInstance() {
-        //return new ChromiumDriver(getOptions());
-        return null;
+        return new ChromeDriver(getOptions());
     }
 
-    private ChromiumOptions<ChromeOptions> getOptions() {
-        log.info("Chromium options...");
-
-        //ChromiumOptions options = new ChromiumOptions();
+    private ChromeOptions getOptions() {
+        log.info("Chrome options...");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
-        //options.addArguments("--headless");
+        options.addArguments("--headless");
         options.addArguments("--incognito");
         options.addArguments("--disable-gpu");
         options.addArguments("--start-maximized");
@@ -60,6 +57,7 @@ public class ChromiumBrowser extends Browsers {
         options.setCapability(ELEMENT_SCROLL_BEHAVIOR, true);
         options.setCapability(HAS_NATIVE_EVENTS, true);
         options.setCapability(PROXY, getProxy());
+        //options.setCapability(CapabilityType.SUPPORTS_FINDING_BY_CSS, true);
         return options;
     }
 }

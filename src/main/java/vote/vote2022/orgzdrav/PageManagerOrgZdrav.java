@@ -1,14 +1,14 @@
 package vote.vote2022.orgzdrav;
 
 import org.openqa.selenium.By;
-import vote.PageManager;
-import vote.browsers.Browsers;
+import vote.pagemanager.PageManagerImpl;
+import vote.browsers.BrowsersImpl;
 
 import static org.openqa.selenium.By.cssSelector;
 
-public class PageManagerOrgZdrav extends PageManager {
+public class PageManagerOrgZdrav extends PageManagerImpl {
 
-    public PageManagerOrgZdrav(Browsers browser) {
+    public PageManagerOrgZdrav(BrowsersImpl browser) {
         this.webDriver = browser.getWebDriver();
         this.process = browser.getProcess();
     }

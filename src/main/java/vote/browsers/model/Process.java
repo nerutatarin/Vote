@@ -1,6 +1,6 @@
 package vote.browsers.model;
 
-public class BrowserProcess {
+public class Process {
     private String processName;
     private String processId;
     private String driverName;

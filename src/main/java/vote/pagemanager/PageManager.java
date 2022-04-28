@@ -1,8 +1,8 @@
-package vote;
+package vote.pagemanager;
 
 import java.util.ArrayList;
 
-public interface PageManagerImpl {
+public interface PageManager {
     void startPage(String baseUrl);
 
     void chkVoteMo(ArrayList<String> inputs);

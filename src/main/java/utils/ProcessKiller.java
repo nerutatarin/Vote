@@ -29,7 +29,9 @@ public class ProcessKiller {
                 log.info("Not able to find the process : " + processName);
             }
         }
-        killProcess(processName);
+        if (isUnix()) {
+            killProcess(processName);
+        }
     }
 
     private boolean isProcessRunning(String processName) {
