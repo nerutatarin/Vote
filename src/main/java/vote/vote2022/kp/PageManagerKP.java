@@ -41,10 +41,10 @@ public class PageManagerKP extends PageManagerImpl {
                 G2_RKIB,
                 G1_KUVATOVO,
                 G3_DRKB,
-                G4_GB1,
-                G5_RD3,
+                //G4_GB1,
+                //G5_RD3,
                 G9_BUBNOVSKY,
-                G13_DP4,
+                //G13_DP4,
                 G14_KUVATOVO,
                 G15_BUBNOVSKY,
                 G16_KUVATOVO);
