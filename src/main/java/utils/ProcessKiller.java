@@ -22,11 +22,10 @@ public class ProcessKiller {
     public void killer(String processName) {
         if (isWindows()) {
             boolean isRunning = isProcessRunning(processName);
-            log.info("is " + processName + " running : " + isRunning);
             if (isRunning) {
                 killProcess(processName);
             } else {
-                log.info("Not able to find the process : " + processName);
+                log.info("Процесс драйвера " + processName + " не найден");
             }
         }
         if (isUnix()) {
@@ -44,8 +43,8 @@ public class ProcessKiller {
                     return true;
                 }
             }
-        } catch (IOException e) {
-            log.debug("При поиске процесса произошла ошибка: " + e.getMessage());
+        } catch (Exception e) {
+            log.debug("При поиске процесса драйвера " + processName + " произошла ошибка: " + e.getMessage());
         }
         return false;
     }
@@ -61,9 +60,9 @@ public class ProcessKiller {
     private void kill(String commandKill, String processName) {
         try {
             getRuntime().exec(commandKill + processName);
-            log.info(processName + " killed successfully!");
-        } catch (IOException e) {
-            log.debug("Не получилось прибить процесс: " + e.getMessage());
+            log.info("Успешное завершение работы процесса драйвера " + processName);
+        } catch (Exception e) {
+            log.debug("Не удалось завершить процесс драйвера" + processName + ": " + e.getMessage());
         }
     }
 }

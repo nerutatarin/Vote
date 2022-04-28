@@ -14,11 +14,11 @@ public class IPAddressGetter {
         this.webDriver = webDriver;
     }
 
-    public String getIpAddress(String cssSelector, String url) {
+    public String getIpAddress(String ipAddressLocator, String url) {
         log.info("Получаем IP адрес... ");
         try {
             webDriver.get(url);
-            return webDriver.findElement(cssSelector(cssSelector)).getText();
+            return webDriver.findElement(cssSelector(ipAddressLocator)).getText();
         } catch (Exception e) {
             log.debug("Превышено время ожидания загрузки страницы: " + e);
         }

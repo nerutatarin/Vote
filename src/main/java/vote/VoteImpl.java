@@ -1,5 +1,6 @@
 package vote;
 
+import com.sun.rowset.internal.WebRowSetXmlReader;
 import org.apache.log4j.Logger;
 import vote.browsers.BrowsersImpl;
 import vote.browsers.Firefox;
@@ -12,6 +13,7 @@ import static org.apache.log4j.Logger.getLogger;
 
 public abstract class VoteImpl extends Thread implements Vote {
     private static final Logger log = getLogger(VoteImpl.class);
+    protected String myIpUrl = "https://myip.ru/";
     protected PageManagerImpl pageManagerImpl;
 
     @Override
@@ -21,9 +23,9 @@ public abstract class VoteImpl extends Thread implements Vote {
             try {
                 init();
             } catch (Exception e) {
-                log.debug("Ошибка: ", e);
+                log.error("Ошибка: " + e);
             } finally {
-                pageManagerImpl.shutdown();
+                pageManagerImpl.voteClose();
             }
         }
     }
@@ -41,13 +43,7 @@ public abstract class VoteImpl extends Thread implements Vote {
 
     protected abstract int getVoteCount();
 
-    protected abstract String getIpAddress();
-
     protected abstract String getMyIpUrl();
 
-    protected abstract String getCssSelector();
-
     protected abstract String getBaseUrl();
-
-    protected abstract ArrayList<String> getInputs();
 }

@@ -1,15 +1,11 @@
 package vote.pagemanager;
 
-import java.util.ArrayList;
-
 public interface PageManager {
-    void startPage(String baseUrl);
+    void votePage(String baseUrl);
 
-    void chkVoteMo(ArrayList<String> inputs);
+    void voteInput();
 
-    void btnVote();
+    void voteButton();
 
-    void shutdown();
-
-    void killProcess();
+    void voteClose();
 }

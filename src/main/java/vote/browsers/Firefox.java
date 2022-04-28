@@ -7,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import static org.apache.log4j.Logger.getLogger;
+import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.TRACE;
 import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
@@ -41,7 +42,7 @@ public class Firefox extends BrowsersImpl {
     private FirefoxOptions getOptions() {
         log.info("Firefox options...");
         FirefoxOptions options = new FirefoxOptions();
-        //options.addPreference("browser.private.browsing.autostart",true);
+        options.addPreference("browser.private.browsing.autostart",true);
         options.addPreference("network.proxy.socks_remote_dns", true);
         options.addPreference("toolkit.startup.max_resumed_crashes", "-1");
         options.addPreference("privacy.clearOnShutdown.cookies", true);
@@ -51,6 +52,7 @@ public class Firefox extends BrowsersImpl {
         options.addPreference("media.peerconnection.enabled", false);
         options.addPreference("webgl.max-contexts", 1500);
 
+        options.setLogLevel(TRACE);
         options.setCapability(PAGE_LOAD_STRATEGY, "eager");
         options.setAcceptInsecureCerts(true);
         options.setHeadless(true);

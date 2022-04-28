@@ -3,16 +3,14 @@ package vote.vote2022.orgzdrav;
 import vote.VoteImpl;
 import vote.browsers.BrowsersImpl;
 
-import java.util.ArrayList;
-
 public class VoteOrgZdrav extends VoteImpl {
     protected int voteCount = 10000;
+    protected String baseUrl = "https://leader.orgzdrav.com/practices/effektivnoe-upravlenie-meditsinskimi-kadrami";
 
     public void vote(BrowsersImpl browser) {
         pageManagerImpl = new PageManagerOrgZdrav(browser);
-        pageManagerImpl.startPage(getBaseUrl());
-        pageManagerImpl.btnVote();
-        //writeToLog(getIpAddress());
+        pageManagerImpl.votePage(getBaseUrl());
+        pageManagerImpl.voteButton();
     }
 
     @Override
@@ -21,28 +19,12 @@ public class VoteOrgZdrav extends VoteImpl {
     }
 
     @Override
-    protected String getIpAddress() {
-        return null;
-    }
-
-    @Override
     protected String getMyIpUrl() {
-        return "https://myip.ru/";
-    }
-
-    @Override
-    protected String getCssSelector() {
-        return "#ipcontent > table > tbody > tr:nth-child(2) > td";
+        return myIpUrl;
     }
 
     @Override
     protected String getBaseUrl() {
-        return "https://leader.orgzdrav.com/practices/effektivnoe-upravlenie-meditsinskimi-kadrami";
-    }
-
-    @Override
-    protected ArrayList<String> getInputs() {
-        ArrayList<String> inputs = new ArrayList<>();
-        return inputs;
+        return baseUrl;
     }
 }

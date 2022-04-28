@@ -1,22 +1,23 @@
 package vote.pagemanager;
 
 import org.apache.log4j.Logger;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.interactions.Action;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.ProcessKiller;
 import vote.browsers.model.Process;
 import vote.vote2022.kp.PageManagerKP;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Thread.sleep;
 import static java.time.Duration.ofSeconds;
 import static org.apache.log4j.Logger.getLogger;
+import static org.openqa.selenium.By.cssSelector;
+import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
-import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 public abstract class PageManagerImpl implements PageManager {
     private static final Logger log = getLogger(PageManagerKP.class);
@@ -25,48 +26,66 @@ public abstract class PageManagerImpl implements PageManager {
     public WebDriver webDriver;
     public Process process;
 
-    public void startPage(String baseUrl) {
+    public void votePage(String baseUrl) {
         wait = new WebDriverWait(webDriver, ofSeconds(30));
         log.info("Запуск страницы голосования " + baseUrl);
         webDriver.get(baseUrl);
     }
 
-    public void chkVoteMo(ArrayList<String> inputs) {
-        for (String inp : inputs) {
+    public void voteInput() {
+        getInputsListLocatorById().forEach(inp -> {
             log.info("Ищем input: " + inp + " ...");
-            WebElement webElement = wait.until(elementToBeClickable(By.id(inp)));
+            WebElement webElement = wait.until(elementToBeClickable(id(inp)));
             webElement.click();
             log.info("Проставлен input: " + inp);
-        }
+        });
     }
 
-    public void btnVote() {
-        log.info("Ищем кнопку голосования: ");
-        WebElement webElement = wait.until(elementToBeClickable(getLocator()));
-        webElement.click();
-        log.info("Кнопка голосования нажата: ");
+    protected abstract List<String> getInputsListLocatorById();
+
+    public void voteButton() {
         try {
+            log.info("Ищем кнопку голосования: ");
+
+            WebElement webElement = wait.until(elementToBeClickable(cssSelector(getButtonLocator())));
+            sleep(10000);
+
+            Actions actions = new Actions(webDriver);
+            actions.moveToElement(webElement);
+            actions.click(webElement);
+
+            webElement.click();
+            log.info("Кнопка голосования нажата: ");
             sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected abstract By getLocator();
+    protected abstract String getButtonLocator();
 
-    public void shutdown() {
+    public String getIpAddress() {
+        /*IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver);
+        return ipAddressGetter.getIpAddress(getIpAddressLocator(), getMyIpUrl());*/
+        return null;
+    }
+
+    protected abstract String getIpAddressLocator();
+
+    public void voteClose() {
+        String driverName = process.getDriverName();
         try {
-            log.info("Закрываем браузер: ");
+            log.info("Завершаем работу драйвера: " + driverName);
             webDriver.quit();
-            log.info("Закрыт браузер: ");
+            log.info("Работа драйвера " + driverName + " успешно завершена!");
         } catch (Exception e) {
-            log.debug("При попытке закрыть браузер возникла ошибка: " + e);
-            log.info("Пытаемся прибить процесс...: ");
+            log.debug("При попытке завершить работу драйвера " + driverName + " возникла непредвиденная ошибка: " + e);
+            log.info("Завершаем процесс драйвера: " + driverName);
             killProcess();
         }
     }
 
-    public void killProcess() {
+    private void killProcess() {
         ProcessKiller processKiller = new ProcessKiller();
         processKiller.killer(process.getDriverName());
         processKiller.killer(process.getProcessName());
