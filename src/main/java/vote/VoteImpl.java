@@ -1,6 +1,5 @@
 package vote;
 
-import com.sun.rowset.internal.WebRowSetXmlReader;
 import org.apache.log4j.Logger;
 import vote.browsers.BrowsersImpl;
 import vote.browsers.Firefox;
