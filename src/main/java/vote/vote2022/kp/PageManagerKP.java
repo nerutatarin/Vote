@@ -39,7 +39,6 @@ public class PageManagerKP extends PageManagerImpl {
 
         return asList(G1_KUVATOVO,
                 G2_RKIB,
-                G1_KUVATOVO,
                 G3_DRKB,
                 //G4_GB1,
                 //G5_RD3,
