@@ -22,7 +22,7 @@ public abstract class BrowsersImpl implements Browsers {
 
     private WebDriver settingBrowser() {
         webDriver = getDriverInstance();
-        webDriver.manage().deleteAllCookies();
+        //webDriver.manage().deleteAllCookies();
         return webDriver;
     }
 

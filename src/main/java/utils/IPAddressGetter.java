@@ -8,7 +8,7 @@ import static org.openqa.selenium.By.cssSelector;
 
 public class IPAddressGetter {
     private static final Logger log = getLogger(IPAddressGetter.class);
-    private final WebDriver webDriver;
+    private WebDriver webDriver;
 
     public IPAddressGetter(WebDriver webDriver) {
         this.webDriver = webDriver;

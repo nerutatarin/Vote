@@ -8,4 +8,6 @@ public interface PageManager {
     void voteButton();
 
     void voteClose();
+
+    String getIpAddress(String myIpUrl);
 }

@@ -1,22 +1,24 @@
 package vote.vote2022.kp;
 
-import vote.browsers.BrowsersImpl;
+import org.openqa.selenium.By;
+import vote.browsers.Browsers;
 import vote.pagemanager.PageManagerImpl;
 
 import java.util.List;
 
 import static java.util.Arrays.asList;
+import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
 
-    public PageManagerKP(BrowsersImpl browser) {
+    public PageManagerKP(Browsers browser) {
         this.webDriver = browser.getWebDriver();
         this.process = browser.getProcess();
     }
 
     @Override
-    protected String getButtonLocator() {
-        return "submit_vote";
+    protected By getButtonLocator() {
+        return id("submit_vote");
     }
 
     @Override

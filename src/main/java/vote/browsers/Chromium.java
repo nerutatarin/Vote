@@ -3,12 +3,15 @@ package vote.browsers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.chromium.ChromiumOptions;
 
 import static org.apache.log4j.Logger.getLogger;
-import static org.openqa.selenium.remote.CapabilityType.*;
+import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
+import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
+import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
+import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public class Chromium extends BrowsersImpl {
     private static final Logger log = getLogger(Chrome.class);
@@ -37,28 +40,25 @@ public class Chromium extends BrowsersImpl {
         return null;
     }
 
-    private ChromiumOptions<ChromeOptions> getOptions() {
+    private ChromeOptions getOptions() {
         log.info("Chromium options...");
 
-        //ChromiumOptions options = new ChromiumOptions();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
         //options.addArguments("--headless");
         options.addArguments("--incognito");
         options.addArguments("--disable-gpu");
-        options.addArguments("--start-maximized");
         options.addArguments("--ignore-ssl-errors");
         options.addArguments("--disable-extensions");
         options.addArguments("--dns-prefetch-disable");
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--ignore-certificate-errors");
         options.addArguments("--enable-precise-memory-info");
+        options.setCapability("--host-resolver-rules", "MAP * ~NOTFOUND, EXCLUDE " + PROXY_IP_ADDRESS + ":" + PROXY_PORT);
 
         options.setAcceptInsecureCerts(true);
+        options.setLogLevel(ChromeDriverLogLevel.ALL);
         options.setCapability(PAGE_LOAD_STRATEGY, "eager");
-        options.setCapability(SUPPORTS_JAVASCRIPT, true);
-        options.setCapability(ELEMENT_SCROLL_BEHAVIOR, true);
-        options.setCapability(HAS_NATIVE_EVENTS, true);
         options.setCapability(PROXY, getProxy());
         return options;
     }

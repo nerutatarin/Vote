@@ -1,9 +1,8 @@
 package vote;
 
 import org.apache.log4j.Logger;
-import vote.browsers.BrowsersImpl;
-import vote.browsers.Firefox;
-import vote.pagemanager.PageManagerImpl;
+import vote.browsers.Browsers;
+import vote.pagemanager.PageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +12,9 @@ import static org.apache.log4j.Logger.getLogger;
 public abstract class VoteImpl extends Thread implements Vote {
     private static final Logger log = getLogger(VoteImpl.class);
     protected String myIpUrl = "https://myip.ru/";
-    protected PageManagerImpl pageManagerImpl;
+    protected PageManager pageManager;
+    protected List<Browsers> browsers = new ArrayList<>();
+    protected Browsers browser;
 
     @Override
     public void run() {
@@ -24,20 +25,9 @@ public abstract class VoteImpl extends Thread implements Vote {
             } catch (Exception e) {
                 log.error("Ошибка: " + e);
             } finally {
-                pageManagerImpl.voteClose();
+                pageManager.voteClose();
             }
         }
-    }
-
-    public void init() {
-        List<BrowsersImpl> browsers = new ArrayList<>();
-        browsers.add(new Firefox());
-        //browsers.add(new EdgeBrowser());
-        //browsers.add(new ChromeBrowser());
-        //browsers.add(new ChromiumBrowser());
-        //browsers.add(new OperaBrowser());
-        //browsers.parallelStream().forEach(this::vote);
-        browsers.forEach(this::vote);
     }
 
     protected abstract int getVoteCount();

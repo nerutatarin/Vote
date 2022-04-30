@@ -1,9 +1,9 @@
 package vote;
 
-import vote.browsers.BrowsersImpl;
+import vote.browsers.Browsers;
 
 public interface Vote {
     void init();
 
-    void vote(BrowsersImpl browsersImpl);
+    void vote(Browsers browsers);
 }
