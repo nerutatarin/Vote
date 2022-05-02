@@ -18,9 +18,7 @@ public class PageManagerOrgZdrav extends PageManagerImpl {
 
     @Override
     protected By getButtonLocator() {
-        return cssSelector("body > section.ftco-section > div > div > div.col-lg-4.column-sidebar > div.practice-vote > button");
-        //return By.xpath("/html/body/section[2]/div/div/div[2]/div[3]/button");
-        //return By.className("btn");
+        return cssSelector("body > section.ftco-section > div > div > div.col-lg-4.column-sidebar > div.practice-vote.d-none.d-md-block > button");
     }
 
     @Override

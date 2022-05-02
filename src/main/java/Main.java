@@ -18,8 +18,8 @@ public class Main {
             browsers.add(new Chrome());
             browsers.forEach(browser -> new VoteKP(browser).start());*/
 
-            VoteImpl kp = new VoteKP(new Firefox());
-            kp.start();
+           /* VoteImpl kp = new VoteKP(new Firefox());
+            kp.start();*/
 
             VoteImpl orgZdrav = new VoteOrgZdrav(new Firefox());
             orgZdrav.start();

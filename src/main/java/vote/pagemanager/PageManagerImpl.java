@@ -49,13 +49,7 @@ public abstract class PageManagerImpl implements PageManager {
 
         WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
 
-        try {
-            webElement.click();
-        } catch (Exception e) {
-            Actions actions = new Actions(webDriver);
-            actions.moveToElement(webElement);
-            actions.click(webElement);
-        }
+        webElement.click();
 
         log.info("Кнопка голосования нажата: ");
 
