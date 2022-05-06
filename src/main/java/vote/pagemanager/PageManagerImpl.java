@@ -4,10 +4,9 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.IPAddressGetter;
 import utils.ProcessKiller;
+import utils.ipaddress.IPAddressGetter;
 import vote.browsers.model.Process;
 import vote.vote2022.kp.PageManagerKP;
 
@@ -46,14 +45,15 @@ public abstract class PageManagerImpl implements PageManager {
     public void voteButton() {
 
         log.info("Ищем кнопку голосования: ");
-
-        WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
-
-        webElement.click();
-
-        log.info("Кнопка голосования нажата: ");
-
         try {
+
+            WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
+
+            sleep(3000);
+            webElement.click();
+
+            log.info("Кнопка голосования нажата: ");
+
             sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -64,7 +64,7 @@ public abstract class PageManagerImpl implements PageManager {
 
     public String getIpAddress(String myIpUrl) {
         IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver);
-        return ipAddressGetter.getIpAddress(getIpAddressLocator(), myIpUrl);
+        return ipAddressGetter.getIpAddress(myIpUrl);
     }
 
     protected abstract String getIpAddressLocator();

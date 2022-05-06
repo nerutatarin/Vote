@@ -7,7 +7,7 @@ import vote.pagemanager.PageManagerImpl;
 import java.util.List;
 
 import static java.util.Collections.emptyList;
-import static org.openqa.selenium.By.cssSelector;
+import static org.openqa.selenium.By.xpath;
 
 public class PageManagerOrgZdrav extends PageManagerImpl {
 
@@ -18,7 +18,9 @@ public class PageManagerOrgZdrav extends PageManagerImpl {
 
     @Override
     protected By getButtonLocator() {
-        return cssSelector("body > section.ftco-section > div > div > div.col-lg-4.column-sidebar > div.practice-vote.d-none.d-md-block > button");
+        //return cssSelector("body > section.ftco-section > div > div > div.col-lg-4.column-sidebar > div.practice-vote.d-none.d-md-block > button");
+        return xpath("/html/body/section[@class='ftco-section']//button[@type='button']");
+
     }
 
     @Override

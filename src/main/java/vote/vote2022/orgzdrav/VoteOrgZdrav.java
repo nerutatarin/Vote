@@ -1,9 +1,12 @@
 package vote.vote2022.orgzdrav;
 
+import utils.WriteToLog;
 import vote.VoteImpl;
 import vote.browsers.Browsers;
 
 import java.util.List;
+
+import static utils.WriteToLog.writeToLog;
 
 public class VoteOrgZdrav extends VoteImpl {
     protected int voteCount = 10000;
@@ -31,6 +34,7 @@ public class VoteOrgZdrav extends VoteImpl {
         pageManager = new PageManagerOrgZdrav(browser);
         pageManager.votePage(getBaseUrl());
         pageManager.voteButton();
+        writeToLog(pageManager);
     }
 
     @Override

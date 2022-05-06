@@ -42,7 +42,7 @@ public class Firefox extends BrowsersImpl {
     private FirefoxOptions getOptions() {
         log.info("Firefox options...");
         FirefoxOptions options = new FirefoxOptions();
-        options.addPreference("browser.private.browsing.autostart",true);
+        options.addPreference("browser.private.browsing.autostart", true);
         options.addPreference("network.proxy.socks_remote_dns", true);
         options.addPreference("toolkit.startup.max_resumed_crashes", "-1");
         options.addPreference("privacy.clearOnShutdown.cookies", true);
