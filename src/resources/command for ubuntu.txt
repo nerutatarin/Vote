@@ -7,9 +7,9 @@ sudo apt autoremove rhythmbox libreoffice libreoffice-common libreoffice-style-t
 #############################
 ############## Устанавливаем ПО
 #############################
-sudo apt install openjdk-8-jdk
+sudo apt install -y openjdk-8-jdk
 sudo snap install intellij-idea-community --classic --edge
-sudo apt install tor tor-geoipdb privoxy mc curl
+sudo apt install tor tor-geoipdb curl
 sudo apt install telegram-desktop
 #############################
 
