@@ -7,3 +7,5 @@
 /gradle/
 /src/resources/tor/
 /src/resources/logs/
+/src/resources/unix/
+/src/resources/win/
