@@ -9,7 +9,7 @@ import java.util.List;
 import static utils.WriteToLog.writeToLog;
 
 public class VoteOrgZdrav extends VoteImpl {
-    protected int voteCount = 10000;
+    protected int voteCount = 10000000;
     protected String baseUrl = "https://leader.orgzdrav.com/practices/effektivnoe-upravlenie-meditsinskimi-kadrami";
 
     public VoteOrgZdrav(List<Browsers> browsers) {
