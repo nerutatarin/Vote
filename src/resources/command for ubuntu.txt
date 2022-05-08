@@ -1,12 +1,13 @@
 #############################
 ############## Удаляем мусор
 #############################
-sudo apt autoremove rhythmbox libreoffice libreoffice-common libreoffice-style-tango libreoffice-base-core shotwell deja-dup thunderbird gnome-mahjongg gnome-mines gnome-sudoku gnome-todo remmina
+sudo apt autoremove rhythmbox libreoffice libreoffice-common libreoffice-style-tango libreoffice-base-core shotwell deja-dup thunderbird gnome-mahjongg gnome-mines gnome-sudoku gnome-todo remmina mysql-common
 #############################
 
 #############################
 ############## Устанавливаем ПО
 #############################
+sudo apt install openjdk-8-jdk
 sudo snap install intellij-idea-community --classic --edge
 sudo apt install tor tor-geoipdb privoxy mc curl
 sudo apt install telegram-desktop
