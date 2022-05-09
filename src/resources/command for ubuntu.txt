@@ -7,9 +7,8 @@ sudo apt autoremove rhythmbox libreoffice libreoffice-common libreoffice-style-t
 #############################
 ############## Устанавливаем ПО
 #############################
-sudo apt install -y openjdk-8-jdk
+sudo apt install -y openjdk-8-jdk tor curl torsocks
 sudo snap install intellij-idea-community --classic --edge
-sudo apt install tor curl
 #############################
 
 #############################
@@ -20,6 +19,7 @@ sudo chmod og+rx /usr/share/tor/snowflake-client
 sudo cp /home/test/IdeaProjects/Vote/src/resources/torrc /etc/tor/torrc
 
 sudo systemctl restart tor
+sudo service tor restart
 
 less /var/log/tor/notice.log
 or

@@ -2,7 +2,7 @@ Log notice file /var/log/tor/notice.log
 
 CircuitBuildTimeout 30
 LearnCircuitBuildTimeout 0
-MaxCircuitDirtiness 3
+MaxCircuitDirtiness 10
 
 UseBridges 1
 ClientTransportPlugin snowflake exec /usr/share/tor/snowflake-client
