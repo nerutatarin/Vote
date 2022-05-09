@@ -9,24 +9,20 @@ sudo apt autoremove rhythmbox libreoffice libreoffice-common libreoffice-style-t
 #############################
 sudo apt install -y openjdk-8-jdk
 sudo snap install intellij-idea-community --classic --edge
-sudo apt install tor tor-geoipdb curl
-sudo apt install telegram-desktop
+sudo apt install tor curl
 #############################
 
 #############################
 ############## Управление TOR
 #############################
-sudo systemctl start tor
-sudo service tor start
-
-sudo cp snowflake-client /usr/bin/snowflake-client 
-	или 
-sudo cp snowflake-client /usr/share/tor/
-	
+sudo cp /home/test/IdeaProjects/Vote/src/resources/snowflake-client /usr/share/tor/
 sudo chmod og+rx /usr/bin/snowflake-client
+sudo cp /home/test/IdeaProjects/Vote/src/resources/torrc /etc/tor/torrc
 
-sudo nano /etc/tor/torrc или sudo gedit /etc/tor/torrc
+sudo systemctl restart tor
 
+less /var/log/tor/notice.log
+or
 journalctl -e -u tor@default.service
 #############################
 
@@ -37,7 +33,7 @@ Log notice file /var/log/tor/notice.log
 
 CircuitBuildTimeout 30
 LearnCircuitBuildTimeout 0
-MaxCircuitDirtiness 3
+MaxCircuitDirtiness 10
 
 UseBridges 1
 ClientTransportPlugin snowflake exec /usr/share/tor/snowflake-client
@@ -66,6 +62,17 @@ sudo apt install torbrowser-launcher
 #############################
 wget -qO - https://api.ipify.org; echo
 torsocks wget -qO - https://api.ipify.org; echo
+#############################
+
+#############################
+############## Install firefox in hand mode
+#############################
+wget https://ftp.mozilla.org/pub/firefox/releases/99.0/linux-x86_64/ru/firefox-99.0.tar.bz2
+tar -xjf firefox-99.0.tar.bz2
+sudo rm -rf /opt/firefox99.0
+sudo mv firefox /opt/firefox-99.0
+sudo mv /usr/bin/firefox /usr/bin/firefoxold
+sudo ln -s /opt/firefox-99.0/firefox /usr/bin/firefox
 #############################
 
 #############################
