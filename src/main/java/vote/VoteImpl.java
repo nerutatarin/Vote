@@ -20,6 +20,7 @@ public abstract class VoteImpl extends Thread implements Vote {
     public void run() {
         log.info("Начало работы...");
         for (int i = 0; i < getVoteCount(); i++) {
+            log.info("Попытка № - " + i);
             try {
                 init();
             } catch (Exception e) {
