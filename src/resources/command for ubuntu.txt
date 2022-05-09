@@ -16,7 +16,7 @@ sudo apt install tor curl
 ############## Управление TOR
 #############################
 sudo cp /home/test/IdeaProjects/Vote/src/resources/snowflake-client /usr/share/tor/
-sudo chmod og+rx /usr/bin/snowflake-client
+sudo chmod og+rx /usr/share/tor/snowflake-client
 sudo cp /home/test/IdeaProjects/Vote/src/resources/torrc /etc/tor/torrc
 
 sudo systemctl restart tor
