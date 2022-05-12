@@ -3,8 +3,8 @@ package utils;
 import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Set;
 
 import static java.lang.Runtime.getRuntime;
 import static org.apache.log4j.Logger.getLogger;
@@ -31,6 +31,10 @@ public class ProcessKiller {
         if (isUnix()) {
             killProcess(processName);
         }
+    }
+
+    public void killer(Set<String> processNames) {
+        processNames.forEach(this::killer);
     }
 
     private boolean isProcessRunning(String processName) {

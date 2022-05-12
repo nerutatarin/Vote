@@ -6,7 +6,7 @@ import vote.browsers.Browsers;
 import java.util.List;
 
 public class VoteKP extends VoteImpl {
-    protected int voteCount = 10000;
+    protected int voteCount = 1;
     protected String baseUrl = "https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022";
 
     public VoteKP(List<Browsers> browsers) {

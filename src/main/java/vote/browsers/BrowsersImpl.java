@@ -4,8 +4,13 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import utils.ProcessKiller;
 import vote.browsers.model.Process;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import static utils.Thesaurus.Drivers.*;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
@@ -14,6 +19,7 @@ public abstract class BrowsersImpl implements Browsers {
 
     @Override
     public WebDriver getWebDriver() {
+        killAllRunningProcesses();
         setDriverProperty();
         return settingBrowser();
     }
@@ -22,7 +28,6 @@ public abstract class BrowsersImpl implements Browsers {
 
     private WebDriver settingBrowser() {
         webDriver = getDriverInstance();
-        //webDriver.manage().deleteAllCookies();
         return webDriver;
     }
 
@@ -50,4 +55,14 @@ public abstract class BrowsersImpl implements Browsers {
     }
 
     protected abstract WebDriver getDriverInstance();
+
+    private void killAllRunningProcesses() {
+        ProcessKiller processKiller = new ProcessKiller();
+        Set<String> drivers = new HashSet<>();
+        drivers.add(GECKO_DRIVER_VALUE);
+        drivers.add(CHROME_DRIVER_VALUE);
+        drivers.add(OPERA_DRIVER_VALUE);
+        drivers.add(EDGE_DRIVER_VALUE);
+        processKiller.killer(drivers);
+    }
 }
