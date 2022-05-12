@@ -56,7 +56,7 @@ public class Firefox extends BrowsersImpl {
         options.setLogLevel(ERROR);
         options.setCapability(PAGE_LOAD_STRATEGY, "eager");
         options.setAcceptInsecureCerts(true);
-        options.setHeadless(false);
+        options.setHeadless(true);
         options.setCapability(PROXY, getProxy());
         return options;
     }
