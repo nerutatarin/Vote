@@ -1,13 +1,7 @@
 import vote.VoteImpl;
-import vote.browsers.Browsers;
-import vote.browsers.Chrome;
-import vote.browsers.Edge;
 import vote.browsers.Firefox;
 import vote.vote2022.kp.VoteKP;
 import vote.vote2022.orgzdrav.VoteOrgZdrav;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -18,11 +12,11 @@ public class Main {
             browsers.add(new Chrome());
             browsers.forEach(browser -> new VoteKP(browser).start());*/
 
-           /* VoteImpl kp = new VoteKP(new Firefox());
-            kp.start();*/
+            VoteImpl kp = new VoteKP(new Firefox());
+            kp.start();
 
-            VoteImpl orgZdrav = new VoteOrgZdrav(new Firefox());
-            orgZdrav.start();
+            /*VoteImpl orgZdrav = new VoteOrgZdrav(new Firefox());
+            orgZdrav.start();*/
         }
     }
 }

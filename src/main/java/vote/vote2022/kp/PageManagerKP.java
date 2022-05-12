@@ -33,21 +33,25 @@ public class PageManagerKP extends PageManagerImpl {
         String G3_DRKB = "inp23";
         String G4_GB1 = "inp24";
         String G5_RD3 = "inp29";
-        String G9_BUBNOVSKY = "inp49";
-        String G13_DP4 = "inp59";
-        String G14_KUVATOVO = "inp63";
-        String G15_BUBNOVSKY = "inp67";
-        String G16_KUVATOVO = "inp69";
+        String G9_EUROOPTIK = "inp47";
+        String G10_BUBNOVSKY = "inp49";
+        String G14_DP4 = "inp59";
+        String G15_STERLIT = "inp64";
+        String G16_BUBNOVSKY = "inp66";
+        String G17_KUVATOVO = "inp68";
 
-        return asList(G1_KUVATOVO,
+        return asList(
+                G1_KUVATOVO,
                 G2_RKIB,
                 G3_DRKB,
                 //G4_GB1,
                 //G5_RD3,
-                G9_BUBNOVSKY,
-                //G13_DP4,
-                G14_KUVATOVO,
-                G15_BUBNOVSKY,
-                G16_KUVATOVO);
+                G9_EUROOPTIK,
+                G10_BUBNOVSKY,
+                //G14_DP4,
+                G15_STERLIT,
+                G16_BUBNOVSKY,
+                G17_KUVATOVO
+        );
     }
 }

@@ -43,10 +43,8 @@ public abstract class PageManagerImpl implements PageManager {
     protected abstract List<String> getInputsListLocatorById();
 
     public void voteButton() {
-
         log.info("Ищем кнопку голосования: ");
         try {
-
             WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
 
             sleep(3000);
