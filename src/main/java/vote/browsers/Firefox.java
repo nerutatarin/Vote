@@ -1,14 +1,14 @@
 package vote.browsers;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import static io.github.bonigarcia.wdm.WebDriverManager.firefoxdriver;
 import static org.apache.log4j.Logger.getLogger;
+import static org.openqa.selenium.PageLoadStrategy.NORMAL;
 import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR;
-import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.TRACE;
 import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
@@ -22,7 +22,7 @@ public class Firefox extends BrowsersImpl {
         log.info("Init Firefox Driver...");
         /*Driver driver = new Driver(GECKO_DRIVER_KEY, GECKO_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
-        WebDriverManager.firefoxdriver().setup();
+        firefoxdriver().setup();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class Firefox extends BrowsersImpl {
         options.addPreference("webgl.max-contexts", 1500);
 
         options.setLogLevel(ERROR);
-        options.setCapability(PAGE_LOAD_STRATEGY, "eager");
+        options.setCapability(PAGE_LOAD_STRATEGY, NORMAL);
         options.setAcceptInsecureCerts(true);
         options.setHeadless(true);
         options.setCapability(PROXY, getProxy());

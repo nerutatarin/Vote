@@ -26,7 +26,7 @@ public abstract class PageManagerImpl implements PageManager {
     public Process process;
 
     public void votePage(String baseUrl) {
-        wait = new WebDriverWait(webDriver, ofSeconds(20));
+        wait = new WebDriverWait(webDriver, ofSeconds(5));
         log.info("Запуск страницы голосования " + baseUrl);
         webDriver.get(baseUrl);
     }
@@ -34,7 +34,8 @@ public abstract class PageManagerImpl implements PageManager {
     public void voteInput() {
         getInputsListLocatorById().forEach(inp -> {
             log.info("Ищем input: " + inp + " ...");
-            WebElement webElement = wait.until(elementToBeClickable(id(inp)));
+            //WebElement webElement = wait.until(elementToBeClickable(id(inp)));
+            WebElement webElement = webDriver.findElement(id(inp));
             webElement.click();
             log.info("Проставлен input: " + inp);
         });
@@ -47,12 +48,12 @@ public abstract class PageManagerImpl implements PageManager {
         try {
             WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
 
-            sleep(3000);
+            sleep(2000);
             webElement.click();
 
             log.info("Кнопка голосования нажата: ");
 
-            sleep(5000);
+            sleep(3000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
