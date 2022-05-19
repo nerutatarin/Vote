@@ -53,7 +53,7 @@ public abstract class PageManagerImpl implements PageManager {
 
             log.info("Кнопка голосования нажата: ");
 
-            sleep(3000);
+            sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
