@@ -17,7 +17,7 @@ public class ProcessKiller {
     private static final String TASKLIST = "tasklist";
     private static final String WIN_KILL_IM = "taskkill /F /IM ";
     private static final String WIN_KILL_PID = "taskkill /PID ";
-    private static final String UNIX_KILL = "killall ";
+    private static final String UNIX_KILL = "killall -r ";
 
     public void killer(String processName) {
         if (isWindows()) {
