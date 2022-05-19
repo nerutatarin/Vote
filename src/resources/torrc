@@ -4,6 +4,9 @@ CircuitBuildTimeout 30
 LearnCircuitBuildTimeout 0
 MaxCircuitDirtiness 10
 
+ExitNodes {us},{ca},{uk}
+StrictNodes 0
+
 UseBridges 1
 ClientTransportPlugin snowflake exec /usr/share/tor/snowflake-client
 
