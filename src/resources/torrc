@@ -4,7 +4,7 @@ CircuitBuildTimeout 30
 LearnCircuitBuildTimeout 0
 MaxCircuitDirtiness 10
 
-ExitNodes {us},{ca},{uk}
+ExitNodes {in},{ch},{kz}
 StrictNodes 0
 
 UseBridges 1
