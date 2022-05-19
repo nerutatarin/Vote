@@ -1,19 +1,14 @@
 package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
-import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.PageLoadStrategy.NORMAL;
-import static org.openqa.selenium.chrome.ChromeDriverLogLevel.ALL;
-import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR;
-import static org.openqa.selenium.remote.CapabilityType.*;
+import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
+import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Drivers.MSEDGE_DRIVER_VALUE;
-import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
-import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public class MsEdge extends BrowsersImpl {
 
