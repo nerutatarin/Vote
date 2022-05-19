@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Set;
+import java.util.List;
 
 import static java.lang.Runtime.getRuntime;
 import static org.apache.log4j.Logger.getLogger;
@@ -25,7 +25,7 @@ public class ProcessKiller {
             if (isRunning) {
                 killProcess(processName);
             } else {
-                log.info("Процесс драйвера " + processName + " не найден");
+                log.info("Процесс " + processName + " не найден");
             }
         }
         if (isUnix()) {
@@ -33,7 +33,7 @@ public class ProcessKiller {
         }
     }
 
-    public void killer(Set<String> processNames) {
+    public void killer(List<String> processNames) {
         processNames.forEach(this::killer);
     }
 
@@ -48,7 +48,7 @@ public class ProcessKiller {
                 }
             }
         } catch (Exception e) {
-            log.debug("При поиске процесса драйвера " + processName + " произошла ошибка: " + e.getMessage());
+            log.debug("При поиске процесса " + processName + " произошла ошибка: " + e.getMessage());
         }
         return false;
     }
@@ -64,9 +64,9 @@ public class ProcessKiller {
     private void kill(String commandKill, String processName) {
         try {
             getRuntime().exec(commandKill + processName);
-            log.info("Успешное завершение работы процесса драйвера " + processName);
+            log.info("Успешное завершение работы процесса " + processName);
         } catch (Exception e) {
-            log.debug("Не удалось завершить процесс драйвера" + processName + ": " + e.getMessage());
+            log.debug("Не удалось завершить процесс " + processName + ": " + e.getMessage());
         }
     }
 }

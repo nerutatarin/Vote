@@ -1,5 +1,6 @@
 package vote.browsers;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
@@ -7,19 +8,27 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ProcessKiller;
 import vote.browsers.model.Process;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
+import java.util.Map;
 
-import static utils.Thesaurus.Drivers.*;
+import static java.util.Arrays.asList;
+import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
+import static org.apache.log4j.Logger.getLogger;
+import static utils.Thesaurus.Drivers.DRIVERS_LIST;
+import static utils.Thesaurus.Drivers.DRIVERS_MAP;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public abstract class BrowsersImpl implements Browsers {
+    private static final Logger log = getLogger(BrowsersImpl.class);
+    private final String instanceName = toLowerCase(this.getClass().getSimpleName());
     public WebDriver webDriver;
 
     @Override
     public WebDriver getWebDriver() {
         killAllRunningProcesses();
+
+        log.info("Инициализация " + instanceName + " драйвера...");
         setDriverProperty();
         return settingBrowser();
     }
@@ -58,11 +67,10 @@ public abstract class BrowsersImpl implements Browsers {
 
     private void killAllRunningProcesses() {
         ProcessKiller processKiller = new ProcessKiller();
-        Set<String> drivers = new HashSet<>();
-        drivers.add(GECKO_DRIVER_VALUE);
-        drivers.add(CHROME_DRIVER_VALUE);
-        drivers.add(OPERA_DRIVER_VALUE);
-        drivers.add(EDGE_DRIVER_VALUE);
-        processKiller.killer(drivers);
+
+        DRIVERS_MAP.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(instanceName))
+                .forEach(entry -> processKiller.killer(asList(entry.getKey(), entry.getValue())));
     }
 }

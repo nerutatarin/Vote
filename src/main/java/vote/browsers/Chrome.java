@@ -1,12 +1,12 @@
 package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static org.apache.log4j.Logger.getLogger;
+import static org.openqa.selenium.PageLoadStrategy.NORMAL;
+import static org.openqa.selenium.chrome.ChromeDriverLogLevel.ALL;
 import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
@@ -14,11 +14,9 @@ import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public class Chrome extends BrowsersImpl {
-    private static final Logger log = getLogger(Chrome.class);
 
     @Override
     protected void setDriverProperty() {
-        log.info("Init Chrome Drivers...");
         /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
         WebDriverManager.chromedriver().setup();
@@ -40,10 +38,8 @@ public class Chrome extends BrowsersImpl {
     }
 
     private ChromeOptions getOptions() {
-        log.info("Chrome options...");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
-        options.addArguments("--headless");
         options.addArguments("--incognito");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-ssl-errors");
@@ -54,8 +50,10 @@ public class Chrome extends BrowsersImpl {
         options.addArguments("--enable-precise-memory-info");
         options.setCapability("--host-resolver-rules", "MAP * ~NOTFOUND, EXCLUDE " + PROXY_IP_ADDRESS + ":" + PROXY_PORT);
 
+        options.setLogLevel(ALL);
+        options.setHeadless(true);
         options.setAcceptInsecureCerts(true);
-        options.setCapability(PAGE_LOAD_STRATEGY, "eager");
+        options.setCapability(PAGE_LOAD_STRATEGY, NORMAL);
         options.setCapability(PROXY, getProxy());
         return options;
     }
