@@ -41,6 +41,7 @@ public class Chrome extends BrowsersImpl {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
         options.addArguments("--incognito");
+        options.addArguments("--no-sandbox");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-ssl-errors");
         options.addArguments("--disable-extensions");

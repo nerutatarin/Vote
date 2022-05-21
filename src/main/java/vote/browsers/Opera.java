@@ -45,6 +45,8 @@ public class Opera extends BrowsersImpl {
         OperaOptions options = new OperaOptions();
         options.addArguments("--enable-automation");
         options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-update");
         options.addArguments("--incognito");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-ssl-errors");
