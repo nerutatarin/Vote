@@ -1,18 +1,12 @@
 package vote.browsers;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static org.openqa.selenium.PageLoadStrategy.NORMAL;
-import static org.openqa.selenium.chrome.ChromeDriverLogLevel.ALL;
-import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
-import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
-import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
-import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public class Chrome extends BrowsersImpl {
 
@@ -20,7 +14,7 @@ public class Chrome extends BrowsersImpl {
     protected void setDriverProperty() {
         /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
-        WebDriverManager.chromedriver().setup();
+        chromedriver().setup();
     }
 
     @Override

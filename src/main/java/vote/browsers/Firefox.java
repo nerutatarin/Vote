@@ -6,10 +6,6 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.firefoxdriver;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static org.openqa.selenium.PageLoadStrategy.NORMAL;
-import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.ERROR;
-import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
-import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
 import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 
