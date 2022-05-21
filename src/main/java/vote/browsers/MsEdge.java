@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
+import static org.openqa.selenium.PageLoadStrategy.EAGER;
 import static org.openqa.selenium.PageLoadStrategy.NORMAL;
 import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
@@ -37,9 +38,8 @@ public class MsEdge extends BrowsersImpl {
     private EdgeOptions getOptions() {
         EdgeOptions options = new EdgeOptions();
         options.addArguments("--enable-automation");
+        options.addArguments("--headless");
         options.addArguments("--incognito");
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-ssl-errors");
         options.addArguments("--disable-extensions");
@@ -47,10 +47,9 @@ public class MsEdge extends BrowsersImpl {
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--enable-precise-memory-info");
 
-        options.setHeadless(false);
         options.setAcceptInsecureCerts(true);
-        options.setCapability(PAGE_LOAD_STRATEGY, NORMAL);
-        options.setCapability(PROXY, getProxy());
+        options.setPageLoadStrategy(EAGER);
+        options.setProxy(getProxy());
         return options;
     }
 }

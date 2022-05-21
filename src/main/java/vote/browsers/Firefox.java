@@ -39,7 +39,7 @@ public class Firefox extends BrowsersImpl {
 
     private FirefoxOptions getOptions() {
         FirefoxOptions options = new FirefoxOptions();
-        options.addArguments("-private"); //true
+        options.addArguments("-private");
         options.addPreference("network.proxy.socks_remote_dns", true);
         options.addPreference("toolkit.startup.max_resumed_crashes", "-1");
 

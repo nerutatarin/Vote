@@ -42,16 +42,16 @@ public class PageManagerKP extends PageManagerImpl {
 
         return asList(
                 G1_KUVATOVO,
-                G2_RKIB,
-                G3_DRKB,
+                G2_RKIB
+                //G3_DRKB,
                 //G4_GB1,
                 //G5_RD3,
-                G9_EUROOPTIK,
-                G10_BUBNOVSKY,
+                //G9_EUROOPTIK,
+                //G10_BUBNOVSKY,
                 //G14_DP4,
-                G15_STERLIT,
-                G16_BUBNOVSKY,
-                G17_KUVATOVO
+                //G15_STERLIT,
+                //G16_BUBNOVSKY,
+                //G17_KUVATOVO
         );
     }
 }

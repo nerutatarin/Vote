@@ -43,11 +43,9 @@ public class Opera extends BrowsersImpl {
 
     private OperaOptions getOptions() {
         OperaOptions options = new OperaOptions();
-        DesiredCapabilities caps = new DesiredCapabilities();
         options.addArguments("--enable-automation");
         options.addArguments("--headless");
-        options.addArguments("--incognito"); //true
-        //options.addArguments("--private"); //true
+        options.addArguments("--incognito");
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-ssl-errors");
         options.addArguments("--disable-extensions");
