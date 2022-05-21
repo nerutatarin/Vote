@@ -21,7 +21,7 @@ public class WriteToLog {
         String timeStamp = new SimpleDateFormat(PATTERN_DDMMYYYYHHMMSS).format(new Date());
         String logFile = "src/resources/logs/" + "log.log";
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
-            writer.write(timeStamp + " ip: " + pageManager.getIpAddress("https://api.myip.com") + "\n");
+            writer.write(timeStamp + " ip: " + pageManager.getIpAddress("https://api.ipify.org/") + "\n");
         } catch (IOException e) {
             log.debug("Ошибка операции ввода-вывода: " + e);
         }

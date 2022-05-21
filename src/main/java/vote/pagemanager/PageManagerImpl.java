@@ -17,6 +17,7 @@ import static java.time.Duration.ofSeconds;
 import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public abstract class PageManagerImpl implements PageManager {
     private static final Logger log = getLogger(PageManagerKP.class);
@@ -26,18 +27,19 @@ public abstract class PageManagerImpl implements PageManager {
     public Process process;
 
     public void votePage(String baseUrl) {
-        wait = new WebDriverWait(webDriver, ofSeconds(5));
-        log.info("Запуск страницы голосования " + baseUrl);
+        wait = new WebDriverWait(webDriver, ofSeconds(60));
+        log.info(process.getProcessName() + " - Запуск страницы голосования " + baseUrl);
         webDriver.get(baseUrl);
     }
 
     public void voteInput() {
         getInputsListLocatorById().forEach(inp -> {
-            log.info("Ищем input: " + inp + " ...");
+            log.info("Ищем " + inp + " ...");
+            WebElement webElement = wait.until(presenceOfElementLocated(id(inp)));
             //WebElement webElement = wait.until(elementToBeClickable(id(inp)));
-            WebElement webElement = webDriver.findElement(id(inp));
+            //WebElement webElement = webDriver.findElement(id(inp));
             webElement.click();
-            log.info("Проставлен input: " + inp);
+            log.info("Проставлен " + inp);
         });
     }
 
@@ -46,9 +48,8 @@ public abstract class PageManagerImpl implements PageManager {
     public void voteButton() {
         log.info("Ищем кнопку голосования: ");
         try {
-            WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
-
-            sleep(2000);
+            //WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
+            WebElement webElement = webDriver.findElement(getButtonLocator());
             webElement.click();
 
             log.info("Кнопка голосования нажата: ");

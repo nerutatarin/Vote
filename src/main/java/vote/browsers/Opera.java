@@ -2,11 +2,15 @@ package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
+import static org.openqa.selenium.PageLoadStrategy.EAGER;
 import static org.openqa.selenium.PageLoadStrategy.NORMAL;
 import static org.openqa.selenium.chrome.ChromeDriverLogLevel.ALL;
+import static org.openqa.selenium.opera.OperaOptions.CAPABILITY;
 import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
 import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Drivers.OPERA_DRIVER_VALUE;
@@ -39,21 +43,21 @@ public class Opera extends BrowsersImpl {
 
     private OperaOptions getOptions() {
         OperaOptions options = new OperaOptions();
+        DesiredCapabilities caps = new DesiredCapabilities();
         options.addArguments("--enable-automation");
         options.addArguments("--headless");
-        options.addArguments("--incognito");
+        options.addArguments("--incognito"); //true
+        //options.addArguments("--private"); //true
         options.addArguments("--disable-gpu");
         options.addArguments("--ignore-ssl-errors");
         options.addArguments("--disable-extensions");
         options.addArguments("--dns-prefetch-disable");
         options.addArguments("--disable-popup-blocking");
-        options.addArguments("--ignore-certificate-errors");
         options.addArguments("--enable-precise-memory-info");
-        options.setCapability("--host-resolver-rules", "MAP * ~NOTFOUND, EXCLUDE " + PROXY_IP_ADDRESS + ":" + PROXY_PORT);
 
         options.setAcceptInsecureCerts(true);
-        options.setCapability(PAGE_LOAD_STRATEGY, NORMAL);
-        options.setCapability(PROXY, getProxy());
+        options.setPageLoadStrategy(EAGER);
+        options.setProxy(getProxy());
         return options;
     }
 }

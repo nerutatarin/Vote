@@ -11,7 +11,6 @@ import static org.apache.log4j.Logger.getLogger;
 
 public abstract class VoteImpl extends Thread implements Vote {
     private static final Logger log = getLogger(VoteImpl.class);
-    protected String myIpUrl = "https://myip.ru/";
     protected PageManager pageManager;
     protected List<Browsers> browsers = new ArrayList<>();
     protected Browsers browser;
@@ -32,8 +31,6 @@ public abstract class VoteImpl extends Thread implements Vote {
     }
 
     protected abstract int getVoteCount();
-
-    protected abstract String getMyIpUrl();
 
     protected abstract String getBaseUrl();
 }

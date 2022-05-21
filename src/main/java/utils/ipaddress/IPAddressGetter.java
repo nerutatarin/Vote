@@ -2,11 +2,12 @@ package utils.ipaddress;
 
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
+import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import utils.ipaddress.model.MyIpAddress;
 
 import static org.apache.log4j.Logger.getLogger;
-import static org.jsoup.Jsoup.parse;
+import static org.jsoup.Jsoup.parseBodyFragment;
 import static org.openqa.selenium.By.cssSelector;
 
 public class IPAddressGetter {
@@ -17,7 +18,7 @@ public class IPAddressGetter {
         this.webDriver = webDriver;
     }
 
-    public String getIpAddress(String ipAddressLocator, String url) {
+    public String getIpAddressLocator(String ipAddressLocator, String url) {
         log.info("Получаем IP адрес... ");
         try {
             webDriver.get(url);
@@ -28,14 +29,30 @@ public class IPAddressGetter {
         return null;
     }
 
+    public String getIpAddressJson(String url) {
+        log.info("Получаем IP адрес... ");
+        try {
+            webDriver.get("https://api.myip.com");
+            String pageSource = webDriver.getPageSource();
+            String document = parseBodyFragment(pageSource).text();
+            Gson gson = new Gson();
+            MyIpAddress response = gson.fromJson(document, MyIpAddress.class);
+            String ip = response.getIp();
+            log.info("Ip Address = " + ip);
+            return ip;
+        } catch (Exception e) {
+            log.debug("Превышено время ожидания загрузки страницы: " + e);
+        }
+        return null;
+    }
+
     public String getIpAddress(String url) {
         log.info("Получаем IP адрес... ");
         try {
             webDriver.get(url);
-            String document = parse(webDriver.getPageSource()).body().text();
-            Gson gson = new Gson();
-            MyIpAddress response = gson.fromJson(document, MyIpAddress.class);
-            String ip = response.getIp();
+            String pageSource = webDriver.getPageSource();
+            Document document = parseBodyFragment(pageSource);
+            String ip = document.text();
             log.info("Ip Address = " + ip);
             return ip;
         } catch (Exception e) {

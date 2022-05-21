@@ -43,11 +43,6 @@ public class VoteOrgZdrav extends VoteImpl {
     }
 
     @Override
-    protected String getMyIpUrl() {
-        return myIpUrl;
-    }
-
-    @Override
     protected String getBaseUrl() {
         return baseUrl;
     }

@@ -8,20 +8,18 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ProcessKiller;
 import vote.browsers.model.Process;
 
-import java.util.List;
-import java.util.Map;
-
 import static java.util.Arrays.asList;
 import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
 import static org.apache.log4j.Logger.getLogger;
-import static utils.Thesaurus.Drivers.DRIVERS_LIST;
 import static utils.Thesaurus.Drivers.DRIVERS_MAP;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
 import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 
 public abstract class BrowsersImpl implements Browsers {
     private static final Logger log = getLogger(BrowsersImpl.class);
+
     private final String instanceName = toLowerCase(this.getClass().getSimpleName());
+
     public WebDriver webDriver;
 
     @Override

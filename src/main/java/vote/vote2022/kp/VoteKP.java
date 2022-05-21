@@ -8,7 +8,7 @@ import java.util.List;
 import static utils.WriteToLog.writeToLog;
 
 public class VoteKP extends VoteImpl {
-    protected int voteCount = 100000;
+    protected int voteCount = 10000;
     protected String baseUrl = "https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022";
 
     public VoteKP(List<Browsers> browsers) {
@@ -34,11 +34,6 @@ public class VoteKP extends VoteImpl {
         pageManager.votePage(getBaseUrl());
         pageManager.voteInput();
         pageManager.voteButton();
-    }
-
-    @Override
-    protected String getMyIpUrl() {
-        return myIpUrl;
     }
 
     @Override
