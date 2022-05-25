@@ -7,7 +7,7 @@ public interface PageManager {
 
     void voteButton();
 
-    void voteClose();
+    void voteLogging();
 
-    String getIpAddress(String myIpUrl);
+    void voteClose();
 }

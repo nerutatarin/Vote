@@ -11,7 +11,7 @@ import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 public class Chrome extends BrowsersImpl {
 
     @Override
-    protected void setDriverProperty() {
+    protected void webDriverInitialize() {
         /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
         driver.setPropertyDependsOnOS();*/
         chromedriver().setup();

@@ -1,13 +1,17 @@
 package vote.pagemanager;
 
 import org.apache.log4j.Logger;
+import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.ProcessKiller;
-import utils.ipaddress.IPAddressGetter;
+import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.model.Process;
+import vote.pagemanager.model.VoteCount;
 import vote.vote2022.kp.PageManagerKP;
 
 import java.util.List;
@@ -15,45 +19,51 @@ import java.util.List;
 import static java.lang.Thread.sleep;
 import static java.time.Duration.ofSeconds;
 import static org.apache.log4j.Logger.getLogger;
+import static org.jsoup.Jsoup.parse;
 import static org.openqa.selenium.By.id;
-import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+import static utils.WriteToLog.writeToLog;
 
 public abstract class PageManagerImpl implements PageManager {
     private static final Logger log = getLogger(PageManagerKP.class);
 
-    public WebDriverWait wait;
-    public WebDriver webDriver;
-    public Process process;
+    protected WebDriverWait wait;
+    protected WebDriver webDriver;
+    protected Process process;
+    protected String processName;
+    protected MyIpAddress myIpAddress;
 
-    public void votePage(String baseUrl) {
-        wait = new WebDriverWait(webDriver, ofSeconds(60));
-        log.info(process.getProcessName() + " - Запуск страницы голосования " + baseUrl);
+    protected void getBrowserName() {
+        processName = process.getProcessName();
+    }
+
+    public void votePage(String baseUrl) throws TimeoutException {
+        log.info(processName + " Запуск страницы голосования " + baseUrl);
+        int timeout = 30;
+        wait = new WebDriverWait(webDriver, ofSeconds(timeout));
         webDriver.get(baseUrl);
+        wait.until(ExpectedConditions.titleIs("Клиника года - 2022. Уфа."));
     }
 
     public void voteInput() {
         getInputsListLocatorById().forEach(inp -> {
-            log.info("Ищем " + inp + " ...");
-            WebElement webElement = wait.until(presenceOfElementLocated(id(inp)));
-            //WebElement webElement = wait.until(elementToBeClickable(id(inp)));
+            log.info(processName + " Ищем " + inp + " ...");
             //WebElement webElement = webDriver.findElement(id(inp));
+            WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(id(inp)));
             webElement.click();
-            log.info("Проставлен " + inp);
+            log.info(processName + " Проставлен " + inp);
         });
+
     }
 
     protected abstract List<String> getInputsListLocatorById();
 
     public void voteButton() {
-        log.info("Ищем кнопку голосования: ");
+        log.info(processName + " Ищем кнопку голосования: ");
         try {
-            //WebElement webElement = wait.until(elementToBeClickable(getButtonLocator()));
-            WebElement webElement = webDriver.findElement(getButtonLocator());
+            //WebElement webElement = webDriver.findElement(getButtonLocator());
+            WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(getButtonLocator()));
             webElement.click();
-
-            log.info("Кнопка голосования нажата: ");
-
+            log.info(processName + " Кнопка голосования нажата: ");
             sleep(5000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -62,22 +72,31 @@ public abstract class PageManagerImpl implements PageManager {
 
     protected abstract By getButtonLocator();
 
-    public String getIpAddress(String myIpUrl) {
-        IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver);
-        return ipAddressGetter.getIpAddress(myIpUrl);
+    public void voteLogging() {
+        Document pageSource = parse(webDriver.getPageSource());
+        if (pageSource == null) return;
+
+        List<VoteCount> voteCounts = getVoteCountList(pageSource);
+        if (voteCounts == null || voteCounts.isEmpty()) return;
+
+        for (VoteCount voteCount : voteCounts) {
+            if (getInputsListLocatorById().contains(voteCount.getInputId())) {
+                writeToLog(processName, myIpAddress.getIp(), voteCount.getTitle(), voteCount.getCount());
+            }
+        }
     }
 
-    protected abstract String getIpAddressLocator();
+    protected abstract List<VoteCount> getVoteCountList(Document pageSource);
 
     public void voteClose() {
         String driverName = process.getDriverName();
         try {
-            log.info("Завершаем работу драйвера: " + driverName);
+            log.info(processName + " Завершаем работу драйвера: " + driverName);
             webDriver.quit();
-            log.info("Работа драйвера " + driverName + " успешно завершена!");
+            log.info(processName + " Работа драйвера " + driverName + " успешно завершена!");
         } catch (Exception e) {
-            log.debug("При попытке завершить работу драйвера " + driverName + " возникла непредвиденная ошибка: " + e);
-            log.info("Завершаем процесс драйвера: " + driverName);
+            log.debug(processName + " При попытке завершить работу драйвера " + driverName + " возникла непредвиденная ошибка: " + e);
+            log.info(processName + " Завершаем процесс драйвера: " + driverName);
             killProcess();
         }
     }

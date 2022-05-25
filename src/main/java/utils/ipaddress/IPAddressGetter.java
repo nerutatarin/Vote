@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.WebDriver;
 import utils.ipaddress.model.MyIpAddress;
+import vote.browsers.model.Process;
 
 import static org.apache.log4j.Logger.getLogger;
 import static org.jsoup.Jsoup.parseBodyFragment;
@@ -12,52 +13,79 @@ import static org.openqa.selenium.By.cssSelector;
 
 public class IPAddressGetter {
     private static final Logger log = getLogger(IPAddressGetter.class);
-    private WebDriver webDriver;
+    private final WebDriver webDriver;
+    private Process process;
+    public String processName;
 
-    public IPAddressGetter(WebDriver webDriver) {
+    private MyIpAddress myIpAddress = new MyIpAddress();
+
+    public IPAddressGetter(WebDriver webDriver, Process process) {
         this.webDriver = webDriver;
+        processName = process.getProcessName() + " ";
     }
 
-    public String getIpAddressLocator(String ipAddressLocator, String url) {
-        log.info("Получаем IP адрес... ");
+    public MyIpAddress getIpAddressLocator(String ipAddressLocator, String url) {
+        log.info(processName + "Получаем IP адрес... ");
+
+        if (ipAddressLocator.isEmpty()) {
+            ipAddressLocator = "#ipcontent > table > tbody > tr:nth-child(2) > td";
+        }
+
+        if (url.isEmpty()) {
+            url = "https://myip.ru/";
+        }
+
         try {
             webDriver.get(url);
-            return webDriver.findElement(cssSelector(ipAddressLocator)).getText();
+            String ip = webDriver.findElement(cssSelector(ipAddressLocator)).getText();
+            myIpAddress.setIp(ip);
+            return myIpAddress;
         } catch (Exception e) {
-            log.debug("Превышено время ожидания загрузки страницы: " + e);
+            log.error("Превышено время ожидания загрузки страницы: " + e);
         }
+
         return null;
     }
 
-    public String getIpAddressJson(String url) {
-        log.info("Получаем IP адрес... ");
+    public MyIpAddress getIpAddressJson(String url) {
+        log.info(processName + "Получаем IP адрес... ");
+
+        if (url.isEmpty()) {
+            url = "https://api.myip.com";
+        }
+
         try {
-            webDriver.get("https://api.myip.com");
+            webDriver.get(url);
             String pageSource = webDriver.getPageSource();
             String document = parseBodyFragment(pageSource).text();
             Gson gson = new Gson();
-            MyIpAddress response = gson.fromJson(document, MyIpAddress.class);
-            String ip = response.getIp();
-            log.info("Ip Address = " + ip);
-            return ip;
+            myIpAddress = gson.fromJson(document, MyIpAddress.class);
+            return myIpAddress;
         } catch (Exception e) {
-            log.debug("Превышено время ожидания загрузки страницы: " + e);
+            log.error("Превышено время ожидания загрузки страницы: " + e);
         }
+
         return null;
     }
 
-    public String getIpAddress(String url) {
-        log.info("Получаем IP адрес... ");
+    public MyIpAddress getIpAddress(String url) {
+        log.info(processName + "Получаем IP адрес... ");
+
+        if (url.isEmpty()) {
+            url = "https://api.ipify.org/";
+        }
+
         try {
             webDriver.get(url);
             String pageSource = webDriver.getPageSource();
             Document document = parseBodyFragment(pageSource);
-            String ip = document.text();
-            log.info("Ip Address = " + ip);
-            return ip;
+            myIpAddress.setIp(document.text());
+            log.info(processName + "IP адрес " + myIpAddress.getIp());
+            return myIpAddress;
         } catch (Exception e) {
-            log.debug("Превышено время ожидания загрузки страницы: " + e);
+            log.error("Превышено время ожидания загрузки страницы: " + e);
         }
+
         return null;
     }
 }

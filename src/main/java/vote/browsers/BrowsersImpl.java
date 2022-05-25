@@ -27,11 +27,11 @@ public abstract class BrowsersImpl implements Browsers {
         killAllRunningProcesses();
 
         log.info("Инициализация " + instanceName + " драйвера...");
-        setDriverProperty();
+        webDriverInitialize();
         return settingBrowser();
     }
 
-    protected abstract void setDriverProperty();
+    protected abstract void webDriverInitialize();
 
     private WebDriver settingBrowser() {
         webDriver = getDriverInstance();

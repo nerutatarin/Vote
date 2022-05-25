@@ -1,8 +1,8 @@
 package utils;
 
 import org.apache.log4j.Logger;
-import vote.pagemanager.PageManager;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,13 +15,21 @@ import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
 public class WriteToLog {
     private static final Logger log = getLogger(WriteToLog.class);
 
-    public static void writeToLog(PageManager pageManager) {
-        if (pageManager == null) return;
-
+    public static void writeToLog(String browserName, String ip, String title, String count) {
         String timeStamp = new SimpleDateFormat(PATTERN_DDMMYYYYHHMMSS).format(new Date());
-        String logFile = "src/resources/logs/" + "log.log";
+
+        String path = "src/resources/logs/" + browserName + "/";
+        String fileName = title + ".log";
+
+        File directory = new File(path);
+        if (!directory.exists()) {
+            directory.mkdir();
+        }
+
+        File logFile = new File(directory + "/" + fileName);
+
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
-            writer.write(timeStamp + " ip: " + pageManager.getIpAddress("https://api.ipify.org/") + "\n");
+            writer.write(timeStamp + " ip: " + ip + " count: " + count + "\n");
         } catch (IOException e) {
             log.debug("Ошибка операции ввода-вывода: " + e);
         }

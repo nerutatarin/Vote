@@ -1,8 +1,12 @@
 package vote.vote2022.orgzdrav;
 
+import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import vote.browsers.Browsers;
+import vote.browsers.model.Process;
 import vote.pagemanager.PageManagerImpl;
+import vote.pagemanager.model.VoteCount;
 
 import java.util.List;
 
@@ -11,25 +15,25 @@ import static org.openqa.selenium.By.xpath;
 
 public class PageManagerOrgZdrav extends PageManagerImpl {
 
-    public PageManagerOrgZdrav(Browsers browser) {
-        this.webDriver = browser.getWebDriver();
-        this.process = browser.getProcess();
+    public PageManagerOrgZdrav(WebDriver webDriver, Process process) {
+        this.webDriver = webDriver;
+        this.process = process;
+        getBrowserName();
     }
 
     @Override
     protected By getButtonLocator() {
-        //return cssSelector("body > section.ftco-section > div > div > div.col-lg-4.column-sidebar > div.practice-vote.d-none.d-md-block > button");
         return xpath("/html/body/section[@class='ftco-section']//button[@type='button']");
-
-    }
-
-    @Override
-    protected String getIpAddressLocator() {
-        return "#ipcontent > table > tbody > tr:nth-child(2) > td";
     }
 
     @Override
     protected List<String> getInputsListLocatorById() {
         return emptyList();
     }
+
+    @Override
+    protected List<VoteCount> getVoteCountList(Document pageSource) {
+        return null;
+    }
+
 }

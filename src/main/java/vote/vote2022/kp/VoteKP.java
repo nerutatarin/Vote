@@ -1,48 +1,35 @@
 package vote.vote2022.kp;
 
+import utils.ipaddress.IPAddressGetter;
 import vote.VoteImpl;
 import vote.browsers.Browsers;
 
 import java.util.List;
 
-import static utils.WriteToLog.writeToLog;
-
 public class VoteKP extends VoteImpl {
-    protected int voteCount = 10000;
-    protected String baseUrl = "https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022";
+    private final String voteUrl = "https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022";
 
-    public VoteKP(List<Browsers> browsers) {
-        this.browsers = browsers;
+    public VoteKP(List<Browsers> browsers, int count) {
+        this.browsersList = browsers;
+        this.count = count;
     }
 
-    public VoteKP(Browsers browser) {
+    public VoteKP(Browsers browser, int count) {
         this.browser = browser;
-    }
-
-    @Override
-    public void init() {
-         if (browsers.isEmpty()) {
-            vote(browser);
-        } else {
-            browsers.forEach(this::vote);
-        }
+        this.count = count;
     }
 
     public void vote(Browsers browser) {
-        pageManager = new PageManagerKP(browser);
-        writeToLog(pageManager);
-        pageManager.votePage(getBaseUrl());
+        webDriver = browser.getWebDriver();
+        process = browser.getProcess();
+
+        IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver, process);
+        myIpAddress = ipAddressGetter.getIpAddress(ipAddrUrl);
+
+        pageManager = new PageManagerKP(webDriver, process, myIpAddress);
+        pageManager.votePage(voteUrl);
         pageManager.voteInput();
         pageManager.voteButton();
-    }
-
-    @Override
-    protected String getBaseUrl() {
-        return baseUrl;
-    }
-
-    @Override
-    protected int getVoteCount() {
-        return voteCount;
+        pageManager.voteLogging();
     }
 }
