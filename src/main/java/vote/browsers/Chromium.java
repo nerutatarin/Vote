@@ -9,9 +9,11 @@ import org.openqa.selenium.chromium.ChromiumDriver;
 import org.openqa.selenium.chromium.ChromiumOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import utils.RandomUserAgent;
 import vote.driver.Driver;
 
 import java.time.Duration;
+import java.util.Collections;
 
 import static java.time.Duration.ofSeconds;
 import static org.apache.log4j.Logger.getLogger;
@@ -30,9 +32,9 @@ public class Chromium extends BrowsersImpl {
 
     @Override
     protected void webDriverInitialize() {
-        //Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
-        //driver.setPropertyDependsOnOS();
-        WebDriverManager.chromedriver().setup();
+        Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
+        driver.setPropertyDependsOnOS();
+        //WebDriverManager.chromedriver().setup();
     }
 
     @Override
@@ -52,28 +54,39 @@ public class Chromium extends BrowsersImpl {
 
     private ChromeOptions getOptions() {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--enable-automation");
-        //options.addArguments("--headless");
-        /*options.addArguments("--disable-gpu");
+        // Fixing 255 Error crashes
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        // Changing the user agent / browser fingerprint
+        String userAgent = RandomUserAgent.getRandomUserAgent();
+        options.addArguments("--user-agent=" + userAgent);
+        options.addArguments("window-size=1920,1080");
+        // Options to trick bot detection
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        //options.addArguments("--enable-automation");
+        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        options.setExperimentalOption("useAutomationExtension", false);
+
+        // Other
+        options.addArguments("disable-infobars");
+
+        /*options.addArguments("--dns-prefetch-disable");
+        options.addArguments("--headless");
+        options.addArguments("--incognito");
+        options.addArguments("--disable-gpu");
         options.addArguments("--ignore-ssl-errors");
         options.addArguments("--disable-extensions");
-        options.addArguments("--dns-prefetch-disable");
+
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--ignore-certificate-errors");
-        options.addArguments("--enable-precise-memory-info");*/
-        //options.setCapability("--host-resolver-rules", "MAP * ~NOTFOUND, EXCLUDE " + PROXY_IP_ADDRESS + ":" + PROXY_PORT);
-
-        /*options.setBrowserVersion("100.0.4896.75");
-        options.setPlatformName("chrome");*/
-
-        options.setExperimentalOption("useAutomationExtension", false);
+        options.addArguments("--enable-precise-memory-info");
+        options.setCapability("--host-resolver-rules", "MAP * ~NOTFOUND, EXCLUDE " + PROXY_IP_ADDRESS + ":" + PROXY_PORT);*/
 
         Duration timeout = ofSeconds(30);
         options.setPageLoadTimeout(timeout);
         options.setImplicitWaitTimeout(timeout);
         options.setScriptTimeout(timeout);
 
-        options.setLogLevel(SEVERE);
         //options.setHeadless(true);
         options.setAcceptInsecureCerts(true);
         options.setPageLoadStrategy(EAGER);

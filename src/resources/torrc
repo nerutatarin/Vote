@@ -1,8 +1,8 @@
 Log notice file /var/log/tor/notice.log
 
-CircuitBuildTimeout 30
+CircuitBuildTimeout 40
 LearnCircuitBuildTimeout 0
-MaxCircuitDirtiness 10
+MaxCircuitDirtiness 40
 
 ExitNodes {in},{ch},{kz}
 StrictNodes 0

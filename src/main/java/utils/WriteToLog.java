@@ -1,6 +1,7 @@
 package utils;
 
 import org.apache.log4j.Logger;
+import utils.ipaddress.model.MyIpAddress;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,11 +16,11 @@ import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
 public class WriteToLog {
     private static final Logger log = getLogger(WriteToLog.class);
 
-    public static void writeToLog(String browserName, String ip, String title, String count) {
+    public static void writeToLog(String browserName, MyIpAddress myIpAddress, String title, String count) {
         String timeStamp = new SimpleDateFormat(PATTERN_DDMMYYYYHHMMSS).format(new Date());
 
         String path = "src/resources/logs/" + browserName + "/";
-        String fileName = title + ".log";
+        String fileName = Utils.removeUTF8BOM(title) + ".log";
 
         File directory = new File(path);
         if (!directory.exists()) {
@@ -28,8 +29,11 @@ public class WriteToLog {
 
         File logFile = new File(directory + "/" + fileName);
 
+        String ip = myIpAddress.getIp();
+        String country = myIpAddress.getCountry();
+
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
-            writer.write(timeStamp + " ip: " + ip + " count: " + count + "\n");
+            writer.write(timeStamp + " ip: " + ip + " country: " + country + " count: " + count + "\n");
         } catch (IOException e) {
             log.debug("Ошибка операции ввода-вывода: " + e);
         }

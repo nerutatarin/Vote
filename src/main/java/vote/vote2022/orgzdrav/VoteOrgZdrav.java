@@ -24,8 +24,7 @@ public class VoteOrgZdrav extends VoteImpl {
         webDriver = browser.getWebDriver();
         process = browser.getProcess();
 
-        IPAddressGetter ipAddressGetter = new IPAddressGetter(webDriver, process);
-        myIpAddress = ipAddressGetter.getIpAddress(ipAddrUrl);
+        myIpAddress = IPAddressGetter.getIpAddress(webDriver, process, ipAddrUrl);
 
         pageManager = new PageManagerOrgZdrav(webDriver, process);
         pageManager.votePage(voteUrl);

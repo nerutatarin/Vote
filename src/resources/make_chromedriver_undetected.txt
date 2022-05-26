@@ -1,0 +1,26 @@
+Replacing cdc_ string
+You can use vim or perl to replace the cdc_ string in chromedriver. See answer by @Erti-Chris Eelmaa to learn more about that string and how it's a detection point.
+Using vim or perl prevents you from having to recompile source code or use a hex-editor.
+Make sure to make a copy of the original chromedriver before attempting to edit it.
+Our goal is to alter the cdc_ string, which looks something like $cdc_lasutopfhvcZLmcfl.
+The methods below were tested on chromedriver version 2.41.578706.
+
+Using Vim
+    vim /path/to/chromedriver
+    After running the line above, you'll probably see a bunch of gibberish. Do the following:
+
+    Replace all instances of cdc_ with dog_ by typing :%s/cdc_/dog_/g.
+    dog_ is just an example. You can choose anything as long as it has the same amount of characters as the search string (e.g., cdc_), otherwise the chromedriver will fail.
+    To save the changes and quit, type :wq! and press return.
+    If you need to quit without saving changes, type :q! and press return.
+
+Using Perl
+    perl -pi -e 's/cdc_/dog_/g' /path/to/chromedriver
+
+Wrapping Up
+    grep "cdc_" /path/to/chromedriver
+
+Example
+cd .cache/selenium/chromedriver/linux64/100.0.4896.60/
+cp chromedriver /home/zaripov/IdeaProjects/Vote/src/resources/unix/
+perl -pi -e 's/cdc_/dog_/g' chromedriver

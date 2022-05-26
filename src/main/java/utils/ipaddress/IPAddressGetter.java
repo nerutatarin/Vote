@@ -13,23 +13,11 @@ import static org.openqa.selenium.By.cssSelector;
 
 public class IPAddressGetter {
     private static final Logger log = getLogger(IPAddressGetter.class);
-    private final WebDriver webDriver;
-    private Process process;
-    public String processName;
 
-    private MyIpAddress myIpAddress = new MyIpAddress();
+    public static MyIpAddress getIpAddressLocator(WebDriver webDriver, Process process, String url) {
+        log.info(process.getProcessName() + " Получаем IP адрес... ");
 
-    public IPAddressGetter(WebDriver webDriver, Process process) {
-        this.webDriver = webDriver;
-        processName = process.getProcessName() + " ";
-    }
-
-    public MyIpAddress getIpAddressLocator(String ipAddressLocator, String url) {
-        log.info(processName + "Получаем IP адрес... ");
-
-        if (ipAddressLocator.isEmpty()) {
-            ipAddressLocator = "#ipcontent > table > tbody > tr:nth-child(2) > td";
-        }
+        String ipAddressLocator = "#ipcontent > table > tbody > tr:nth-child(2) > td";
 
         if (url.isEmpty()) {
             url = "https://myip.ru/";
@@ -38,6 +26,7 @@ public class IPAddressGetter {
         try {
             webDriver.get(url);
             String ip = webDriver.findElement(cssSelector(ipAddressLocator)).getText();
+            MyIpAddress myIpAddress = new MyIpAddress();
             myIpAddress.setIp(ip);
             return myIpAddress;
         } catch (Exception e) {
@@ -47,11 +36,11 @@ public class IPAddressGetter {
         return null;
     }
 
-    public MyIpAddress getIpAddressJson(String url) {
-        log.info(processName + "Получаем IP адрес... ");
+    public static MyIpAddress getIpAddressJson(WebDriver webDriver, Process process, String url) {
+        log.info(process.getProcessName() + " Получаем IP адрес... ");
 
         if (url.isEmpty()) {
-            url = "https://api.myip.com";
+            url = "https://ipinfo.io/?token=c2e2408c951023";
         }
 
         try {
@@ -59,7 +48,7 @@ public class IPAddressGetter {
             String pageSource = webDriver.getPageSource();
             String document = parseBodyFragment(pageSource).text();
             Gson gson = new Gson();
-            myIpAddress = gson.fromJson(document, MyIpAddress.class);
+            MyIpAddress myIpAddress = gson.fromJson(document, MyIpAddress.class);
             return myIpAddress;
         } catch (Exception e) {
             log.error("Превышено время ожидания загрузки страницы: " + e);
@@ -68,8 +57,8 @@ public class IPAddressGetter {
         return null;
     }
 
-    public MyIpAddress getIpAddress(String url) {
-        log.info(processName + "Получаем IP адрес... ");
+    public static MyIpAddress getIpAddress(WebDriver webDriver, Process process, String url) {
+        log.info(process.getProcessName() + " Получаем IP адрес... ");
 
         if (url.isEmpty()) {
             url = "https://api.ipify.org/";
@@ -79,8 +68,9 @@ public class IPAddressGetter {
             webDriver.get(url);
             String pageSource = webDriver.getPageSource();
             Document document = parseBodyFragment(pageSource);
+            MyIpAddress myIpAddress = new MyIpAddress();
             myIpAddress.setIp(document.text());
-            log.info(processName + "IP адрес " + myIpAddress.getIp());
+            log.info(process.getProcessName() + "IP адрес " + myIpAddress.getIp());
             return myIpAddress;
         } catch (Exception e) {
             log.error("Превышено время ожидания загрузки страницы: " + e);

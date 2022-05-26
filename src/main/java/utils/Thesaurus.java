@@ -51,4 +51,8 @@ public class Thesaurus {
         public static final String MOZ_PROCESS_ID = "moz:processID";
         public static final String MOZ_GECKODRIVER_VERSION = "moz:geckodriverVersion";
     }
+
+    public static class Urls {
+        public static final String VINDECODERZ_URL = "https://www.vindecoderz.com/EN/check-lookup/KNAFX4A67E5145611";
+    }
 }

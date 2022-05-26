@@ -8,7 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.AntiBotDetector;
 import utils.ProcessKiller;
+import utils.Utils;
 import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.model.Process;
 import vote.pagemanager.model.VoteCount;
@@ -37,9 +39,13 @@ public abstract class PageManagerImpl implements PageManager {
     }
 
     public void votePage(String baseUrl) throws TimeoutException {
-        log.info(processName + " Запуск страницы голосования " + baseUrl);
         int timeout = 30;
         wait = new WebDriverWait(webDriver, ofSeconds(timeout));
+
+        AntiBotDetector.webDriverModeDetected(webDriver, wait, processName);
+        //webDriver.get(VINDECODERZ_URL);
+
+        log.info(processName + " Запуск страницы голосования " + baseUrl);
         webDriver.get(baseUrl);
         wait.until(ExpectedConditions.titleIs("Клиника года - 2022. Уфа."));
     }
@@ -64,7 +70,7 @@ public abstract class PageManagerImpl implements PageManager {
             WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(getButtonLocator()));
             webElement.click();
             log.info(processName + " Кнопка голосования нажата: ");
-            sleep(5000);
+            sleep(2000);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -81,7 +87,7 @@ public abstract class PageManagerImpl implements PageManager {
 
         for (VoteCount voteCount : voteCounts) {
             if (getInputsListLocatorById().contains(voteCount.getInputId())) {
-                writeToLog(processName, myIpAddress.getIp(), voteCount.getTitle(), voteCount.getCount());
+                writeToLog(processName, myIpAddress, voteCount.getTitle(), voteCount.getCount().trim());
             }
         }
     }

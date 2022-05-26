@@ -14,9 +14,21 @@ public class MyIpAddress {
     @SerializedName("country")
     @Expose
     private String country;
-    @SerializedName("cc")
+
+    @SerializedName("city")
     @Expose
-    private String cc;
+    private String city;
+
+    @SerializedName("hostname")
+    @Expose
+    private String hostname;
+
+    @SerializedName("region")
+    @Expose
+    private String region;
+    @SerializedName("org")
+    @Expose
+    private String org;
 
     public String getIp() {
         return ip;
@@ -34,12 +46,43 @@ public class MyIpAddress {
         this.country = country;
     }
 
-    public String getCc() {
-        return cc;
+    public String getOrg() {
+        return org;
     }
 
-    public void setCc(String cc) {
-        this.cc = cc;
+    public String getCity() {
+        return city;
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getHostname() {
+        return hostname;
+    }
+
+    public void setHostname(String hostname) {
+        this.hostname = hostname;
+    }
+
+    public String getRegion() {
+        return region;
+    }
+
+    public void setRegion(String region) {
+        this.region = region;
+    }
+
+    public void setOrg(String cc) {
+        this.org = org;
+    }
+
+    @Override
+    public String toString() {
+        return "MyIpAddress{" +
+                "ip='" + ip + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 }
