@@ -12,8 +12,6 @@ public class MsEdge extends BrowsersImpl {
 
     @Override
     protected void webDriverInitialize() {
-        /*Driver driver = new Driver(EDGE_DRIVER_KEY, EDGE_DRIVER_VALUE);
-        driver.setPropertyDependsOnOS();*/
         WebDriverManager.edgedriver().setup();
     }
 

@@ -1,10 +1,10 @@
 package vote.browsers;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-import static io.github.bonigarcia.wdm.WebDriverManager.chromedriver;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
 import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
@@ -12,9 +12,7 @@ public class Chrome extends BrowsersImpl {
 
     @Override
     protected void webDriverInitialize() {
-        /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
-        driver.setPropertyDependsOnOS();*/
-        chromedriver().setup();
+        WebDriverManager.chromedriver().setup();
     }
 
     @Override

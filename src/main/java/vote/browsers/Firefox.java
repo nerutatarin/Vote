@@ -2,7 +2,9 @@ package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import utils.RandomUserAgent;
 
 import java.time.Duration;
@@ -16,10 +18,7 @@ public class Firefox extends BrowsersImpl {
 
     @Override
     protected void webDriverInitialize() {
-        /*Driver driver = new Driver(GECKO_DRIVER_KEY, GECKO_DRIVER_VALUE);
-        driver.setPropertyDependsOnOS();*/
         WebDriverManager.firefoxdriver().setup();
-        //firefoxdriver().browserInDocker().create();
     }
 
     @Override

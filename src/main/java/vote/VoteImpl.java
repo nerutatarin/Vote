@@ -44,10 +44,10 @@ public abstract class VoteImpl extends Thread implements Vote {
     }
 
     public void init() {
-        if (browsersList.isEmpty()) {
-            vote(browser);
-        } else {
+        if (!browsersList.isEmpty()) {
             browsersList.forEach(this::vote);
+        } else {
+            vote(browser);
         }
     }
 }

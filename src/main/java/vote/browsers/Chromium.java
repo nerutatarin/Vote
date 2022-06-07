@@ -1,7 +1,6 @@
 package vote.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,17 +10,13 @@ import java.time.Duration;
 import java.util.Collections;
 
 import static java.time.Duration.ofSeconds;
-import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
 import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
 public class Chromium extends BrowsersImpl {
-    private static final Logger log = getLogger(Chrome.class);
 
     @Override
     protected void webDriverInitialize() {
-        /*Driver driver = new Driver(CHROME_DRIVER_KEY, CHROME_DRIVER_VALUE);
-        driver.setPropertyDependsOnOS();*/
         WebDriverManager.chromedriver().setup();
     }
 

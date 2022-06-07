@@ -1,5 +1,6 @@
 package vote.browsers;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
@@ -25,16 +26,16 @@ public abstract class BrowsersImpl implements Browsers {
         killAllRunningProcesses();
 
         log.info("Инициализация " + getInstanceName() + " драйвера...");
+        WebDriverManager.getInstance().setup();
         webDriverInitialize();
-        return settingBrowser();
+
+        webDriver = getDriverInstance();
+        return webDriver;
     }
 
     protected abstract void webDriverInitialize();
 
-    private WebDriver settingBrowser() {
-        webDriver = getDriverInstance();
-        return webDriver;
-    }
+    protected abstract WebDriver getDriverInstance();
 
     public Process getProcess() {
         Process process = new Process();
@@ -45,25 +46,23 @@ public abstract class BrowsersImpl implements Browsers {
         return process;
     }
 
-    protected Proxy getProxy() {
-        Proxy proxy = new Proxy();
-        proxy.setSocksProxy(PROXY_IP_ADDRESS + ":" + PROXY_PORT);
-        proxy.setSocksVersion(5);
-        return proxy;
+    private String getInstanceName() {
+        return toLowerCase(this.getClass().getSimpleName());
+    }
+
+    protected Capabilities getCapabilities() {
+        return ((RemoteWebDriver) webDriver).getCapabilities();
     }
 
     protected abstract String getProcessId();
 
     protected abstract String getDriverName();
 
-    protected Capabilities getCapabilities() {
-        return ((RemoteWebDriver) webDriver).getCapabilities();
-    }
-
-    protected abstract WebDriver getDriverInstance();
-
-    private String getInstanceName() {
-        return toLowerCase(this.getClass().getSimpleName());
+    protected Proxy getProxy() {
+        Proxy proxy = new Proxy();
+        proxy.setSocksProxy(PROXY_IP_ADDRESS + ":" + PROXY_PORT);
+        proxy.setSocksVersion(5);
+        return proxy;
     }
 
     private void killAllRunningProcesses() {

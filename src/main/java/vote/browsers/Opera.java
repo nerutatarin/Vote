@@ -1,5 +1,6 @@
 package vote.browsers;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
@@ -8,7 +9,6 @@ import utils.RandomUserAgent;
 import java.time.Duration;
 import java.util.Collections;
 
-import static io.github.bonigarcia.wdm.WebDriverManager.operadriver;
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
 import static utils.Thesaurus.Drivers.OPERA_DRIVER_VALUE;
@@ -17,9 +17,7 @@ public class Opera extends BrowsersImpl {
 
     @Override
     protected void webDriverInitialize() {
-        /*Driver driver = new Driver(OPERA_DRIVER_KEY, OPERA_DRIVER_VALUE);
-        driver.setPropertyDependsOnOS();*/
-        operadriver().setup();
+        WebDriverManager.operadriver().setup();
     }
 
     @Override
