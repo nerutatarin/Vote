@@ -11,4 +11,14 @@ public class Utils {
         }
         return str;
     }
+
+    public static String substringBeforeSpace(String str) {
+        if (str == null || str.isEmpty()) return str;
+        return str.replaceAll("\\S+$", "").trim();
+    }
+
+    public static String substringAfterSpace(String str) {
+        if (str == null || str.isEmpty()) return str;
+        return str.replaceAll("^\\S+\\s", "");
+    }
 }

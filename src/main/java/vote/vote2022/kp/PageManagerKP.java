@@ -5,6 +5,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import utils.Utils;
 import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.model.Process;
 import vote.pagemanager.PageManagerImpl;
@@ -37,9 +38,10 @@ public class PageManagerKP extends PageManagerImpl {
         Elements questionData = getQuestionData(pageSource);
         for (Element question : questionData) {
             String title = question.selectFirst("div.question").text();
-            VotePage votePage = new VotePage();
+
             List<Participant> participantList = getParticipantsOfNominations(question);
 
+            VotePage votePage = new VotePage();
             votePage.setTitleNomination(title);
             votePage.setParticipant(participantList);
 
@@ -57,15 +59,16 @@ public class PageManagerKP extends PageManagerImpl {
 
     private List<Participant> getParticipants(Element answer) {
         Elements labels = answer.select("label");
-
         List<Participant> participants = new ArrayList<>();
         for (Element el : labels) {
             String inputMO = el.attr("for");
             String titleMO = el.ownText();
+
             Participant participant = new Participant();
             participant.setId(Integer.parseInt(inputMO.substring(3)));
             participant.setInput(inputMO);
             participant.setTitleMO(titleMO);
+
             participants.add(participant);
         }
         return participants;
@@ -96,20 +99,16 @@ public class PageManagerKP extends PageManagerImpl {
         Elements pollResultsAnswer = getPollResultsAnswer(pageSource);
         int id = 1;
         for (Element resultAnswer : pollResultsAnswer) {
-            String title = resultAnswer.select("span.unicredit_poll_results_answer>:not(a[href])").first().ownText();
-            String count = resultAnswer.getElementsByClass("unicredit_poll_results_count").text();
+            String pollResultAnswerTitle = resultAnswer.select("span.unicredit_poll_results_answer>:not(a[href])").first().ownText();
+            String pollResultsCount = resultAnswer.getElementsByClass("unicredit_poll_results_count").text();
+            String count = Utils.substringBeforeSpace(pollResultsCount);
+            String percent = Utils.substringAfterSpace(pollResultsCount);
 
             VoteCount voteCount = new VoteCount();
             voteCount.setId(id++);
-            voteCount.setTitle(title);
-
-            String[] arrCount = count.split(" ", 2);
-            String substringBeforeSpace = count.replaceAll("\\S+$", "").trim();
-
-            String replace3 = count.replaceAll("\\S+\\s+$", "");
-            String substringAfterSpace = count.replaceAll("^\\S+\\s", "");
-            voteCount.setCount(arrCount[0]);
-            voteCount.setPercent(arrCount[1].substring(1, arrCount[1].length() - 1));
+            voteCount.setTitle(pollResultAnswerTitle);
+            voteCount.setCount(count);
+            voteCount.setPercent(percent);
 
             voteCountList.add(voteCount);
         }
