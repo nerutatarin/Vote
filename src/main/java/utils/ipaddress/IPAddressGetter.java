@@ -49,6 +49,7 @@ public class IPAddressGetter {
             String document = parseBodyFragment(pageSource).text();
             Gson gson = new Gson();
             MyIpAddress myIpAddress = gson.fromJson(document, MyIpAddress.class);
+            log.info(process.getProcessName() + " IP адрес = " + myIpAddress.getIp());
             return myIpAddress;
         } catch (Exception e) {
             log.error("Превышено время ожидания загрузки страницы: " + e);

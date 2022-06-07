@@ -1,6 +1,5 @@
 package vote.vote2022.kp;
 
-import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ipaddress.IPAddressGetter;
 import vote.VoteImpl;
 import vote.browsers.Browsers;
@@ -23,9 +22,6 @@ public class VoteKP extends VoteImpl {
     public void vote(Browsers browser) {
         webDriver = browser.getWebDriver();
         process = browser.getProcess();
-
-        RemoteWebDriver remoteWebDriver = (RemoteWebDriver) webDriver;
-        String userAgent = String.valueOf(remoteWebDriver.executeScript("return navigator.userAgent"));
 
         myIpAddress = IPAddressGetter.getIpAddressJson(webDriver, process, ipAddrUrl);
 

@@ -3,7 +3,7 @@ package vote;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
-import utils.Utils;
+import utils.WriteToLog;
 import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.Browsers;
 import vote.browsers.model.Process;
@@ -12,11 +12,8 @@ import vote.pagemanager.PageManager;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.apache.log4j.Logger.getLogger;
-import static utils.WriteToLog.writeToLog;
-
 public abstract class VoteImpl extends Thread implements Vote {
-    private static final Logger log = getLogger(VoteImpl.class);
+    private static final Logger log = Logger.getLogger(VoteImpl.class);
     protected int count;
     //protected String ipAddrUrl = "https://api.ipify.org/";
     protected String ipAddrUrl = "https://ipinfo.io/?token=c2e2408c951023";
@@ -35,12 +32,11 @@ public abstract class VoteImpl extends Thread implements Vote {
                 init();
             } catch (TimeoutException e) {
                 String processName = process.getProcessName();
-                log.info(processName + " Запуск страницы голосования завершился по timeout");
-                String title = "МЗ РБ ГБУЗ Республиканская клиническая инфекционная больница";
-                writeToLog(processName, myIpAddress, title, null);
+                new WriteToLog(processName).error(e.getMessage());
                 return;
             } catch (Exception e) {
-                log.error("Ошибка: " + e);
+                String processName = process.getProcessName();
+                new WriteToLog(processName).error(e.getMessage());
             } finally {
                 pageManager.voteClose();
             }

@@ -1,11 +1,11 @@
 package vote.browsers.model;
 
 public class Process {
+    private String browserName;
     private String processName;
     private String processId;
     private String driverName;
     private Long startTime;
-
     public String getProcessName() {
         return processName;
     }
@@ -36,5 +36,13 @@ public class Process {
 
     public void setStartTime(Long startTime) {
         this.startTime = startTime;
+    }
+
+    public String getBrowserName() {
+        return browserName;
+    }
+
+    public void setBrowserName(String browserName) {
+        this.browserName = browserName;
     }
 }

@@ -6,9 +6,6 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static org.openqa.selenium.PageLoadStrategy.NORMAL;
-import static org.openqa.selenium.remote.CapabilityType.PAGE_LOAD_STRATEGY;
-import static org.openqa.selenium.remote.CapabilityType.PROXY;
 import static utils.Thesaurus.Drivers.MSEDGE_DRIVER_VALUE;
 
 public class MsEdge extends BrowsersImpl {

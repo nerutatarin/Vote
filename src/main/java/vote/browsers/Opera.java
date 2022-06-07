@@ -3,13 +3,14 @@ package vote.browsers;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
+import utils.RandomUserAgent;
 
 import java.time.Duration;
+import java.util.Collections;
 
 import static io.github.bonigarcia.wdm.WebDriverManager.operadriver;
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static org.openqa.selenium.chrome.ChromeDriverLogLevel.OFF;
 import static utils.Thesaurus.Drivers.OPERA_DRIVER_VALUE;
 
 public class Opera extends BrowsersImpl {
@@ -38,16 +39,22 @@ public class Opera extends BrowsersImpl {
 
     private OperaOptions getOptions() {
         OperaOptions options = new OperaOptions();
-
-        options.addArguments("--headless");
-        options.addArguments("--disable-update");
+        //options.addArguments("--enable-automation");
+        options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+        options.setExperimentalOption("useAutomationExtension", false);
+        // Fixing 255 Error crashes
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+        // Changing the user agent / browser fingerprint
+        String userAgent = RandomUserAgent.getRandomUserAgent();
+        options.addArguments("--user-agent=" + userAgent);
+        options.addArguments("--window-size=1920,1080");
+        // Options to trick bot detection
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        // Other
+        options.addArguments("--disable-infobars");
         options.addArguments("--incognito");
-        options.addArguments("--disable-gpu");
-        options.addArguments("--ignore-ssl-errors");
-        options.addArguments("--disable-extensions");
-        options.addArguments("--dns-prefetch-disable");
-        options.addArguments("--disable-popup-blocking");
-        options.addArguments("--enable-precise-memory-info");
+        options.addArguments("--headless");
 
         Duration timeout = ofSeconds(30);
         options.setPageLoadTimeout(timeout);
@@ -56,7 +63,7 @@ public class Opera extends BrowsersImpl {
 
         options.setAcceptInsecureCerts(true);
         options.setPageLoadStrategy(EAGER);
-        options.setProxy(getProxy());
+        //options.setProxy(getProxy());
         return options;
     }
 }

@@ -3,10 +3,10 @@ package vote.vote2022.orgzdrav;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import vote.browsers.Browsers;
 import vote.browsers.model.Process;
 import vote.pagemanager.PageManagerImpl;
 import vote.pagemanager.model.VoteCount;
+import vote.pagemanager.model.VotePage;
 
 import java.util.List;
 
@@ -24,6 +24,11 @@ public class PageManagerOrgZdrav extends PageManagerImpl {
     @Override
     protected By getButtonLocator() {
         return xpath("/html/body/section[@class='ftco-section']//button[@type='button']");
+    }
+
+    @Override
+    protected void getVotePages(Document pageSource, List<VotePage> votePages) {
+
     }
 
     @Override

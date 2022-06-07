@@ -18,15 +18,13 @@ import static utils.Thesaurus.ProxySettings.PROXY_PORT;
 public abstract class BrowsersImpl implements Browsers {
     private static final Logger log = getLogger(BrowsersImpl.class);
 
-    private final String instanceName = toLowerCase(this.getClass().getSimpleName());
-
     public WebDriver webDriver;
 
     @Override
     public WebDriver getWebDriver() {
         killAllRunningProcesses();
 
-        log.info("Инициализация " + instanceName + " драйвера...");
+        log.info("Инициализация " + getInstanceName() + " драйвера...");
         webDriverInitialize();
         return settingBrowser();
     }
@@ -40,6 +38,7 @@ public abstract class BrowsersImpl implements Browsers {
 
     public Process getProcess() {
         Process process = new Process();
+        process.setBrowserName(getInstanceName());
         process.setProcessName(getCapabilities().getBrowserName());
         process.setProcessId(getProcessId());
         process.setDriverName(getDriverName());
@@ -63,12 +62,16 @@ public abstract class BrowsersImpl implements Browsers {
 
     protected abstract WebDriver getDriverInstance();
 
+    private String getInstanceName() {
+        return toLowerCase(this.getClass().getSimpleName());
+    }
+
     private void killAllRunningProcesses() {
         ProcessKiller processKiller = new ProcessKiller();
 
         DRIVERS_MAP.entrySet()
                 .stream()
-                .filter(entry -> entry.getKey().equals(instanceName))
+                .filter(entry -> entry.getKey().equals(getInstanceName()))
                 .forEach(entry -> processKiller.killer(asList(entry.getKey(), entry.getValue())));
     }
 }

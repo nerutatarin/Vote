@@ -1,9 +1,9 @@
-import vote.browsers.*;
+import vote.browsers.Browsers;
+import vote.browsers.Firefox;
 import vote.vote2022.kp.VoteKP;
 
 import java.util.List;
 
-import static io.github.bonigarcia.wdm.WebDriverManager.firefoxdriver;
 import static java.util.Arrays.asList;
 
 public class Main {
@@ -11,12 +11,17 @@ public class Main {
         for (int i = 0; i < 1; i++) {
 
             int count = 1;
+            boolean headless = true;
+            boolean proxy = true;
 
-            List<Browsers> browsers = asList(new Chromium());
+            List<Browsers> browsers = asList(
+                    new Firefox()
+                    //new Chromium(),
+                    //new Opera()
+                    //new MsEdge()
+            );
+
             browsers.forEach(browser -> new VoteKP(browser, count).start());
-
-            /*VoteImpl kp = new VoteKP(new MsEdge());
-            kp.start();*/
         }
     }
 }
