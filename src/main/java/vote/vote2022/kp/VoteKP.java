@@ -1,6 +1,10 @@
 package vote.vote2022.kp;
 
 import utils.ipaddress.IPAddressGetter;
+import utils.retrofit.services.apod.response.Apod;
+import utils.retrofit.services.apod.ApodService;
+import utils.retrofit.services.webproxy.WebProxyService;
+import utils.retrofit.services.webproxy.response.WebProxies;
 import vote.VoteImpl;
 import vote.browsers.Browsers;
 
@@ -24,6 +28,14 @@ public class VoteKP extends VoteImpl {
         process = browser.getProcess();
 
         myIpAddress = IPAddressGetter.getIpAddressJson(webDriver, process, ipAddrUrl);
+
+        ApodService apodService = new ApodService();
+        Apod apod = apodService.getTitle();
+        System.out.println(apod.title);
+
+        WebProxyService webProxyService = new WebProxyService();
+        WebProxies webProxies = webProxyService.getProxyList();
+        System.out.println(webProxies);
 
         pageManager = new PageManagerKP(webDriver, process, myIpAddress);
         pageManager.votePage(voteUrl);

@@ -34,13 +34,21 @@ dependencies {
     implementation "org.seleniumhq.selenium:selenium-safari-driver:${seleniumVersion}"
     implementation "org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}"
 
-
     /* WebDriverManager */
     implementation "io.github.bonigarcia:webdrivermanager:5.1.1"
+
+    /* Retrofit */
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-jackson:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.3'
+    implementation 'org.json:json:20220320'
+
     /* Logger */
     implementation "log4j:apache-log4j-extras:1.2.17"
     //testImplementation 'ch.qos.logback:logback-classic:1.3.0-alpha16'
 
+    /* YAML */
     implementation 'org.yaml:snakeyaml:1.30'
 
     //implementation "junit:junit:4.12"

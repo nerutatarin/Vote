@@ -24,4 +24,8 @@ public class Utils {
 
         return str.replaceAll("^\\S+\\s", "");
     }
+
+    public static boolean isBlankString(String value) {
+        return value == null || value.trim().length() == 0;
+    }
 }
