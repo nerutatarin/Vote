@@ -1,7 +1,11 @@
 package utils.retrofit.services.webproxy.response;
 
+import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.gson.annotations.SerializedName;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class WebProxies {
 
@@ -11,8 +15,11 @@ public class WebProxies {
     @SerializedName("limit")
     private int limit;
 
-    @JsonIgnore
-    private WebProxy webProxy;
+    @JsonAnySetter
+    private Map<String, WebProxy> webProxies = new HashMap<>();
+
+    public WebProxies() {
+    }
 
     @SerializedName("balans")
     private int balans;
@@ -41,4 +48,11 @@ public class WebProxies {
         this.balans = balans;
     }
 
+    public Map<String, WebProxy> getWebProxies() {
+        return webProxies;
+    }
+
+    public void setWebProxies(Map<String, WebProxy> webProxies) {
+        this.webProxies = webProxies;
+    }
 }

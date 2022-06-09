@@ -2,6 +2,8 @@ package vote.vote2021;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import utils.retrofit.services.webproxy.response.WebProxies;
+import utils.retrofit.services.webproxy.response.WebProxy;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -17,10 +19,9 @@ public class DeserializationExample {
         try {
             reader = Files.newBufferedReader(Paths.get("src/resources/response.json"));
 
-            /*Type type = new TypeToken<Map<String, WebProxies>>(){}.getType();
-            Map<String, WebProxies> json = gson.fromJson(reader, type);*/
+            WebProxies map = gson.fromJson(reader, WebProxies.class);
+            Map<String, WebProxy> webProxies = map.getWebProxies();
 
-            Map<?, ?> map = gson.fromJson(reader, Map.class);
             System.out.println();
         } catch (IOException e) {
             reader.close();
