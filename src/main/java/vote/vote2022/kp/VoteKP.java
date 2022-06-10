@@ -1,10 +1,8 @@
 package vote.vote2022.kp;
 
 import utils.ipaddress.IPAddressGetter;
-import utils.retrofit.services.apod.response.Apod;
-import utils.retrofit.services.apod.ApodService;
-import utils.retrofit.services.webproxy.WebProxyService;
-import utils.retrofit.services.webproxy.response.WebProxies;
+import utils.retrofit.services.webproxy.freeproxyapi.FreeProxyService;
+import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMini;
 import vote.VoteImpl;
 import vote.browsers.Browsers;
 
@@ -29,13 +27,9 @@ public class VoteKP extends VoteImpl {
 
         myIpAddress = IPAddressGetter.getIpAddressJson(webDriver, process, ipAddrUrl);
 
-        ApodService apodService = new ApodService();
-        Apod apod = apodService.getTitle();
-        System.out.println(apod.title);
-
-        WebProxyService webProxyService = new WebProxyService();
-        WebProxies webProxies = webProxyService.getProxyList();
-        System.out.println(webProxies);
+        FreeProxyService webProxyService = new FreeProxyService();
+        FreeProxyMini freeProxyMini = webProxyService.getProxyMini();
+        System.out.println(freeProxyMini);
 
         pageManager = new PageManagerKP(webDriver, process, myIpAddress);
         pageManager.votePage(voteUrl);

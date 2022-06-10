@@ -1,29 +1,26 @@
-package utils.retrofit.services.webproxy.response;
+package utils.retrofit.services.webproxy.htmlweb.response;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class WebProxy {
 
-    @SerializedName("name")
+    @JsonProperty("name")
     private String name;
 
-    @SerializedName("work")
+    @JsonProperty("work")
     private int work;
 
-    @SerializedName("type")
+    @JsonProperty("type")
     private String type;
 
-    @SerializedName("speed")
+    @JsonProperty("speed")
     private int speed;
 
-    @SerializedName("upd")
+    @JsonProperty("upd")
     private String upd;
 
-    @SerializedName("country")
+    @JsonProperty("country")
     private String country;
-
-    public WebProxy() {
-    }
 
     public String getName() {
         return name;

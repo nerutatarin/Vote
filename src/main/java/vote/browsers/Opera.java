@@ -61,7 +61,7 @@ public class Opera extends BrowsersImpl {
 
         options.setAcceptInsecureCerts(true);
         options.setPageLoadStrategy(EAGER);
-        //options.setProxy(getProxy());
+        options.setProxy(getProxy());
         return options;
     }
 }

@@ -1,9 +1,9 @@
-package utils.retrofit.services.webproxy.request;
+package utils.retrofit.services.webproxy.htmlweb.request;
 
 public class WebProxyRequest {
-    private String country;
-    private String perpage;
-    private String api_key;
+    private final String country;
+    private final String perpage;
+    private final String api_key;
 
     public WebProxyRequest(String country, String perpage, String api_key) {
         this.country = country;

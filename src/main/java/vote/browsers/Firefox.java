@@ -44,6 +44,7 @@ public class Firefox extends BrowsersImpl {
 
         String userAgent = RandomUserAgent.getRandomUserAgent();
         options.addPreference("general.useragent.override", userAgent);
+
         //options.addArguments("user-agent=" + userAgent);
         options.addPreference("dom.webdriver.enabled", false);
         options.addPreference("dom.webnotifications.enabled", false);

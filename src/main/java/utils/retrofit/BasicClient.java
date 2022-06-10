@@ -1,5 +1,6 @@
 package utils.retrofit;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import okhttp3.OkHttpClient;
@@ -8,9 +9,10 @@ import okhttp3.ResponseBody;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.Contract;
 import retrofit2.Call;
-import retrofit2.Retrofit;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.jackson.JacksonConverterFactory;
 import utils.Utils;
 import utils.configurations.ClientConfig;
 
@@ -22,6 +24,7 @@ public abstract class BasicClient {
 
     private ClientConfig clientConfig;
     protected Gson gson = buildGson();
+    protected ObjectMapper objectMapper = buildObjectMapper();
 
     public BasicClient() {
     }
@@ -38,14 +41,18 @@ public abstract class BasicClient {
         ClientConfig clientConfig = new ClientConfig();
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl)
-                .addConverterFactory(createConverter())
+                .addConverterFactory(createGsonConverter())
+                //.addConverterFactory(createJacksonConverter())
                 .client(createClient(clientConfig, false))
                 .build();
         return retrofit.create(clazz);
     }
 
-    protected GsonConverterFactory createConverter() {
+    protected GsonConverterFactory createGsonConverter() {
         return GsonConverterFactory.create(gson);
+    }
+    protected JacksonConverterFactory createJacksonConverter() {
+        return JacksonConverterFactory.create(objectMapper);
     }
 
     protected OkHttpClient createClient(ClientConfig config, boolean isIgnoringSSL) {
@@ -54,6 +61,10 @@ public abstract class BasicClient {
                 .readTimeout(config.getReadTimeout(), MILLISECONDS);
 
         return clientBuilder.build();
+    }
+
+    private ObjectMapper buildObjectMapper() {
+        return new ObjectMapper();
     }
 
     protected Gson buildGson() {
@@ -73,6 +84,7 @@ public abstract class BasicClient {
         if (!Utils.isBlankString(payload)) {
             try {
                 utils.retrofit.Response response = gson.fromJson(payload, model);
+                //utils.retrofit.Response response = objectMapper.readValue(payload, model);
                 return response.getErrorMessage();
             } catch (Exception e) {
                 getLog().error("deserialization failed: " + payload, e);

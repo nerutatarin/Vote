@@ -25,7 +25,7 @@ public class PageManagerKP extends PageManagerImpl {
     private final String RKIB = "МЗ РБ ГБУЗ Республиканская клиническая инфекционная больница";
     private final String RD3 = "ГБУЗ РБ Родильный дом № 3 г. Уфа";
     private final String DP4 = "ГБУЗ РБ Детская поликлиника № 4 г. Уфа";
-    private final List<String> participants = asList(RKIB);
+    private final List<String> participants = asList(RKIB, DP4);
 
     public PageManagerKP(WebDriver webDriver, Process process, MyIpAddress myIpAddress) {
         this.webDriver = webDriver;
