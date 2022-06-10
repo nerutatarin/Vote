@@ -2,6 +2,7 @@ package utils.retrofit.services.webproxy.freeproxyapi;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyLarge;
 import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMedium;
 import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMini;
 
@@ -119,5 +120,5 @@ public interface FreeProxyApi {
      * }
      */
     @GET("/api/Proxy/large")
-    Call<FreeProxyMini> getLarge();
+    Call<FreeProxyLarge> getLarge();
 }

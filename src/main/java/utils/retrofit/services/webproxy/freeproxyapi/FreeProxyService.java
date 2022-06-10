@@ -2,6 +2,7 @@ package utils.retrofit.services.webproxy.freeproxyapi;
 
 import org.apache.log4j.Logger;
 import utils.retrofit.BasicClient;
+import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyLarge;
 import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMedium;
 import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMini;
 
@@ -24,7 +25,7 @@ public class FreeProxyService extends BasicClient {
         return getResponse(api.getMedium());
     }
 
-    public FreeProxyMini getProxyLarge() {
+    public FreeProxyLarge getProxyLarge() {
         return getResponse(api.getLarge());
     }
 
