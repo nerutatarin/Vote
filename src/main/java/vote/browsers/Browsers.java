@@ -6,4 +6,6 @@ import vote.browsers.model.Process;
 public interface Browsers {
     WebDriver getWebDriver();
     Process getProcess();
+
+    String getInstanceName();
 }

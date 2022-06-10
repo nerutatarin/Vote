@@ -16,6 +16,17 @@ import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 
 public class Firefox extends BrowsersImpl {
 
+    public Firefox() {
+    }
+
+    public Firefox(boolean isProxy) {
+        super(isProxy);
+    }
+
+    public Firefox(boolean isHeadless, boolean isProxy) {
+        super(isHeadless, isProxy);
+    }
+
     @Override
     protected void webDriverInitialize() {
         WebDriverManager.firefoxdriver().setup();
@@ -56,10 +67,10 @@ public class Firefox extends BrowsersImpl {
         options.setImplicitWaitTimeout(timeout);
         options.setScriptTimeout(timeout);
 
-        options.setHeadless(true);
         options.setAcceptInsecureCerts(true);
         options.setPageLoadStrategy(EAGER);
-        //options.setProxy(getProxy());
+        options.setHeadless(isHeadless);
+        options.setProxy(getProxy());
         return options;
     }
 }

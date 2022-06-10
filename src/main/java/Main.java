@@ -14,7 +14,7 @@ public class Main {
             boolean proxy = true;
 
             List<Browsers> browsers = asList(
-                    new Firefox()
+                    new Firefox(proxy)
                     //new Chromium(),
                     //new Opera(),
                     //new MsEdge()

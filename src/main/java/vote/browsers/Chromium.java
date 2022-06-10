@@ -15,6 +15,17 @@ import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
 public class Chromium extends BrowsersImpl {
 
+    public Chromium() {
+    }
+
+    public Chromium(boolean isProxy) {
+        super(isProxy);
+    }
+
+    public Chromium(boolean isHeadless, boolean isProxy) {
+        super(isHeadless, isProxy);
+    }
+
     @Override
     protected void webDriverInitialize() {
         WebDriverManager.chromedriver().setup();
@@ -58,10 +69,10 @@ public class Chromium extends BrowsersImpl {
         options.setImplicitWaitTimeout(timeout);
         options.setScriptTimeout(timeout);
 
-        options.setHeadless(true);
         options.setAcceptInsecureCerts(true);
         options.setPageLoadStrategy(EAGER);
-        //options.setProxy(getProxy());
+        options.setHeadless(isHeadless);
+        options.setProxy(getProxy());
         return options;
     }
 }

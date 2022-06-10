@@ -15,6 +15,17 @@ import static utils.Thesaurus.Drivers.OPERA_DRIVER_VALUE;
 
 public class Opera extends BrowsersImpl {
 
+    public Opera() {
+    }
+
+    public Opera(boolean isProxy) {
+        super(isProxy);
+    }
+
+    public Opera(boolean isHeadless, boolean isProxy) {
+        super(isHeadless, isProxy);
+    }
+
     @Override
     protected void webDriverInitialize() {
         WebDriverManager.operadriver().setup();
@@ -52,7 +63,8 @@ public class Opera extends BrowsersImpl {
         // Other
         options.addArguments("--disable-infobars");
         options.addArguments("--incognito");
-        options.addArguments("--headless");
+
+        if (isHeadless) options.addArguments("--headless");
 
         Duration timeout = ofSeconds(30);
         options.setPageLoadTimeout(timeout);

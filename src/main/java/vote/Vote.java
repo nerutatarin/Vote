@@ -1,9 +1,10 @@
 package vote;
 
-import vote.browsers.Browsers;
+import org.openqa.selenium.WebDriver;
+import vote.browsers.model.Process;
 
 public interface Vote {
     void init();
 
-    void vote(Browsers browsers);
+    void vote(WebDriver driver, Process process);
 }

@@ -1,10 +1,9 @@
 package vote.vote2022.kp;
 
-import utils.ipaddress.IPAddressGetter;
-import utils.retrofit.services.webproxy.freeproxyapi.FreeProxyService;
-import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMini;
+import org.openqa.selenium.WebDriver;
 import vote.VoteImpl;
 import vote.browsers.Browsers;
+import vote.browsers.model.Process;
 
 import java.util.List;
 
@@ -12,26 +11,18 @@ public class VoteKP extends VoteImpl {
     private final String voteUrl = "https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022";
 
     public VoteKP(List<Browsers> browsers, int count) {
-        this.browsersList = browsers;
-        this.count = count;
+        super(browsers, count);
     }
 
     public VoteKP(Browsers browser, int count) {
-        this.browser = browser;
-        this.count = count;
+        super(browser, count);
     }
 
-    public void vote(Browsers browser) {
-        webDriver = browser.getWebDriver();
-        process = browser.getProcess();
+    @Override
+    public void vote(WebDriver driver, Process process) {
+        getIpAddressJson(driver, process);
 
-        myIpAddress = IPAddressGetter.getIpAddressJson(webDriver, process, ipAddrUrl);
-
-        FreeProxyService freeProxyService = new FreeProxyService();
-        FreeProxyMini freeProxyMini = freeProxyService.getProxyMini();
-        System.out.println(freeProxyMini);
-
-        pageManager = new PageManagerKP(webDriver, process, myIpAddress);
+        pageManager = new PageManagerKP(driver, process, myIpAddress);
         pageManager.votePage(voteUrl);
         pageManager.voteInput();
         pageManager.voteButton();
