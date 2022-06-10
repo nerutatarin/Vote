@@ -8,20 +8,18 @@ import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMini;
 public interface FreeProxyApi {
 
     /**
-     * {
+     * @return {
      * "host": "139.198.121.69",
      * "port": 5678,
      * "type": "Socks4",
      * "proxyLevel": "Elite"
      * }
-     *
-     * @return
      */
-    @GET("/Proxy/mini")
+    @GET("/api/Proxy/mini")
     Call<FreeProxyMini> getMini();
 
     /**
-     * {
+     * @return {
      * "isAlive": true,
      * "miliseconds": 9560,
      * "averageTime": 9559,
@@ -33,97 +31,93 @@ public interface FreeProxyApi {
      * "type": "Socks4",
      * "proxyLevel": "Elite"
      * }
-     *
-     * @return
      */
-    @GET("/Proxy/medium")
+    @GET("/api/Proxy/medium")
     Call<FreeProxyMedium> getMedium();
 
     /**
-     * {
-     * "totalUpdated": 12,
-     * "totalFailed": 27,
+     * @return {
+     * "totalUpdated": 104,
+     * "totalFailed": 63,
      * "checkInfo": [
      * {
+     * "isAlive": true,
+     * "time": "2022-06-10T03:48:59.1653363+00:00",
+     * "miliseconds": 110,
+     * "id": 0
+     * },
+     * {
+     * "isAlive": true,
+     * "time": "2022-06-10T04:21:51.8822179+00:00",
+     * "miliseconds": 64100,
+     * "id": 0
+     * },
+     * {
+     * "isAlive": true,
+     * "time": "2022-06-10T04:54:13.1131655+00:00",
+     * "miliseconds": 7173,
+     * "id": 0
+     * },
+     * {
      * "isAlive": false,
-     * "time": "2022-06-10T04:08:48.2926984+00:00",
+     * "time": "2022-06-10T05:32:47.4639262+00:00",
      * "miliseconds": 0,
      * "id": 0
      * },
      * {
      * "isAlive": true,
-     * "time": "2022-06-10T04:37:25.742601+00:00",
-     * "miliseconds": 67495,
+     * "time": "2022-06-10T05:53:04.9926259+00:00",
+     * "miliseconds": 1116,
+     * "id": 0
+     * },
+     * {
+     * "isAlive": true,
+     * "time": "2022-06-10T06:27:22.80408+00:00",
+     * "miliseconds": 7176,
      * "id": 0
      * },
      * {
      * "isAlive": false,
-     * "time": "2022-06-10T05:16:45.7832574+00:00",
+     * "time": "2022-06-10T07:01:45.7969008+00:00",
+     * "miliseconds": 0,
+     * "id": 0
+     * },
+     * {
+     * "isAlive": false,
+     * "time": "2022-06-10T07:36:34.4430557+00:00",
      * "miliseconds": 0,
      * "id": 0
      * },
      * {
      * "isAlive": true,
-     * "time": "2022-06-10T05:38:16.0527731+00:00",
-     * "miliseconds": 33651,
+     * "time": "2022-06-10T08:03:08.2436446+00:00",
+     * "miliseconds": 280,
      * "id": 0
      * },
      * {
      * "isAlive": false,
-     * "time": "2022-06-10T06:12:28.4911525+00:00",
+     * "time": "2022-06-10T08:41:23.1440111+00:00",
      * "miliseconds": 0,
-     * "id": 0
-     * },
-     * {
-     * "isAlive": true,
-     * "time": "2022-06-10T06:44:18.1512959+00:00",
-     * "miliseconds": 12357,
-     * "id": 0
-     * },
-     * {
-     * "isAlive": false,
-     * "time": "2022-06-10T07:19:25.018892+00:00",
-     * "miliseconds": 0,
-     * "id": 0
-     * },
-     * {
-     * "isAlive": false,
-     * "time": "2022-06-10T07:53:18.1491635+00:00",
-     * "miliseconds": 0,
-     * "id": 0
-     * },
-     * {
-     * "isAlive": false,
-     * "time": "2022-06-10T08:24:33.9929605+00:00",
-     * "miliseconds": 0,
-     * "id": 0
-     * },
-     * {
-     * "isAlive": true,
-     * "time": "2022-06-10T08:52:14.144342+00:00",
-     * "miliseconds": 68442,
      * "id": 0
      * }
      * ],
-     * "continentCode": "EU",
-     * "continentName": "Europe",
-     * "countryCode": "RU",
-     * "cityName": "Moscow",
-     * "isInEu": true,
-     * "isAlive": true,
-     * "miliseconds": 19075,
-     * "averageTime": 19075,
-     * "countryName": "Russia",
-     * "latitude": 55.7483,
-     * "longitude": 37.6171,
-     * "host": "188.133.158.145",
-     * "port": 8080,
-     * "type": "Http",
+     * "continentCode": "AS",
+     * "continentName": "Asia",
+     * "countryCode": "TR",
+     * "cityName": "Istanbul",
+     * "isInEu": false,
+     * "isAlive": false,
+     * "miliseconds": 14099,
+     * "averageTime": 14099,
+     * "countryName": "Turkey",
+     * "latitude": 41.0082,
+     * "longitude": 28.9784,
+     * "host": "84.51.56.123",
+     * "port": 4145,
+     * "type": "Socks4",
      * "proxyLevel": "NotValidated"
      * }
-     *
-     * @return
      */
-    @GET("/Proxy/large")
+    @GET("/api/Proxy/large")
     Call<FreeProxyMini> getLarge();
 }

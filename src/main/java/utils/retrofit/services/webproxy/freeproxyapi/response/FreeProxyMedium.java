@@ -17,10 +17,10 @@ public class FreeProxyMedium extends FreeProxyMini {
     private String countryName;
 
     @SerializedName("latitude")
-    private String latitude;
+    private float latitude;
 
     @SerializedName("longitude")
-    private String longitude;
+    private float longitude;
 
     public Boolean getAlive() {
         return isAlive;
@@ -54,19 +54,19 @@ public class FreeProxyMedium extends FreeProxyMini {
         this.countryName = countryName;
     }
 
-    public String getLatitude() {
+    public float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(float latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(float longitude) {
         this.longitude = longitude;
     }
 

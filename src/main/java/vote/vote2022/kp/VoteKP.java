@@ -27,8 +27,8 @@ public class VoteKP extends VoteImpl {
 
         myIpAddress = IPAddressGetter.getIpAddressJson(webDriver, process, ipAddrUrl);
 
-        FreeProxyService webProxyService = new FreeProxyService();
-        FreeProxyMini freeProxyMini = webProxyService.getProxyMini();
+        FreeProxyService freeProxyService = new FreeProxyService();
+        FreeProxyMini freeProxyMini = freeProxyService.getProxyMini();
         System.out.println(freeProxyMini);
 
         pageManager = new PageManagerKP(webDriver, process, myIpAddress);
