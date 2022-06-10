@@ -8,7 +8,6 @@ import vote.browsers.model.Process;
 import java.util.List;
 
 public class VoteKP extends VoteImpl {
-    private final String voteUrl = "https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022";
 
     public VoteKP(List<Browsers> browsers, int count) {
         super(browsers, count);
@@ -22,10 +21,12 @@ public class VoteKP extends VoteImpl {
     public void vote(WebDriver driver, Process process) {
         getIpAddressJson(driver, process);
 
-        pageManager = new PageManagerKP(driver, process, myIpAddress);
+        pageManager = new PageManagerKP(driver, process);
+
+        String voteUrl = "https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022";
         pageManager.votePage(voteUrl);
         pageManager.voteInput();
         pageManager.voteButton();
-        pageManager.voteLogging();
+        pageManager.voteLogging(myIpAddress);
     }
 }

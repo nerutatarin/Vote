@@ -1,10 +1,10 @@
-package utils.retrofit.services.webproxy.freeproxyapi;
+package utils.retrofit.services.webproxy.freeproxy;
 
 import org.apache.log4j.Logger;
 import utils.retrofit.BasicClient;
-import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyLarge;
-import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMedium;
-import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMini;
+import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyLarge;
+import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyMedium;
+import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyMini;
 
 import static org.apache.log4j.Logger.getLogger;
 

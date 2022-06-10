@@ -11,6 +11,8 @@ import java.time.Duration;
 
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
+import static org.openqa.selenium.PageLoadStrategy.NONE;
+import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.FATAL;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
 import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 
@@ -67,6 +69,7 @@ public class Firefox extends BrowsersImpl {
         options.setImplicitWaitTimeout(timeout);
         options.setScriptTimeout(timeout);
 
+        options.setLogLevel(FATAL);
         options.setAcceptInsecureCerts(true);
         options.setPageLoadStrategy(EAGER);
         options.setHeadless(isHeadless);

@@ -1,33 +1,27 @@
 package utils.ipaddress.model;
 
-import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import javax.annotation.Generated;
 
-@Generated("jsonschema2pojo")
 public class MyIpAddress {
 
     @SerializedName("ip")
-    @Expose
     private String ip;
+
     @SerializedName("country")
-    @Expose
     private String country;
 
     @SerializedName("city")
-    @Expose
     private String city;
 
     @SerializedName("hostname")
-    @Expose
     private String hostname;
 
     @SerializedName("region")
-    @Expose
     private String region;
+
     @SerializedName("org")
-    @Expose
     private String org;
 
     public String getIp() {

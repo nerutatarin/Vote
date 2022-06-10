@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import utils.ProcessKiller;
 import utils.WriteToLog;
 import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.model.Process;
@@ -32,10 +31,11 @@ public abstract class PageManagerImpl implements PageManager {
     protected WebDriver webDriver;
     protected Process process;
     protected String processName;
-    protected MyIpAddress myIpAddress;
     protected List<VotePage> votePageList;
 
-    protected void getBrowserName() {
+    public PageManagerImpl(WebDriver webDriver, Process process) {
+        this.webDriver = webDriver;
+        this.process = process;
         processName = process.getProcessName();
     }
 
@@ -86,7 +86,7 @@ public abstract class PageManagerImpl implements PageManager {
 
     protected abstract By getButtonLocator();
 
-    public void voteLogging() {
+    public void voteLogging(MyIpAddress myIpAddress) {
         Document pageSource = getPageSource();
         if (pageSource == null) return;
 
@@ -108,28 +108,9 @@ public abstract class PageManagerImpl implements PageManager {
         }
     }
 
-    protected Document getPageSource() {
+    private Document getPageSource() {
         return parse(webDriver.getPageSource());
     }
 
     protected abstract List<VoteCount> getVoteCountList(Document pageSource);
-
-    public void voteClose() {
-        String driverName = process.getDriverName();
-        try {
-            log.info(processName + " Завершаем работу драйвера: " + driverName);
-            webDriver.quit();
-            log.info(processName + " Работа драйвера " + driverName + " успешно завершена!");
-        } catch (Exception e) {
-            log.debug(processName + " При попытке завершить работу драйвера " + driverName + " возникла непредвиденная ошибка: " + e);
-            log.info(processName + " Завершаем процесс драйвера: " + driverName);
-            killProcess();
-        }
-    }
-
-    private void killProcess() {
-        ProcessKiller processKiller = new ProcessKiller();
-        processKiller.killer(process.getDriverName());
-        processKiller.killer(process.getProcessName());
-    }
 }

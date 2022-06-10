@@ -1,4 +1,4 @@
-package utils.retrofit.services.webproxy.freeproxyapi.response;
+package utils.retrofit.services.webproxy.freeproxy.response;
 
 import com.google.gson.annotations.SerializedName;
 

@@ -16,6 +16,7 @@ import java.util.List;
 
 public abstract class VoteImpl extends Thread implements Vote {
     private static final Logger log = Logger.getLogger(VoteImpl.class);
+
     protected int count;
     protected PageManager pageManager;
     protected List<Browsers> browsersList = new ArrayList<>();
@@ -38,14 +39,15 @@ public abstract class VoteImpl extends Thread implements Vote {
         for (int i = 0; i < count; i++) {
             try {
                 init();
-                log.info(" Попытка № " + count);
             } catch (TimeoutException e) {
-                new WriteToLog(browserName).error(e.getMessage());
+                log.error(browserName + " Превышено время ожидания загрузки страницы!");
+                new WriteToLog(browserName).error(e.getLocalizedMessage());
                 return;
             } catch (Exception e) {
+                log.error(browserName + " Неизвестная ошибка!");
                 new WriteToLog(browserName).error(e.getMessage());
             } finally {
-                pageManager.voteClose();
+                browser.voteClose();
             }
         }
     }
@@ -54,10 +56,12 @@ public abstract class VoteImpl extends Thread implements Vote {
         if (!browsersList.isEmpty()) {
             for (Browsers driver : browsersList) {
                 browserName = driver.getInstanceName();
+                log.info(browserName + " Попытка № " + count);
                 vote(getWebDriver(driver), getProcess(driver));
             }
         } else {
             browserName = browser.getInstanceName();
+            log.info(browserName + " Попытка № " + count);
             vote(getWebDriver(browser), getProcess(browser));
         }
     }
@@ -72,7 +76,6 @@ public abstract class VoteImpl extends Thread implements Vote {
 
     @Nullable
     public MyIpAddress getIpAddressJson(WebDriver webDriver, Process process) {
-        //String ipAddrUrl = "https://api.ipify.org/";
         String ipAddrUrl = "https://ipinfo.io/?token=c2e2408c951023";
         myIpAddress = IPAddressGetter.getIpAddressJson(webDriver, process, ipAddrUrl);
         return myIpAddress;

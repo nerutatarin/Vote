@@ -6,7 +6,6 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.Utils;
-import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.model.Process;
 import vote.pagemanager.PageManagerImpl;
 import vote.pagemanager.model.Participant;
@@ -27,11 +26,8 @@ public class PageManagerKP extends PageManagerImpl {
     private final String DP4 = "ГБУЗ РБ Детская поликлиника № 4 г. Уфа";
     private final List<String> participants = asList(RKIB, DP4);
 
-    public PageManagerKP(WebDriver webDriver, Process process, MyIpAddress myIpAddress) {
-        this.webDriver = webDriver;
-        this.process = process;
-        this.myIpAddress = myIpAddress;
-        getBrowserName();
+    public PageManagerKP(WebDriver webDriver, Process process) {
+        super(webDriver, process);
     }
 
     protected void getVotePages(Document pageSource, List<VotePage> votePages) {

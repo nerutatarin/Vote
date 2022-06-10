@@ -7,8 +7,8 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ProcessKiller;
-import utils.retrofit.services.webproxy.freeproxyapi.FreeProxyService;
-import utils.retrofit.services.webproxy.freeproxyapi.response.FreeProxyMedium;
+import utils.retrofit.services.webproxy.freeproxy.FreeProxyService;
+import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyMedium;
 import vote.browsers.model.Process;
 
 import static java.util.Arrays.asList;
@@ -22,8 +22,7 @@ public abstract class BrowsersImpl implements Browsers {
     private static final Logger log = getLogger(BrowsersImpl.class);
     protected boolean isHeadless;
     protected boolean isProxy;
-    public WebDriver webDriver;
-
+    protected WebDriver webDriver;
     protected Process process;
 
     public BrowsersImpl() {
@@ -44,7 +43,7 @@ public abstract class BrowsersImpl implements Browsers {
     public WebDriver getWebDriver() {
         killAllRunningProcesses();
 
-        log.info("Инициализация " + getInstanceName() + " драйвера...");
+        log.info(getInstanceName() + " Инициализация драйвера...");
         WebDriverManager.getInstance().setup();
         webDriverInitialize();
 
@@ -124,5 +123,25 @@ public abstract class BrowsersImpl implements Browsers {
         FreeProxyService freeProxyService = new FreeProxyService();
         FreeProxyMedium proxyMedium = freeProxyService.getProxyMedium();
         return proxyMedium.getAlive() ? proxyMedium : getWebProxy();
+    }
+
+    public void voteClose() {
+        String driverName = getDriverName();
+        String browserName = getInstanceName();
+        try {
+            log.info(browserName + " Завершаем работу драйвера: " + driverName);
+            webDriver.quit();
+            log.info(browserName + " Работа драйвера " + driverName + " успешно завершена!");
+        } catch (Exception e) {
+            log.debug(browserName + " При попытке завершить работу драйвера " + driverName + " возникла непредвиденная ошибка: " + e);
+            log.info(browserName + " Завершаем процесс драйвера: " + driverName);
+            killProcess(driverName, browserName);
+        }
+    }
+
+    private void killProcess(String driverName, String browserName) {
+        ProcessKiller processKiller = new ProcessKiller();
+        processKiller.killer(driverName);
+        processKiller.killer(browserName);
     }
 }

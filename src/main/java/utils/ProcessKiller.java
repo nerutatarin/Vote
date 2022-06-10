@@ -25,7 +25,7 @@ public class ProcessKiller {
             if (isRunning) {
                 killProcess(processName);
             } else {
-                log.info("Процесс " + processName + " не найден");
+                log.info(processName + " Процесс не найден");
             }
         }
         if (isUnix()) {
@@ -48,7 +48,7 @@ public class ProcessKiller {
                 }
             }
         } catch (Exception e) {
-            log.debug("При поиске процесса " + processName + " произошла ошибка: " + e.getMessage());
+            log.debug(processName + " При поиске процесса произошла ошибка: " + e.getMessage());
         }
         return false;
     }
@@ -64,9 +64,9 @@ public class ProcessKiller {
     private void kill(String commandKill, String processName) {
         try {
             getRuntime().exec(commandKill + processName);
-            log.info("Успешное завершение работы процесса " + processName);
+            log.info(processName + " Успешное завершение работы процесса");
         } catch (Exception e) {
-            log.debug("Не удалось завершить процесс " + processName + ": " + e.getMessage());
+            log.debug(processName + " Попытка прикончить процесс завершилась с ошибкой: " + e.getMessage());
         }
     }
 }

@@ -1,6 +1,7 @@
 package vote.pagemanager;
 
 import org.jsoup.nodes.Document;
+import utils.ipaddress.model.MyIpAddress;
 import vote.pagemanager.model.VotePage;
 
 import java.util.List;
@@ -15,7 +16,5 @@ public interface PageManager {
 
     void voteButton();
 
-    void voteLogging();
-
-    void voteClose();
+    void voteLogging(MyIpAddress myIpAddress);
 }

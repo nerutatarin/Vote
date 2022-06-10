@@ -16,9 +16,7 @@ import static org.openqa.selenium.By.xpath;
 public class PageManagerOrgZdrav extends PageManagerImpl {
 
     public PageManagerOrgZdrav(WebDriver webDriver, Process process) {
-        this.webDriver = webDriver;
-        this.process = process;
-        getBrowserName();
+        super(webDriver, process);
     }
 
     @Override
