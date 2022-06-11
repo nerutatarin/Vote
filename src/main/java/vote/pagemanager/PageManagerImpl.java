@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.WriteToLog;
+import utils.configurations.Participants;
 import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.model.Process;
 import vote.pagemanager.model.VoteCount;
@@ -32,11 +33,17 @@ public abstract class PageManagerImpl implements PageManager {
     protected Process process;
     protected String processName;
     protected List<VotePage> votePageList;
+    protected Participants participants;
 
     public PageManagerImpl(WebDriver webDriver, Process process) {
         this.webDriver = webDriver;
         this.process = process;
         processName = process.getProcessName();
+        participants = getParticipants();
+    }
+
+    private Participants getParticipants() {
+        return new Participants().yamlParser();
     }
 
     public void votePage(String baseUrl) throws TimeoutException {
@@ -66,7 +73,6 @@ public abstract class PageManagerImpl implements PageManager {
             webElement.click();
             log.info(processName + " Проставлен " + inp);
         });
-
     }
 
     protected abstract List<String> getInputsListLocatorById();

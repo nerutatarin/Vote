@@ -1,4 +1,4 @@
-package utils.configurations.config;
+package example;
 
 import java.util.List;
 

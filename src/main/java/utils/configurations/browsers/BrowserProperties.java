@@ -1,4 +1,4 @@
-package utils.configurations.config;
+package utils.configurations.browsers;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;

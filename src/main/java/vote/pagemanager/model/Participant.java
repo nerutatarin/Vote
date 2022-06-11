@@ -31,7 +31,7 @@ public class Participant {
 
     @Override
     public String toString() {
-        return "{" +
+        return "Participant{" +
                 "id=" + id +
                 ", input='" + input + '\'' +
                 ", titleMO='" + titleMO + '\'' +

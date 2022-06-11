@@ -3,11 +3,14 @@ package example;
 import org.apache.log4j.Logger;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import utils.configurations.config.BrowserProperties;
-import utils.configurations.config.BrowserType;
+import utils.configurations.Participants;
+import utils.configurations.browsers.BrowserProperties;
+import utils.configurations.browsers.BrowserType;
 
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Config {
     private static final Logger log = Logger.getLogger(Config.class);
@@ -27,10 +30,13 @@ public class Config {
 
     public static void main(String[] args) {
 
-        BrowserProperties browserProperties = new BrowserProperties().yamlParser();
-        Map<String, BrowserType> browsersType = browserProperties.getBrowsersType();
-        BrowserType opera = browsersType.get("opera");
-        String name = opera.getName();
+        Participants participants = new Participants().yamlParser();
+        List<Participants.Participant> participantList = participants.getParticipants();
 
+        List<Participants.Participant> collect = participantList.stream()
+                .filter(Participants.Participant::getAllow)
+                .collect(Collectors.toList());
+
+        System.out.println();
     }
 }

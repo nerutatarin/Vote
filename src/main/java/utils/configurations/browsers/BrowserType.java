@@ -1,4 +1,4 @@
-package utils.configurations.config;
+package utils.configurations.browsers;
 
 public class BrowserType {
 

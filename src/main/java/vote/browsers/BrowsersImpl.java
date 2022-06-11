@@ -11,7 +11,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ProcessKiller;
-import utils.configurations.config.BrowserProperties;
+import utils.configurations.browsers.BrowserProperties;
 import utils.retrofit.services.webproxy.freeproxy.FreeProxyService;
 import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyMedium;
 import vote.browsers.model.Process;

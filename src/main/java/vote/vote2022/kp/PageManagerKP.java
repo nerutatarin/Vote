@@ -6,6 +6,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import utils.Utils;
+import utils.configurations.Participants;
 import vote.browsers.model.Process;
 import vote.pagemanager.PageManagerImpl;
 import vote.pagemanager.model.Participant;
@@ -13,11 +14,9 @@ import vote.pagemanager.model.VoteCount;
 import vote.pagemanager.model.VotePage;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.util.Arrays.asList;
 import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
@@ -25,7 +24,7 @@ public class PageManagerKP extends PageManagerImpl {
     private final String RD3 = "ГБУЗ РБ Родильный дом № 3 г. Уфа";
     private final String DP4 = "ГБУЗ РБ Детская поликлиника № 4 г. Уфа";
     private final String GB18 = "ГБУЗ РБ Городская клиническая больница № 18 г. Уфа";
-    private final List<String> participants = asList(RKIB);
+    //private final List<String> participantsList = Collections.singletonList(RKIB);
 
     public PageManagerKP(WebDriver webDriver, Process process) {
         super(webDriver, process);
@@ -39,7 +38,7 @@ public class PageManagerKP extends PageManagerImpl {
             List<Participant> participantList = getParticipantsOfNominations(question);
 
             VotePage votePage = new VotePage();
-            votePage.setTitleNomination(title);
+            votePage.setTitleNomination(title.substring(3).trim());
             votePage.setParticipant(participantList);
 
             votePages.add(votePage);
@@ -82,12 +81,21 @@ public class PageManagerKP extends PageManagerImpl {
 
     @Override
     protected List<String> getInputsListLocatorById() {
-        return votePageList.stream()
-                .map(VotePage::getParticipant)
-                .flatMap(Collection::stream)
-                .filter(participant -> participants.contains(participant.getTitleMO()))
-                .map(Participant::getInput)
-                .collect(Collectors.toList());
+        List<String> list = new ArrayList<>();
+        for (VotePage votePage : votePageList) {
+            List<Participant> participantList = votePage.getParticipant();
+            for (Participant participant : participantList) {
+                for (Participants.Participant allow : getAllowParticipants()) {
+                    String titleNomination = votePage.getTitleNomination();
+                    if (allow.getNomination().contains(titleNomination) && allow.getTitle().contains(participant.getTitleMO())) {
+                        String input = participant.getInput();
+                        list.add(input);
+                    }
+                }
+
+            }
+        }
+        return list;
     }
 
     @Override
@@ -114,5 +122,11 @@ public class PageManagerKP extends PageManagerImpl {
 
     private Elements getPollResultsAnswer(Document pageSource) {
         return pageSource.getElementsByClass("unicredit_poll_results_answer");
+    }
+
+    private List<Participants.Participant> getAllowParticipants() {
+        return participants.getParticipants().stream()
+                .filter(Participants.Participant::getAllow)
+                .collect(Collectors.toList());
     }
 }

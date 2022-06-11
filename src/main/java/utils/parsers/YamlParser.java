@@ -1,7 +1,7 @@
 package utils.parsers;
 
 import org.yaml.snakeyaml.Yaml;
-import utils.configurations.config.BrowserType;
+import utils.configurations.browsers.BrowserType;
 
 import java.io.InputStream;
 import java.util.Map;

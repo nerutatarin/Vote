@@ -1,4 +1,4 @@
-package utils.configurations.config;
+package example;
 
 public class Contact {
     private String type;
