@@ -1,0 +1,6 @@
+chrome:
+    driverKey: "webdriver.chrome.driver"
+    driverName: "chromedriver"
+firefox:
+    driverKey: "webdriver.gecko.driver"
+    driverName: "geckodriver"

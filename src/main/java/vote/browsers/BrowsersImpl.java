@@ -7,6 +7,8 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ProcessKiller;
+import utils.configurations.config.BrowserProperties;
+import utils.configurations.config.ConfigWebDriver;
 import utils.retrofit.services.webproxy.freeproxy.FreeProxyService;
 import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyMedium;
 import vote.browsers.model.Process;
@@ -37,6 +39,15 @@ public abstract class BrowsersImpl implements Browsers {
         this.isHeadless = isHeadless;
         this.isProxy = isProxy;
         process = new Process();
+    }
+
+    protected BrowserProperties getBrowserProperties() {
+        return new ConfigWebDriver().getBrowserType();
+    }
+
+    public String getDriverName() {
+        String instanceName = getInstanceName();
+        return getBrowserProperties().getDriverName();
     }
 
     @Override
@@ -72,8 +83,6 @@ public abstract class BrowsersImpl implements Browsers {
     }
 
     protected abstract String getProcessId();
-
-    protected abstract String getDriverName();
 
     protected Proxy getProxy() {
         Proxy proxy = new Proxy();

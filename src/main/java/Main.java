@@ -9,9 +9,9 @@ public class Main {
     public static void main(String[] args) {
         for (int i = 0; i < 1; i++) {
 
-            int count = 2;
+            int count = 1;
             boolean headless = true;
-            boolean proxy = true;
+            boolean proxy = false;
 
             List<Browsers> browsers = asList(
                     new Firefox(proxy)

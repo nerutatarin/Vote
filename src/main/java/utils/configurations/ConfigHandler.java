@@ -15,7 +15,7 @@ import org.yaml.snakeyaml.constructor.Constructor;
 
 public class ConfigHandler {
 
-    public static final Path configWebDriverPath = Paths.get("./configwebdriver.yml");
+    public static final Path configWebDriverPath = Paths.get("./browser_properties.yaml");
 
     private static ConfigHandler configHandler;
 

@@ -32,11 +32,6 @@ public class Chrome extends BrowsersImpl {
     }
 
     @Override
-    protected String getDriverName() {
-        return CHROME_DRIVER_VALUE;
-    }
-
-    @Override
     protected WebDriver getDriverInstance() {
         return new ChromeDriver(getOptions());
     }

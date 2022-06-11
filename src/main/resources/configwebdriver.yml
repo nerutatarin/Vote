@@ -1,9 +1,0 @@
-browserType:
-  Chrome:
-    name: "chrome"
-    key: "webdriver.chrome.driver"
-    value: "chromedriver"
-  Firefox:
-    name: "firefox"
-    key: "webdriver.gecko.driver"
-    value: "geckodriver"

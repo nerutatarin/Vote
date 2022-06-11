@@ -37,11 +37,6 @@ public class Opera extends BrowsersImpl {
     }
 
     @Override
-    protected String getDriverName() {
-        return OPERA_DRIVER_VALUE;
-    }
-
-    @Override
     protected WebDriver getDriverInstance() {
         return new OperaDriver(getOptions());
     }

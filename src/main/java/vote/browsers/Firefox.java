@@ -11,10 +11,8 @@ import java.time.Duration;
 
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static org.openqa.selenium.PageLoadStrategy.NONE;
 import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.FATAL;
 import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
-import static utils.Thesaurus.Drivers.GECKO_DRIVER_VALUE;
 
 public class Firefox extends BrowsersImpl {
 
@@ -39,11 +37,10 @@ public class Firefox extends BrowsersImpl {
         return getCapabilities().getCapability(MOZ_PROCESS_ID).toString();
     }
 
-    @Override
+    /*@Override
     protected String getDriverName() {
         return GECKO_DRIVER_VALUE;
-    }
-
+    }*/
     @Override
     protected WebDriver getDriverInstance() {
         return new FirefoxDriver(getOptions());

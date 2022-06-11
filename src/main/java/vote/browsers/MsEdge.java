@@ -37,11 +37,6 @@ public class MsEdge extends BrowsersImpl {
     }
 
     @Override
-    protected String getDriverName() {
-        return MSEDGE_DRIVER_VALUE;
-    }
-
-    @Override
     protected WebDriver getDriverInstance() {
         return new EdgeDriver(getOptions());
     }

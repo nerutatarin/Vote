@@ -1,4 +1,4 @@
-package utils;
+package example;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
@@ -12,6 +12,7 @@ import java.nio.file.Paths;
 
 public class DeserializationExample {
     private static final Logger log = Logger.getLogger(DeserializationExample.class);
+
     public static void main(final String[] args) throws IOException {
 
         ObjectMapper objectMapper = new ObjectMapper();
