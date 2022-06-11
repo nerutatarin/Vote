@@ -1,12 +1,8 @@
 package vote.browsers;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static utils.Thesaurus.Drivers.CHROME_DRIVER_VALUE;
 
 public class Chrome extends BrowsersImpl {
 
@@ -22,21 +18,12 @@ public class Chrome extends BrowsersImpl {
     }
 
     @Override
-    protected void webDriverInitialize() {
-        WebDriverManager.chromedriver().setup();
-    }
-
-    @Override
     protected String getProcessId() {
         return null;
     }
 
     @Override
-    protected WebDriver getDriverInstance() {
-        return new ChromeDriver(getOptions());
-    }
-
-    private ChromeOptions getOptions() {
+    protected ChromeOptions getOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
         //options.addArguments("--headless");

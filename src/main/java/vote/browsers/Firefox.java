@@ -1,8 +1,5 @@
 package vote.browsers;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import utils.RandomUserAgent;
@@ -28,25 +25,12 @@ public class Firefox extends BrowsersImpl {
     }
 
     @Override
-    protected void webDriverInitialize() {
-        WebDriverManager.firefoxdriver().setup();
-    }
-
-    @Override
     protected String getProcessId() {
         return getCapabilities().getCapability(MOZ_PROCESS_ID).toString();
     }
 
-    /*@Override
-    protected String getDriverName() {
-        return GECKO_DRIVER_VALUE;
-    }*/
     @Override
-    protected WebDriver getDriverInstance() {
-        return new FirefoxDriver(getOptions());
-    }
-
-    private FirefoxOptions getOptions() {
+    protected FirefoxOptions getOptions() {
         FirefoxOptions options = new FirefoxOptions();
         options.setProfile(new FirefoxProfile());
 

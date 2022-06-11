@@ -47,7 +47,7 @@ public abstract class VoteImpl extends Thread implements Vote {
                 log.error(browserName + " Неизвестная ошибка!");
                 new WriteToLog(browserName).error(e.getMessage());
             } finally {
-                browser.voteClose();
+                browser.webDriverClose();
             }
         }
     }
@@ -55,12 +55,12 @@ public abstract class VoteImpl extends Thread implements Vote {
     public void init() {
         if (!browsersList.isEmpty()) {
             for (Browsers driver : browsersList) {
-                browserName = driver.getInstanceName();
+                browserName = driver.getBrowserName();
                 log.info(browserName + " Попытка № " + count);
                 vote(getWebDriver(driver), getProcess(driver));
             }
         } else {
-            browserName = browser.getInstanceName();
+            browserName = browser.getBrowserName();
             log.info(browserName + " Попытка № " + count);
             vote(getWebDriver(browser), getProcess(browser));
         }

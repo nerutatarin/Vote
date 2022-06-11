@@ -1,7 +1,7 @@
 package utils.parsers;
 
 import org.yaml.snakeyaml.Yaml;
-import utils.configurations.config.BrowserProperties;
+import utils.configurations.config.BrowserType;
 
 import java.io.InputStream;
 import java.util.Map;
@@ -10,7 +10,7 @@ public class YamlParser {
 
     private final String configName = "browser_properties.yaml";
 
-    public Map<String, BrowserProperties> yamlParser(String configName) {
+    public Map<String, BrowserType> yamlParser(String configName) {
         if (configName == null || configName.isEmpty()) return null;
 
         Yaml yaml = new Yaml();

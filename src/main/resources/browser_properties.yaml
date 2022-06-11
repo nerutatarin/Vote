@@ -1,6 +1,16 @@
-chrome:
-    driverKey: "webdriver.chrome.driver"
-    driverName: "chromedriver"
-firefox:
-    driverKey: "webdriver.gecko.driver"
-    driverName: "geckodriver"
+browsersType:
+  chromium:
+    key: "webdriver.chrome.driver"
+    name: "chromedriver"
+  chrome:
+    key: "webdriver.chrome.driver"
+    name: "chromedriver"
+  firefox:
+    key: "webdriver.gecko.driver"
+    name: "geckodriver"
+  msedge:
+    key: "webdriver.edge.driver"
+    name: "msedgedriver"
+  opera:
+    key: "webdriver.opera.driver"
+    name: "operadriver"

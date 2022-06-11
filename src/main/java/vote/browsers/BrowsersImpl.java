@@ -5,10 +5,13 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ProcessKiller;
 import utils.configurations.config.BrowserProperties;
-import utils.configurations.config.ConfigWebDriver;
 import utils.retrofit.services.webproxy.freeproxy.FreeProxyService;
 import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyMedium;
 import vote.browsers.model.Process;
@@ -41,41 +44,77 @@ public abstract class BrowsersImpl implements Browsers {
         process = new Process();
     }
 
-    protected BrowserProperties getBrowserProperties() {
-        return new ConfigWebDriver().getBrowserType();
+    private Capabilities capabilities() {
+        return getOptions();
     }
 
-    public String getDriverName() {
-        String instanceName = getInstanceName();
-        return getBrowserProperties().getDriverName();
-    }
+    protected abstract <T> T getOptions();
 
     @Override
     public WebDriver getWebDriver() {
         killAllRunningProcesses();
 
-        log.info(getInstanceName() + " Инициализация драйвера...");
-        WebDriverManager.getInstance().setup();
-        webDriverInitialize();
+        log.info(getBrowserName() + " Инициализация драйвера...");
+        WebDriverManager().setup();
 
-        webDriver = getDriverInstance();
+        webDriver = getBrowsersFactory();
         return webDriver;
     }
 
-    protected abstract void webDriverInitialize();
+    private void killAllRunningProcesses() {
+        ProcessKiller processKiller = new ProcessKiller();
 
-    protected abstract WebDriver getDriverInstance();
+        DRIVERS_MAP.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(getBrowserName()))
+                .forEach(entry -> processKiller.killer(asList(entry.getKey(), entry.getValue())));
+    }
+
+    private void killProcess(String driverName, String browserName) {
+        ProcessKiller processKiller = new ProcessKiller();
+        processKiller.killer(driverName);
+        processKiller.killer(browserName);
+    }
+
+    private WebDriverManager WebDriverManager() {
+        return WebDriverManager.getInstance(getBrowserName());
+    }
+
+    public String getBrowserName() {
+        return toLowerCase(this.getClass().getSimpleName());
+    }
+
+    private BrowserProperties getBrowserProperties() {
+        return new BrowserProperties().yamlParser();
+    }
+
+    private String getDriverName() {
+        return getBrowserProperties().getBrowsersType().get(getBrowserName()).getName();
+    }
+
+    private WebDriver getBrowsersFactory() {
+        switch (getBrowserName()) {
+            case ("chrome"):
+                return new ChromeDriver(capabilities());
+            case ("chromium"):
+                return new ChromeDriver(capabilities());
+            case ("firefox"):
+                return new FirefoxDriver(capabilities());
+            case ("msedge"):
+                return new EdgeDriver(capabilities());
+            case ("opera"):
+                return new OperaDriver(capabilities());
+            default:
+                return new FirefoxDriver(capabilities());
+        }
+    }
 
     public Process getProcess() {
-        process.setBrowserName(getInstanceName());
+        process.setBrowserName(getBrowserName());
         process.setProcessName(getCapabilities().getBrowserName());
         process.setProcessId(getProcessId());
         process.setDriverName(getDriverName());
         return process;
-    }
-
-    public String getInstanceName() {
-        return toLowerCase(this.getClass().getSimpleName());
     }
 
     protected Capabilities getCapabilities() {
@@ -94,7 +133,7 @@ public abstract class BrowsersImpl implements Browsers {
             process.setHost(host);
             process.setPort(port);
 
-            log.info(getInstanceName() + " Включен PROXY " + host + ":" + port + " " + proxyType + " alive: " + alive);
+            log.info(getBrowserName() + " Включен PROXY " + host + ":" + port + " " + proxyType + " alive: " + alive);
             if (proxyType.equals("Socks4")) {
                 proxy.setSocksProxy(host + ":" + port);
                 proxy.setSocksVersion(4);
@@ -112,15 +151,6 @@ public abstract class BrowsersImpl implements Browsers {
         return proxy;
     }
 
-    private void killAllRunningProcesses() {
-        ProcessKiller processKiller = new ProcessKiller();
-
-        DRIVERS_MAP.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().equals(getInstanceName()))
-                .forEach(entry -> processKiller.killer(asList(entry.getKey(), entry.getValue())));
-    }
-
     private Proxy getTorProxy() {
         Proxy proxy = new Proxy();
         proxy.setSocksProxy(PROXY_IP_ADDRESS + ":" + PROXY_PORT);
@@ -134,9 +164,9 @@ public abstract class BrowsersImpl implements Browsers {
         return proxyMedium.getAlive() ? proxyMedium : getWebProxy();
     }
 
-    public void voteClose() {
+    public void webDriverClose() {
         String driverName = getDriverName();
-        String browserName = getInstanceName();
+        String browserName = getBrowserName();
         try {
             log.info(browserName + " Завершаем работу драйвера: " + driverName);
             webDriver.quit();
@@ -146,11 +176,5 @@ public abstract class BrowsersImpl implements Browsers {
             log.info(browserName + " Завершаем процесс драйвера: " + driverName);
             killProcess(driverName, browserName);
         }
-    }
-
-    private void killProcess(String driverName, String browserName) {
-        ProcessKiller processKiller = new ProcessKiller();
-        processKiller.killer(driverName);
-        processKiller.killer(browserName);
     }
 }

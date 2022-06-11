@@ -1,8 +1,5 @@
 package vote.browsers;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.opera.OperaOptions;
 import utils.RandomUserAgent;
 
@@ -11,7 +8,6 @@ import java.util.Collections;
 
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static utils.Thesaurus.Drivers.OPERA_DRIVER_VALUE;
 
 public class Opera extends BrowsersImpl {
 
@@ -27,21 +23,12 @@ public class Opera extends BrowsersImpl {
     }
 
     @Override
-    protected void webDriverInitialize() {
-        WebDriverManager.operadriver().setup();
-    }
-
-    @Override
     protected String getProcessId() {
         return null;
     }
 
     @Override
-    protected WebDriver getDriverInstance() {
-        return new OperaDriver(getOptions());
-    }
-
-    private OperaOptions getOptions() {
+    protected OperaOptions getOptions() {
         OperaOptions options = new OperaOptions();
         //options.addArguments("--enable-automation");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));

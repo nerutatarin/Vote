@@ -1,8 +1,5 @@
 package vote.browsers;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import utils.RandomUserAgent;
 
@@ -11,7 +8,6 @@ import java.util.Collections;
 
 import static java.time.Duration.ofSeconds;
 import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static utils.Thesaurus.Drivers.MSEDGE_DRIVER_VALUE;
 
 public class MsEdge extends BrowsersImpl {
 
@@ -27,21 +23,12 @@ public class MsEdge extends BrowsersImpl {
     }
 
     @Override
-    protected void webDriverInitialize() {
-        WebDriverManager.edgedriver().setup();
-    }
-
-    @Override
     protected String getProcessId() {
         return null;
     }
 
     @Override
-    protected WebDriver getDriverInstance() {
-        return new EdgeDriver(getOptions());
-    }
-
-    private EdgeOptions getOptions() {
+    protected EdgeOptions getOptions() {
         EdgeOptions options = new EdgeOptions();
         //options.addArguments("--enable-automation");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));

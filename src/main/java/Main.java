@@ -1,4 +1,5 @@
-import vote.browsers.*;
+import vote.browsers.Browsers;
+import vote.browsers.Firefox;
 import vote.vote2022.kp.VoteKP;
 
 import java.util.List;
@@ -14,7 +15,7 @@ public class Main {
             boolean proxy = false;
 
             List<Browsers> browsers = asList(
-                    new Firefox(proxy)
+                    new Firefox(headless, proxy)
                     //new Chromium(),
                     //new Opera(),
                     //new MsEdge()

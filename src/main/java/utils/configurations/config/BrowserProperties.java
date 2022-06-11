@@ -1,24 +1,27 @@
 package utils.configurations.config;
 
+import org.yaml.snakeyaml.Yaml;
+import org.yaml.snakeyaml.constructor.Constructor;
+
+import java.io.InputStream;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class BrowserProperties {
 
-    private String driverKey;
+    private Map<String, BrowserType> browsersType = new LinkedHashMap<>();
 
-    private String driverName;
-
-    public String driverKey() {
-        return driverKey;
+    public Map<String, BrowserType> getBrowsersType() {
+        return browsersType;
     }
 
-    public void setDriverKey(String driverKey) {
-        this.driverKey = driverKey;
+    public void setBrowsersType(Map<String, BrowserType> browsersType) {
+        this.browsersType = browsersType;
     }
 
-    public String getDriverName() {
-        return driverName;
-    }
-
-    public void setDriverName(String driverName) {
-        this.driverName = driverName;
+    public BrowserProperties yamlParser() {
+        InputStream is = getClass().getClassLoader().getResourceAsStream("browser_properties.yaml");
+        Yaml yaml = new Yaml(new Constructor(BrowserProperties.class));
+        return yaml.load(is);
     }
 }

@@ -9,7 +9,7 @@ public interface Browsers {
 
     Process getProcess();
 
-    String getInstanceName();
+    String getBrowserName();
 
-    void voteClose();
+    void webDriverClose();
 }
