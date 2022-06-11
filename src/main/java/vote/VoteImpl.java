@@ -38,6 +38,7 @@ public abstract class VoteImpl extends Thread implements Vote {
     public void run() {
         for (int i = 0; i < count; i++) {
             try {
+                log.info(browser.getBrowserName() + " Попытка № " + i);
                 init();
             } catch (TimeoutException e) {
                 log.error(browserName + " Превышено время ожидания загрузки страницы!");
@@ -56,12 +57,10 @@ public abstract class VoteImpl extends Thread implements Vote {
         if (!browsersList.isEmpty()) {
             for (Browsers driver : browsersList) {
                 browserName = driver.getBrowserName();
-                log.info(browserName + " Попытка № " + count);
                 vote(getWebDriver(driver), getProcess(driver));
             }
         } else {
             browserName = browser.getBrowserName();
-            log.info(browserName + " Попытка № " + count);
             vote(getWebDriver(browser), getProcess(browser));
         }
     }
