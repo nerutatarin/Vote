@@ -10,13 +10,6 @@ import java.util.Collections;
 
 public class MsEdge extends BrowsersFactory {
 
-    public MsEdge() {
-    }
-
-    public MsEdge(boolean isHeadless) {
-        super(isHeadless);
-    }
-
     @Override
     protected EdgeOptions getOptions() {
         EdgeOptions options = new EdgeOptions();

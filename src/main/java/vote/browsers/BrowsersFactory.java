@@ -9,13 +9,6 @@ import org.openqa.selenium.opera.OperaDriver;
 
 public class BrowsersFactory extends BrowsersImpl{
 
-    public BrowsersFactory() {
-    }
-
-    public BrowsersFactory(boolean isHeadless) {
-        super(isHeadless);
-    }
-
     public WebDriver getBrowsersFactory(String browserName) {
         switch (browserName) {
             case ("chrome"):

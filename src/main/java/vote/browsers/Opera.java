@@ -10,13 +10,6 @@ import java.util.Collections;
 
 public class Opera extends BrowsersFactory {
 
-    public Opera() {
-    }
-
-    public Opera(boolean isHeadless) {
-        super(isHeadless);
-    }
-
     @Override
     protected OperaOptions getOptions() {
         OperaOptions options = new OperaOptions();

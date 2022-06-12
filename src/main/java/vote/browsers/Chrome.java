@@ -9,13 +9,6 @@ import java.time.Duration;
 
 public class Chrome extends BrowsersFactory {
 
-    public Chrome() {
-    }
-
-    public Chrome(boolean isHeadless) {
-        super(isHeadless);
-    }
-
     @Override
     protected ChromeOptions getOptions() {
         ChromeOptions options = new ChromeOptions();

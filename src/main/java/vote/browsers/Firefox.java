@@ -11,13 +11,6 @@ import java.time.Duration;
 
 public class Firefox extends BrowsersFactory {
 
-    public Firefox() {
-    }
-
-    public Firefox(boolean isHeadless) {
-        super(isHeadless);
-    }
-
     @Override
     protected FirefoxOptions getOptions() {
         FirefoxOptions options = new FirefoxOptions();

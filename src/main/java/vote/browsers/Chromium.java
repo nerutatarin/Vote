@@ -11,13 +11,6 @@ import java.util.Collections;
 
 public class Chromium extends BrowsersFactory {
 
-    public Chromium() {
-    }
-
-    public Chromium(boolean isHeadless) {
-        super(isHeadless);
-    }
-
     @Override
     protected ChromeOptions getOptions() {
         ChromeOptions options = new ChromeOptions();

@@ -24,18 +24,12 @@ public abstract class BrowsersImpl implements Browsers {
 
     protected final BrowserProperties browserProperties;
     protected final String browserName;
-    protected boolean isHeadless;
     protected boolean isProxy;
     protected WebDriver webDriver;
     protected Process process;
 
     public BrowsersImpl() {
-        this(true);
-    }
-
-    public BrowsersImpl(boolean isHeadless) {
         this.browserProperties = getBrowserProperties();
-        this.isHeadless = isHeadless;
         this.isProxy = getProxySettings().getProxyEnabled();
         this.process = new Process();
         this.browserName = getBrowserName();
