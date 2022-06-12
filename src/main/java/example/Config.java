@@ -29,7 +29,7 @@ public class Config {
     }
 
     public static WebDriver getWebDriverProxy() {
-        Browsers browser = new Firefox(true);
+        Browsers browser = new Firefox();
         return browser.getWebDriver();
     }
 
