@@ -3,14 +3,20 @@ package utils.retrofit.services.webproxy.freeproxy.response;
 import com.google.gson.annotations.SerializedName;
 
 public class FreeProxyMini {
+
     @SerializedName("host")
     private String host;
+
     @SerializedName("port")
     private int port;
+
     @SerializedName("type")
     private String type;
+
     @SerializedName("proxyLevel")
     private String proxyLevel;
+
+    private String proxyTypeVersion;
 
     public String getHost() {
         return host;
@@ -29,7 +35,7 @@ public class FreeProxyMini {
     }
 
     public String getType() {
-        return type;
+        return type.toLowerCase();
     }
 
     public void setType(String type) {
@@ -42,6 +48,14 @@ public class FreeProxyMini {
 
     public void setProxyLevel(String proxyLevel) {
         this.proxyLevel = proxyLevel;
+    }
+
+    public String getProxyTypeVersion() {
+        return getType().contains("socks") ? getType().substring(5) : "";
+    }
+
+    public void setProxyTypeVersion(String proxyTypeVersion) {
+        this.proxyTypeVersion = proxyTypeVersion;
     }
 
     @Override

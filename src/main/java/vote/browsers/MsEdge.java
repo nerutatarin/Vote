@@ -1,30 +1,20 @@
 package vote.browsers;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.edge.EdgeOptions;
 import utils.RandomUserAgent;
+import utils.configurations.browsers.Options;
 
 import java.time.Duration;
 import java.util.Collections;
 
-import static java.time.Duration.ofSeconds;
-import static org.openqa.selenium.PageLoadStrategy.EAGER;
-
-public class MsEdge extends BrowsersImpl {
+public class MsEdge extends BrowsersFactory {
 
     public MsEdge() {
     }
 
-    public MsEdge(boolean isProxy) {
-        super(isProxy);
-    }
-
-    public MsEdge(boolean isHeadless, boolean isProxy) {
-        super(isHeadless, isProxy);
-    }
-
-    @Override
-    protected String getProcessId() {
-        return null;
+    public MsEdge(boolean isHeadless) {
+        super(isHeadless);
     }
 
     @Override
@@ -46,15 +36,21 @@ public class MsEdge extends BrowsersImpl {
         options.addArguments("--disable-infobars");
         options.addArguments("--incognito");
 
-        Duration timeout = ofSeconds(30);
-        options.setPageLoadTimeout(timeout);
-        options.setImplicitWaitTimeout(timeout);
-        options.setScriptTimeout(timeout);
-
-        options.setAcceptInsecureCerts(true);
-        options.setPageLoadStrategy(EAGER);
-        options.setHeadless(isHeadless);
-        options.setProxy(getProxy());
+        mainOptions(options);
         return options;
+    }
+
+    private void mainOptions(EdgeOptions options) {
+        Options browserOptions = getBrowserOptions();
+
+        options.setPageLoadTimeout(Duration.ofSeconds(browserOptions.getPageLoadTimeout()));
+        options.setImplicitWaitTimeout(Duration.ofSeconds(browserOptions.getImplicitWaitTimeout()));
+        options.setScriptTimeout(Duration.ofSeconds(browserOptions.getScriptTimeout()));
+
+        options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
+        options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
+
+        options.setHeadless(browserOptions.isHeadless());
+        options.setProxy(getProxy());
     }
 }

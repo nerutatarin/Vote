@@ -1,30 +1,20 @@
 package vote.browsers;
 
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.opera.OperaOptions;
 import utils.RandomUserAgent;
+import utils.configurations.browsers.Options;
 
 import java.time.Duration;
 import java.util.Collections;
 
-import static java.time.Duration.ofSeconds;
-import static org.openqa.selenium.PageLoadStrategy.EAGER;
-
-public class Opera extends BrowsersImpl {
+public class Opera extends BrowsersFactory {
 
     public Opera() {
     }
 
-    public Opera(boolean isProxy) {
-        super(isProxy);
-    }
-
-    public Opera(boolean isHeadless, boolean isProxy) {
-        super(isHeadless, isProxy);
-    }
-
-    @Override
-    protected String getProcessId() {
-        return null;
+    public Opera(boolean isHeadless) {
+        super(isHeadless);
     }
 
     @Override
@@ -46,16 +36,22 @@ public class Opera extends BrowsersImpl {
         options.addArguments("--disable-infobars");
         options.addArguments("--incognito");
 
-        if (isHeadless) options.addArguments("--headless");
-
-        Duration timeout = ofSeconds(30);
-        options.setPageLoadTimeout(timeout);
-        options.setImplicitWaitTimeout(timeout);
-        options.setScriptTimeout(timeout);
-
-        options.setAcceptInsecureCerts(true);
-        options.setPageLoadStrategy(EAGER);
-        options.setProxy(getProxy());
+        mainOptions(options);
         return options;
+    }
+
+    private void mainOptions(OperaOptions options) {
+        Options browserOptions = getBrowserOptions();
+
+        if (browserOptions.isHeadless()) options.addArguments("--headless");
+
+        options.setPageLoadTimeout(Duration.ofSeconds(browserOptions.getPageLoadTimeout()));
+        options.setImplicitWaitTimeout(Duration.ofSeconds(browserOptions.getImplicitWaitTimeout()));
+        options.setScriptTimeout(Duration.ofSeconds(browserOptions.getScriptTimeout()));
+
+        options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
+        options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
+
+        options.setProxy(getProxy());
     }
 }

@@ -1,30 +1,21 @@
 package vote.browsers;
 
+import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
 import utils.RandomUserAgent;
+import utils.configurations.browsers.Options;
 
 import java.time.Duration;
 import java.util.Collections;
 
-import static java.time.Duration.ofSeconds;
-import static org.openqa.selenium.PageLoadStrategy.EAGER;
-
-public class Chromium extends BrowsersImpl {
+public class Chromium extends BrowsersFactory {
 
     public Chromium() {
     }
 
-    public Chromium(boolean isProxy) {
-        super(isProxy);
-    }
-
-    public Chromium(boolean isHeadless, boolean isProxy) {
-        super(isHeadless, isProxy);
-    }
-
-    @Override
-    protected String getProcessId() {
-        return null;
+    public Chromium(boolean isHeadless) {
+        super(isHeadless);
     }
 
     @Override
@@ -46,15 +37,22 @@ public class Chromium extends BrowsersImpl {
         options.addArguments("--disable-infobars");
         options.addArguments("--incognito");
 
-        Duration timeout = ofSeconds(30);
-        options.setPageLoadTimeout(timeout);
-        options.setImplicitWaitTimeout(timeout);
-        options.setScriptTimeout(timeout);
-
-        options.setAcceptInsecureCerts(true);
-        options.setPageLoadStrategy(EAGER);
-        options.setHeadless(isHeadless);
-        options.setProxy(getProxy());
+        mainOptions(options);
         return options;
+    }
+
+    private void mainOptions(ChromeOptions options) {
+        Options browserOptions = getBrowserOptions();
+
+        options.setPageLoadTimeout(Duration.ofSeconds(browserOptions.getPageLoadTimeout()));
+        options.setImplicitWaitTimeout(Duration.ofSeconds(browserOptions.getImplicitWaitTimeout()));
+        options.setScriptTimeout(Duration.ofSeconds(browserOptions.getScriptTimeout()));
+
+        options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
+        options.setLogLevel(ChromeDriverLogLevel.valueOf(browserOptions.getLogLevel()));
+        options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
+
+        options.setHeadless(browserOptions.isHeadless());
+        options.setProxy(getProxy());
     }
 }

@@ -29,7 +29,7 @@ public class FreeProxyLarge extends FreeProxyMedium{
     private String cityName;
 
     @SerializedName("isInEu")
-    private Boolean isInEu;
+    private boolean isInEu;
 
     public int getTotalUpdated() {
         return totalUpdated;
@@ -87,11 +87,11 @@ public class FreeProxyLarge extends FreeProxyMedium{
         this.cityName = cityName;
     }
 
-    public Boolean getInEu() {
+    public boolean getInEu() {
         return isInEu;
     }
 
-    public void setInEu(Boolean inEu) {
+    public void setInEu(boolean inEu) {
         isInEu = inEu;
     }
 

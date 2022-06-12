@@ -26,7 +26,7 @@ public class VoteKP extends VoteImpl {
 
     @Override
     public void vote(WebDriver driver, Process process) {
-        getIpAddressJson(driver, process);
+        getIpAddress(driver);
 
         pageManager = new PageManagerKP(driver, process);
 
@@ -34,6 +34,6 @@ public class VoteKP extends VoteImpl {
         pageManager.votePage(voteUrl);
         pageManager.voteInput();
         pageManager.voteButton();
-        pageManager.voteLogging(myIpAddress);
+        pageManager.voteLogging(IPAddress);
     }
 }

@@ -13,7 +13,7 @@ public class IPAddressGetterByLocator extends IPAddressGetter {
     protected void response() {
         String ipAddressLocator = "#ipcontent > table > tbody > tr:nth-child(2) > td";
         String ip = webDriver.findElement(By.cssSelector(ipAddressLocator)).getText();
-        myIpAddress.setIp(ip);
+        IPAddress.setIp(ip);
     }
 
     @Override

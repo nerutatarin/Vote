@@ -7,7 +7,8 @@ import org.openqa.selenium.WebDriver;
 import utils.WriteToLog;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
-import utils.ipaddress.model.MyIpAddress;
+import utils.ipaddress.model.IPAddress;
+import utils.retrofit.services.myip.IpSeeipService;
 import vote.browsers.Browsers;
 import vote.browsers.Firefox;
 import vote.browsers.model.Process;
@@ -23,7 +24,7 @@ public abstract class VoteImpl extends Thread implements Vote {
     protected PageManager pageManager;
     protected List<Browsers> browsersList = new ArrayList<>();
     protected Browsers browser;
-    protected MyIpAddress myIpAddress;
+    protected IPAddress IPAddress;
     protected String browserName;
 
     public VoteImpl() {
@@ -83,10 +84,13 @@ public abstract class VoteImpl extends Thread implements Vote {
     }
 
     @Nullable
-    protected MyIpAddress getIpAddressJson(WebDriver webDriver, Process process) {
-        String ipAddrUrl = "https://ipinfo.io/?token=c2e2408c951023";
-        IPAddressGetter ipAddressGetter = new IPAddressGetterByJson(webDriver);
-        myIpAddress = ipAddressGetter.getIpAddress(ipAddrUrl);
-        return myIpAddress;
+    protected IPAddress getIpAddress(WebDriver webDriver) {
+        if (browser.getProcess().getProxy()) {
+            IPAddressGetter ipAddressGetter = new IPAddressGetterByJson(webDriver);
+            IPAddress = ipAddressGetter.getIpAddress();
+        }
+        IpSeeipService ipSeeipService = new IpSeeipService();
+        IPAddress = ipSeeipService.getIpJson();
+        return IPAddress;
     }
 }

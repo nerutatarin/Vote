@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 public class FreeProxyMedium extends FreeProxyMini {
 
     @SerializedName("isAlive")
-    private Boolean isAlive;
+    private boolean isAlive;
 
     @SerializedName("miliseconds")
     private int miliseconds;
@@ -22,11 +22,11 @@ public class FreeProxyMedium extends FreeProxyMini {
     @SerializedName("longitude")
     private float longitude;
 
-    public Boolean getAlive() {
+    public boolean getAlive() {
         return isAlive;
     }
 
-    public void setAlive(Boolean alive) {
+    public void setAlive(boolean alive) {
         isAlive = alive;
     }
 

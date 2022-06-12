@@ -1,10 +1,8 @@
 package utils.configurations;
 
-import org.yaml.snakeyaml.Yaml;
-import org.yaml.snakeyaml.constructor.Constructor;
-
-import java.io.InputStream;
 import java.util.List;
+
+import static utils.parsers.YamlParser.yamlParser;
 
 public class Participants {
 
@@ -18,16 +16,15 @@ public class Participants {
         this.participants = participants;
     }
 
-    public Participants yamlParser() {
-        InputStream is = getClass().getClassLoader().getResourceAsStream("participants.yaml");
-        Yaml yaml = new Yaml(new Constructor(Participants.class));
-        return yaml.load(is);
+    public Participants parse() {
+        return yamlParser(getClass(), "participants.yaml");
     }
 
     public static class Participant {
+
         private String title;
         private String nomination;
-        private Boolean allow;
+        private boolean allow;
 
         public String getTitle() {
             return title;
@@ -45,11 +42,11 @@ public class Participants {
             this.nomination = nomination;
         }
 
-        public Boolean getAllow() {
+        public boolean getAllow() {
             return allow;
         }
 
-        public void setAllow(Boolean allow) {
+        public void setAllow(boolean allow) {
             this.allow = allow;
         }
 
@@ -61,6 +58,6 @@ public class Participants {
                     ", allow=" + allow +
                     '}';
         }
-    }
 
+    }
 }

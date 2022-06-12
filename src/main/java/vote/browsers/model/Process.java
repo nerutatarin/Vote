@@ -2,16 +2,13 @@ package vote.browsers.model;
 
 public class Process {
     private String browserName;
-    private String processName;
     private String processId;
     private String driverName;
     private Long startTime;
-
     private String host;
-
     private int port;
-
     private String type;
+    private boolean proxy;
 
     public String getHost() {
         return host;
@@ -35,14 +32,6 @@ public class Process {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public String getProcessName() {
-        return processName;
-    }
-
-    public void setProcessName(String processName) {
-        this.processName = processName;
     }
 
     public String getProcessId() {
@@ -75,5 +64,13 @@ public class Process {
 
     public void setBrowserName(String browserName) {
         this.browserName = browserName;
+    }
+
+    public boolean getProxy() {
+        return proxy;
+    }
+
+    public void setProxy(Boolean proxy) {
+        this.proxy = proxy;
     }
 }

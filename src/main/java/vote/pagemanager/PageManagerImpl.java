@@ -11,7 +11,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utils.WriteToLog;
 import utils.configurations.Participants;
-import utils.ipaddress.model.MyIpAddress;
+import utils.ipaddress.model.IPAddress;
 import vote.browsers.model.Process;
 import vote.pagemanager.model.VoteCount;
 import vote.pagemanager.model.VotePage;
@@ -30,25 +30,25 @@ public abstract class PageManagerImpl implements PageManager {
     protected WebDriverWait wait;
     protected WebDriver webDriver;
     protected Process process;
-    protected String processName;
+    protected String browserName;
     protected List<VotePage> votePageList;
     protected Participants participants;
 
     public PageManagerImpl(WebDriver webDriver, Process process) {
         this.webDriver = webDriver;
         this.process = process;
-        processName = process.getProcessName();
+        browserName = process.getBrowserName();
         participants = getParticipants();
     }
 
     private Participants getParticipants() {
-        return new Participants().yamlParser();
+        return new Participants().parse();
     }
 
     public void votePage(String baseUrl) {
         int timeout = 30;
         wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
-        log.info(processName + " Запуск страницы голосования " + baseUrl);
+        log.info(browserName + " Запуск страницы голосования " + baseUrl);
         webDriver.get(baseUrl);
         wait.until(ExpectedConditions.titleIs("Клиника года - 2022. Уфа."));
 
@@ -67,20 +67,20 @@ public abstract class PageManagerImpl implements PageManager {
 
     public void voteInput() {
         getInputsListLocatorById().forEach(inp -> {
-            log.info(processName + " Ищем " + inp + " ...");
+            log.info(browserName + " Ищем " + inp + " ...");
             WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(id(inp)));
             webElement.click();
-            log.info(processName + " Проставлен " + inp);
+            log.info(browserName + " Проставлен " + inp);
         });
     }
 
     protected abstract List<String> getInputsListLocatorById();
 
     public void voteButton() {
-        log.info(processName + " Ищем кнопку голосования: ");
+        log.info(browserName + " Ищем кнопку голосования: ");
         WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(getButtonLocator()));
         webElement.click();
-        log.info(processName + " Кнопка голосования нажата: ");
+        log.info(browserName + " Кнопка голосования нажата: ");
 
         sleep();
     }
@@ -95,7 +95,7 @@ public abstract class PageManagerImpl implements PageManager {
 
     protected abstract By getButtonLocator();
 
-    public void voteLogging(MyIpAddress myIpAddress) {
+    public void voteLogging(IPAddress IPAddress) {
         Document pageSource = getPageSource();
         if (pageSource == null) return;
 
@@ -104,14 +104,14 @@ public abstract class PageManagerImpl implements PageManager {
 
         for (VoteCount vCount : voteCounts) {
             if (getInputsListLocatorById().contains(vCount.getInputId())) {
-                log.info(processName + " " + vCount);
+                log.info(browserName + " " + vCount);
 
-                String ip = myIpAddress.getIp();
-                String country = myIpAddress.getCountry();
+                String ip = IPAddress.getIp();
+                String country = IPAddress.getCountry();
                 String count = vCount.getCount().trim();
 
                 String title = vCount.getTitle();
-                WriteToLog writeToLog = new WriteToLog(processName, title);
+                WriteToLog writeToLog = new WriteToLog(browserName, title);
                 writeToLog.ipCountryCount(ip, country, count);
             }
         }

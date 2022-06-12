@@ -12,10 +12,9 @@ public class Main {
 
             int count = 1;
             boolean headless = true;
-            boolean proxy = false;
 
             List<Browsers> browsers = asList(
-                    new Firefox(headless, proxy)
+                    new Firefox(headless)
                     //new Chromium(),
                     //new Opera(),
                     //new MsEdge()

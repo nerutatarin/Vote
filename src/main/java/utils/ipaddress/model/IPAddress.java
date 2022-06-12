@@ -2,12 +2,18 @@ package utils.ipaddress.model;
 
 import com.google.gson.annotations.SerializedName;
 
-import javax.annotation.Generated;
-
-public class MyIpAddress {
+public class IPAddress {
 
     @SerializedName("ip")
     private String ip;
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
 
     @SerializedName("country")
     private String country;
@@ -23,14 +29,6 @@ public class MyIpAddress {
 
     @SerializedName("org")
     private String org;
-
-    public String getIp() {
-        return ip;
-    }
-
-    public void setIp(String ip) {
-        this.ip = ip;
-    }
 
     public String getCountry() {
         return country;
@@ -74,9 +72,13 @@ public class MyIpAddress {
 
     @Override
     public String toString() {
-        return "MyIpAddress{" +
+        return "IPAddress{" +
                 "ip='" + ip + '\'' +
                 ", country='" + country + '\'' +
+                ", city='" + city + '\'' +
+                ", hostname='" + hostname + '\'' +
+                ", region='" + region + '\'' +
+                ", org='" + org + '\'' +
                 '}';
     }
 }

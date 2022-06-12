@@ -1,32 +1,21 @@
 package vote.browsers;
 
+import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import utils.RandomUserAgent;
+import utils.configurations.browsers.Options;
 
 import java.time.Duration;
 
-import static java.time.Duration.ofSeconds;
-import static org.openqa.selenium.PageLoadStrategy.EAGER;
-import static org.openqa.selenium.firefox.FirefoxDriverLogLevel.FATAL;
-import static utils.Thesaurus.Capabilities.MOZ_PROCESS_ID;
-
-public class Firefox extends BrowsersImpl {
+public class Firefox extends BrowsersFactory {
 
     public Firefox() {
     }
 
-    public Firefox(boolean isProxy) {
-        super(isProxy);
-    }
-
-    public Firefox(boolean isHeadless, boolean isProxy) {
-        super(isHeadless, isProxy);
-    }
-
-    @Override
-    protected String getProcessId() {
-        return getCapabilities().getCapability(MOZ_PROCESS_ID).toString();
+    public Firefox(boolean isHeadless) {
+        super(isHeadless);
     }
 
     @Override
@@ -45,16 +34,22 @@ public class Firefox extends BrowsersImpl {
         options.addPreference("useAutomationExtension", false);
         options.addPreference("toolkit.startup.max_resumed_crashes", "-1");
 
-        Duration timeout = ofSeconds(30);
-        options.setPageLoadTimeout(timeout);
-        options.setImplicitWaitTimeout(timeout);
-        options.setScriptTimeout(timeout);
-
-        options.setLogLevel(FATAL);
-        options.setAcceptInsecureCerts(true);
-        options.setPageLoadStrategy(EAGER);
-        options.setHeadless(isHeadless);
-        options.setProxy(getProxy());
+        mainOptions(options);
         return options;
+    }
+
+    private void mainOptions(FirefoxOptions options) {
+        Options browserOptions = getBrowserOptions();
+
+        options.setPageLoadTimeout(Duration.ofSeconds(browserOptions.getPageLoadTimeout()));
+        options.setImplicitWaitTimeout(Duration.ofSeconds(browserOptions.getImplicitWaitTimeout()));
+        options.setScriptTimeout(Duration.ofSeconds(browserOptions.getScriptTimeout()));
+
+        options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
+        options.setLogLevel(FirefoxDriverLogLevel.valueOf(browserOptions.getLogLevel()));
+        options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
+
+        options.setHeadless(browserOptions.isHeadless());
+        options.setProxy(getProxy());
     }
 }

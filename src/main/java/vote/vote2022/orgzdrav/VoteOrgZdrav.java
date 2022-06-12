@@ -26,13 +26,13 @@ public class VoteOrgZdrav extends VoteImpl {
 
     @Override
     public void vote(WebDriver driver, Process process) {
-        getIpAddressJson(driver, process);
+        getIpAddress(driver);
 
         pageManager = new PageManagerOrgZdrav(driver, process);
 
         String voteUrl = "https://leader.orgzdrav.com/practices/effektivnoe-upravlenie-meditsinskimi-kadrami";
         pageManager.votePage(voteUrl);
         pageManager.voteButton();
-        pageManager.voteLogging(myIpAddress);
+        pageManager.voteLogging(IPAddress);
     }
 }

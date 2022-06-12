@@ -1,16 +1,58 @@
+proxySettings:
+  proxyEnabled: false
+  torProxy: true
+  webProxy: false
 browsersType:
   chromium:
     key: "webdriver.chrome.driver"
     name: "chromedriver"
+    options:
+      headless: true
+      logLevel: "fatal"
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
   chrome:
     key: "webdriver.chrome.driver"
     name: "chromedriver"
+    options:
+      headless: true
+      logLevel: "fatal"
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
   firefox:
     key: "webdriver.gecko.driver"
     name: "geckodriver"
+    options:
+      headless: true
+      logLevel: "fatal"
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
   msedge:
     key: "webdriver.edge.driver"
     name: "msedgedriver"
+    options:
+      headless: true
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
   opera:
     key: "webdriver.opera.driver"
     name: "operadriver"
+    options:
+      headless: true
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true

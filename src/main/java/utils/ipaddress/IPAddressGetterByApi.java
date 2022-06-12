@@ -14,7 +14,7 @@ public class IPAddressGetterByApi extends IPAddressGetter {
     protected void response() {
         String pageSource = webDriver.getPageSource();
         Document document = Jsoup.parseBodyFragment(pageSource);
-        myIpAddress.setIp(document.text());
+        IPAddress.setIp(document.text());
     }
 
     @Override

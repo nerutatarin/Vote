@@ -1,25 +1,19 @@
 package vote.browsers;
 
+import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
+import utils.configurations.browsers.Options;
 
-import static org.openqa.selenium.PageLoadStrategy.EAGER;
+import java.time.Duration;
 
-public class Chrome extends BrowsersImpl {
+public class Chrome extends BrowsersFactory {
 
     public Chrome() {
     }
 
-    public Chrome(boolean isProxy) {
-        super(isProxy);
-    }
-
-    public Chrome(boolean isHeadless, boolean isProxy) {
-        super(isHeadless, isProxy);
-    }
-
-    @Override
-    protected String getProcessId() {
-        return null;
+    public Chrome(boolean isHeadless) {
+        super(isHeadless);
     }
 
     @Override
@@ -37,10 +31,22 @@ public class Chrome extends BrowsersImpl {
         options.addArguments("--disable-popup-blocking");
         options.addArguments("--enable-precise-memory-info");
 
-        options.setAcceptInsecureCerts(true);
-        options.setPageLoadStrategy(EAGER);
-        options.setHeadless(isHeadless);
-        options.setProxy(getProxy());
+        mainOptions(options);
         return options;
+    }
+
+    private void mainOptions(ChromeOptions options) {
+        Options browserOptions = getBrowserOptions();
+
+        options.setPageLoadTimeout(Duration.ofSeconds(browserOptions.getPageLoadTimeout()));
+        options.setImplicitWaitTimeout(Duration.ofSeconds(browserOptions.getImplicitWaitTimeout()));
+        options.setScriptTimeout(Duration.ofSeconds(browserOptions.getScriptTimeout()));
+
+        options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
+        options.setLogLevel(ChromeDriverLogLevel.valueOf(browserOptions.getLogLevel()));
+        options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
+
+        options.setHeadless(browserOptions.isHeadless());
+        options.setProxy(getProxy());
     }
 }

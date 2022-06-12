@@ -7,9 +7,11 @@ import java.io.InputStreamReader;
 import java.util.List;
 
 import static java.lang.Runtime.getRuntime;
+import static java.util.Arrays.asList;
 import static org.apache.log4j.Logger.getLogger;
 import static utils.OSValidator.isUnix;
 import static utils.OSValidator.isWindows;
+import static utils.Thesaurus.Drivers.DRIVERS_MAP;
 
 public class ProcessKiller {
     private static final Logger log = getLogger(ProcessKiller.class);
@@ -68,5 +70,12 @@ public class ProcessKiller {
         } catch (Exception e) {
             log.debug(processName + " Попытка прикончить процесс завершилась с ошибкой: " + e.getMessage());
         }
+    }
+
+    public void killAllRunningProcesses(String browserName) {
+        DRIVERS_MAP.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(browserName))
+                .forEach(entry -> killer(asList(entry.getKey(), entry.getValue())));
     }
 }
