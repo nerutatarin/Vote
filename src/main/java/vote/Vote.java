@@ -4,7 +4,5 @@ import org.openqa.selenium.WebDriver;
 import vote.browsers.model.Process;
 
 public interface Vote {
-    void init();
-
     void vote(WebDriver driver, Process process);
 }

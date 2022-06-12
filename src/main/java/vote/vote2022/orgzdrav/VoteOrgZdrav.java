@@ -1,7 +1,6 @@
 package vote.vote2022.orgzdrav;
 
 import org.openqa.selenium.WebDriver;
-import utils.ipaddress.model.MyIpAddress;
 import vote.VoteImpl;
 import vote.browsers.Browsers;
 import vote.browsers.model.Process;
@@ -9,6 +8,13 @@ import vote.browsers.model.Process;
 import java.util.List;
 
 public class VoteOrgZdrav extends VoteImpl {
+
+    public VoteOrgZdrav() {
+    }
+
+    public VoteOrgZdrav(Browsers browser) {
+        super(browser);
+    }
 
     public VoteOrgZdrav(List<Browsers> browsers, int count) {
         super(browsers, count);

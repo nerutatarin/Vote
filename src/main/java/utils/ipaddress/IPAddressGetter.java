@@ -1,66 +1,59 @@
 package utils.ipaddress;
 
-import com.google.gson.Gson;
 import org.apache.log4j.Logger;
-import org.jsoup.nodes.Document;
-import org.openqa.selenium.TimeoutException;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import utils.ipaddress.model.MyIpAddress;
-import vote.browsers.model.Process;
 
 import static org.apache.log4j.Logger.getLogger;
-import static org.jsoup.Jsoup.parseBodyFragment;
-import static org.openqa.selenium.By.cssSelector;
 
-public class IPAddressGetter {
+public abstract class IPAddressGetter {
     private static final Logger log = getLogger(IPAddressGetter.class);
 
-    public static MyIpAddress getIpAddressLocator(WebDriver webDriver, Process process, String url) throws TimeoutException {
-        log.info(process.getProcessName() + " Получаем IP адрес... ");
+    protected final WebDriver webDriver;
+    protected MyIpAddress myIpAddress = new MyIpAddress();
+    protected String browserName;
 
-        String ipAddressLocator = "#ipcontent > table > tbody > tr:nth-child(2) > td";
-
-        if (url.isEmpty()) {
-            url = "https://myip.ru/";
-        }
-
-        webDriver.get(url);
-        String ip = webDriver.findElement(cssSelector(ipAddressLocator)).getText();
-        MyIpAddress myIpAddress = new MyIpAddress();
-        myIpAddress.setIp(ip);
-        return myIpAddress;
-
+    public IPAddressGetter(WebDriver webDriver) {
+        this.webDriver = webDriver;
+        browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName();
     }
 
-    public static MyIpAddress getIpAddressJson(WebDriver webDriver, Process process, String url) throws TimeoutException {
-        log.info(process.getProcessName() + " Получаем IP адрес... ");
+    public MyIpAddress getIpAddress() {
+        return getIpAddress(getDefaultUrl());
+    }
 
-        if (url.isEmpty()) {
-            url = "https://ipinfo.io/?token=c2e2408c951023";
+    public MyIpAddress getIpAddress(String url) {
+        log.info(browserName + " Получаем IP адрес... ");
+
+
+        url = validUrl(url);
+
+        try {
+            webDriver.get(url);
+
+            response();
+
+            log.info(browserName + " IP адрес = " + myIpAddress.getIp());
+            return myIpAddress;
+        } catch (Exception e) {
+            log.error(browserName + " Не удалось получить IP адрес ");
         }
 
-        webDriver.get(url);
-        String pageSource = webDriver.getPageSource();
-        String document = parseBodyFragment(pageSource).text();
-        Gson gson = new Gson();
-        MyIpAddress myIpAddress = gson.fromJson(document, MyIpAddress.class);
-        log.info(process.getProcessName() + " IP адрес = " + myIpAddress.getIp());
         return myIpAddress;
     }
 
-    public static MyIpAddress getIpAddress(WebDriver webDriver, Process process, String url) throws TimeoutException {
-        log.info(process.getProcessName() + " Получаем IP адрес... ");
+    protected abstract void response();
 
+    @NotNull
+    private String validUrl(String url) {
         if (url.isEmpty()) {
-            url = "https://api.ipify.org/";
+            url = getDefaultUrl();
         }
-
-        webDriver.get(url);
-        String pageSource = webDriver.getPageSource();
-        Document document = parseBodyFragment(pageSource);
-        MyIpAddress myIpAddress = new MyIpAddress();
-        myIpAddress.setIp(document.text());
-        log.info(process.getProcessName() + "IP адрес " + myIpAddress.getIp());
-        return myIpAddress;
+        return url;
     }
+
+    protected abstract String getDefaultUrl();
+
 }

@@ -1,19 +1,27 @@
 package example;
 
 import org.apache.log4j.Logger;
+import org.openqa.selenium.WebDriver;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;
-import utils.configurations.Participants;
 import utils.configurations.browsers.BrowserProperties;
 import utils.configurations.browsers.BrowserType;
+import utils.ipaddress.IPAddressGetter;
+import utils.ipaddress.IPAddressGetterByJson;
+import utils.ipaddress.model.MyIpAddress;
+import vote.browsers.Browsers;
+import vote.browsers.Firefox;
 
 import java.io.InputStream;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Config {
     private static final Logger log = Logger.getLogger(Config.class);
+
+    public WebDriver getWebDriver() {
+        Browsers browser = new Firefox();
+        return browser.getWebDriver();
+    }
 
     public void yamlParser() {
 
@@ -29,14 +37,11 @@ public class Config {
     }
 
     public static void main(String[] args) {
+        Config config = new Config();
+        WebDriver webDriver = config.getWebDriver();
 
-        Participants participants = new Participants().yamlParser();
-        List<Participants.Participant> participantList = participants.getParticipants();
-
-        List<Participants.Participant> collect = participantList.stream()
-                .filter(Participants.Participant::getAllow)
-                .collect(Collectors.toList());
-
-        System.out.println();
+        IPAddressGetter ipAddressGetter = new IPAddressGetterByJson(webDriver);
+        MyIpAddress ipAddress = ipAddressGetter.getIpAddress();
+        System.out.println(ipAddress);
     }
 }

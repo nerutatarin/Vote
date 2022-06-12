@@ -9,6 +9,13 @@ import java.util.List;
 
 public class VoteKP extends VoteImpl {
 
+    public VoteKP() {
+    }
+
+    public VoteKP(Browsers browser) {
+        super(browser);
+    }
+
     public VoteKP(List<Browsers> browsers, int count) {
         super(browsers, count);
     }

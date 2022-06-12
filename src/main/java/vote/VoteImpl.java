@@ -6,8 +6,10 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import utils.WriteToLog;
 import utils.ipaddress.IPAddressGetter;
+import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.MyIpAddress;
 import vote.browsers.Browsers;
+import vote.browsers.Firefox;
 import vote.browsers.model.Process;
 import vote.pagemanager.PageManager;
 
@@ -23,6 +25,14 @@ public abstract class VoteImpl extends Thread implements Vote {
     protected Browsers browser;
     protected MyIpAddress myIpAddress;
     protected String browserName;
+
+    public VoteImpl() {
+        this(new Firefox(), 1);
+    }
+
+    public VoteImpl(Browsers browser) {
+        this(browser, 1);
+    }
 
     public VoteImpl(List<Browsers> browsers, int count) {
         this.browsersList = browsers;
@@ -43,7 +53,6 @@ public abstract class VoteImpl extends Thread implements Vote {
             } catch (TimeoutException e) {
                 log.error(browserName + " Превышено время ожидания загрузки страницы!");
                 new WriteToLog(browserName).error(e.getLocalizedMessage());
-                return;
             } catch (Exception e) {
                 log.error(browserName + " Неизвестная ошибка!");
                 new WriteToLog(browserName).error(e.getMessage());
@@ -53,7 +62,7 @@ public abstract class VoteImpl extends Thread implements Vote {
         }
     }
 
-    public void init() {
+    private void init() {
         if (!browsersList.isEmpty()) {
             for (Browsers driver : browsersList) {
                 browserName = driver.getBrowserName();
@@ -65,18 +74,19 @@ public abstract class VoteImpl extends Thread implements Vote {
         }
     }
 
-    public Process getProcess(Browsers browser) {
+    private Process getProcess(Browsers browser) {
         return browser.getProcess();
     }
 
-    public WebDriver getWebDriver(Browsers browser) {
+    private WebDriver getWebDriver(Browsers browser) {
         return browser.getWebDriver();
     }
 
     @Nullable
-    public MyIpAddress getIpAddressJson(WebDriver webDriver, Process process) {
+    protected MyIpAddress getIpAddressJson(WebDriver webDriver, Process process) {
         String ipAddrUrl = "https://ipinfo.io/?token=c2e2408c951023";
-        myIpAddress = IPAddressGetter.getIpAddressJson(webDriver, process, ipAddrUrl);
+        IPAddressGetter ipAddressGetter = new IPAddressGetterByJson(webDriver);
+        myIpAddress = ipAddressGetter.getIpAddress(ipAddrUrl);
         return myIpAddress;
     }
 }

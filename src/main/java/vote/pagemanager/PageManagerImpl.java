@@ -1,6 +1,7 @@
 package vote.pagemanager;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
@@ -16,13 +17,11 @@ import vote.pagemanager.model.VoteCount;
 import vote.pagemanager.model.VotePage;
 import vote.vote2022.kp.PageManagerKP;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Thread.sleep;
-import static java.time.Duration.ofSeconds;
 import static org.apache.log4j.Logger.getLogger;
-import static org.jsoup.Jsoup.parse;
 import static org.openqa.selenium.By.id;
 
 public abstract class PageManagerImpl implements PageManager {
@@ -46,9 +45,9 @@ public abstract class PageManagerImpl implements PageManager {
         return new Participants().yamlParser();
     }
 
-    public void votePage(String baseUrl) throws TimeoutException {
+    public void votePage(String baseUrl) {
         int timeout = 30;
-        wait = new WebDriverWait(webDriver, ofSeconds(timeout));
+        wait = new WebDriverWait(webDriver, Duration.ofSeconds(timeout));
         log.info(processName + " Запуск страницы голосования " + baseUrl);
         webDriver.get(baseUrl);
         wait.until(ExpectedConditions.titleIs("Клиника года - 2022. Уфа."));
@@ -79,14 +78,18 @@ public abstract class PageManagerImpl implements PageManager {
 
     public void voteButton() {
         log.info(processName + " Ищем кнопку голосования: ");
-        try {
-            WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(getButtonLocator()));
-            webElement.click();
-            log.info(processName + " Кнопка голосования нажата: ");
-            sleep(2000);
+        WebElement webElement = wait.until(ExpectedConditions.elementToBeClickable(getButtonLocator()));
+        webElement.click();
+        log.info(processName + " Кнопка голосования нажата: ");
 
+        sleep();
+    }
+
+    private void sleep() {
+        try {
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Во время паузы произошла ошибка: " + e.getMessage());
         }
     }
 
@@ -115,7 +118,7 @@ public abstract class PageManagerImpl implements PageManager {
     }
 
     private Document getPageSource() {
-        return parse(webDriver.getPageSource());
+        return Jsoup.parse(webDriver.getPageSource());
     }
 
     protected abstract List<VoteCount> getVoteCountList(Document pageSource);
