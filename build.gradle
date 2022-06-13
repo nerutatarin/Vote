@@ -11,13 +11,13 @@ repositories {
 }
 
 ext {
-    seleniumVersion = '4.1.4'
+    seleniumVersion = '4.2.1'
 }
 
 dependencies {
     //implementation "org.apache.maven.plugins:maven-resources-plugin:3.2.0"
     /* Jsoup */
-    implementation "org.jsoup:jsoup:1.13.1"
+    implementation 'org.jsoup:jsoup:1.14.3'
     /* Selenium */
     //implementation "org.seleniumhq.selenium:htmlunit-driver:2.33.2"
 
@@ -35,7 +35,7 @@ dependencies {
     implementation "org.seleniumhq.selenium:selenium-remote-driver:${seleniumVersion}"
 
     /* WebDriverManager */
-    implementation "io.github.bonigarcia:webdrivermanager:5.1.1"
+    implementation 'io.github.bonigarcia:webdrivermanager:5.2.0'
 
     /* Retrofit */
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
@@ -52,6 +52,9 @@ dependencies {
 
     /* YAML */
     implementation 'org.yaml:snakeyaml:1.30'
+
+    /*TelegramBot*/
+    implementation 'org.telegram:telegrambots:6.0.1'
 
     //implementation "junit:junit:4.12"
 }

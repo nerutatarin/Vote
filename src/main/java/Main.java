@@ -1,6 +1,6 @@
-import vote.browsers.Browsers;
-import vote.browsers.Firefox;
-import vote.vote2022.kp.VoteKP;
+import service.browsers.Browsers;
+import service.browsers.Firefox;
+import votes.kp.VoteKP;
 
 import java.util.List;
 

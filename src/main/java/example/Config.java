@@ -2,19 +2,19 @@ package example;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
-import utils.configurations.browsers.BrowserProperties;
-import utils.configurations.browsers.BrowserType;
-import utils.configurations.browsers.Options;
-import utils.configurations.browsers.ProxySettings;
+import service.browsers.Browsers;
+import service.browsers.Firefox;
+import service.configurations.browsers.BrowserProperties;
+import service.configurations.browsers.BrowserType;
+import service.configurations.browsers.Options;
+import service.configurations.browsers.ProxySettings;
+import service.pagemanager.model.ResultsCount;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
 import utils.retrofit.services.myip.IpSeeipService;
 import utils.retrofit.services.myip.response.IPAddressInfo;
-import vote.browsers.Browsers;
-import vote.browsers.Firefox;
-import vote.pagemanager.model.ResultsCount;
-import vote.vote2022.kp.Results;
+import votes.kp.Results;
 
 import java.util.List;
 import java.util.Map;

@@ -13,8 +13,8 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.converter.jackson.JacksonConverterFactory;
+import service.configurations.ClientConfig;
 import utils.Utils;
-import utils.configurations.ClientConfig;
 
 import java.io.IOException;
 
