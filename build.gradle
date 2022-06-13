@@ -44,6 +44,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:4.9.3'
     implementation 'org.json:json:20220320'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.3'
+    implementation 'commons-io:commons-io:2.11.0'
 
     /* Logger */
     implementation "log4j:apache-log4j-extras:1.2.17"

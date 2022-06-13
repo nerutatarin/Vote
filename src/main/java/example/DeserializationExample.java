@@ -1,37 +1,44 @@
 package example;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import utils.retrofit.services.webproxy.htmlweb.response.WebProxies;
+import utils.Utils;
+import vote.vote2022.kp.model.CookieKP;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class DeserializationExample {
     private static final Logger log = Logger.getLogger(DeserializationExample.class);
 
     public static void main(final String[] args) throws IOException {
+        String fileName = "src/resources/gson_cookie_kp.json";
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        Gson gson = new Gson().newBuilder().create();
+        /*Gson gson = new Gson();
+        Type listType = new TypeToken<List<CookieKP>>() {}.getType();
+        Object fromJson = gson.fromJson(loadFileFromClasspath(fileName), listType);*/
 
-        Reader reader = null;
-        try {
-            reader = Files.newBufferedReader(Paths.get("src/resources/response.json"));
+        //SetCookieKP cookieKPS = Utils.fileToObjectWithGson(fileName, SetCookieKP.class);
 
-            /*Map<?, ?> map = gson.fromJson(reader, Map.class);
-            String asString = objectMapper.writeValueAsString(map);*/
 
-            //WebProxies webProxies = objectMapper.readValue(reader, WebProxies.class);
-            WebProxies webProxies = gson.fromJson(reader, WebProxies.class);
+        /**
+         * рабочая версия
+         */
+        CookieKP[] cookieKPS = Utils.fileToObjectWithGsonExposeMode(fileName, CookieKP[].class);
+        Arrays.stream(cookieKPS).forEach(System.out::println);
+    }
 
-            log.info(webProxies.toString());
+    private static String loadFileFromClasspath(String fileName) {
+        ClassLoader classLoader = DeserializationExample.class.getClassLoader();
+        try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
+            if (inputStream != null) {
+                return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+            }
         } catch (IOException e) {
-            reader.close();
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return "";
     }
 }

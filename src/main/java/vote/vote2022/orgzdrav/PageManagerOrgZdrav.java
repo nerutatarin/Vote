@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import vote.browsers.model.Process;
 import vote.pagemanager.PageManagerImpl;
-import vote.pagemanager.model.VoteCount;
+import vote.pagemanager.model.ResultsCount;
 import vote.pagemanager.model.VotePage;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class PageManagerOrgZdrav extends PageManagerImpl {
     }
 
     @Override
-    protected List<VoteCount> getVoteCountList(Document pageSource) {
+    protected List<ResultsCount> getVoteCountList(Document pageSource) {
         return null;
     }
 

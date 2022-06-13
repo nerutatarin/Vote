@@ -13,7 +13,7 @@ import utils.WriteToLog;
 import utils.configurations.Participants;
 import utils.ipaddress.model.IPAddress;
 import vote.browsers.model.Process;
-import vote.pagemanager.model.VoteCount;
+import vote.pagemanager.model.ResultsCount;
 import vote.pagemanager.model.VotePage;
 import vote.vote2022.kp.PageManagerKP;
 
@@ -99,10 +99,10 @@ public abstract class PageManagerImpl implements PageManager {
         Document pageSource = getPageSource();
         if (pageSource == null) return;
 
-        List<VoteCount> voteCounts = getVoteCountList(pageSource);
-        if (voteCounts == null || voteCounts.isEmpty()) return;
+        List<ResultsCount> resultsCounts = getVoteCountList(pageSource);
+        if (resultsCounts == null || resultsCounts.isEmpty()) return;
 
-        for (VoteCount vCount : voteCounts) {
+        for (ResultsCount vCount : resultsCounts) {
             if (getInputsListLocatorById().contains(vCount.getInputId())) {
                 log.info(browserName + " " + vCount);
 
@@ -121,5 +121,5 @@ public abstract class PageManagerImpl implements PageManager {
         return Jsoup.parse(webDriver.getPageSource());
     }
 
-    protected abstract List<VoteCount> getVoteCountList(Document pageSource);
+    protected abstract List<ResultsCount> getVoteCountList(Document pageSource);
 }

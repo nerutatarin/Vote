@@ -1,6 +1,6 @@
 package vote.pagemanager.model;
 
-public class VoteCount {
+public class ResultsCount {
     private int id;
     private String title;
     private String count;

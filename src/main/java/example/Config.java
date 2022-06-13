@@ -13,14 +13,29 @@ import utils.retrofit.services.myip.IpSeeipService;
 import utils.retrofit.services.myip.response.IPAddressInfo;
 import vote.browsers.Browsers;
 import vote.browsers.Firefox;
+import vote.pagemanager.model.ResultsCount;
+import vote.vote2022.kp.Results;
 
+import java.util.List;
 import java.util.Map;
 
 public class Config {
     private static final Logger log = Logger.getLogger(Config.class);
 
     public static void main(String[] args) {
-        yamlParserTest();
+        getResultsCount();
+    }
+
+    private static void getResultsCount() {
+        Results results = new Results();
+        List<ResultsCount> resultsCountList = results.getResults();
+        if (resultsCountList == null) return;
+
+        for (ResultsCount resultsCount : resultsCountList) {
+            System.out.println("======================");
+            System.out.println(resultsCount.getTitle() + " : "  + resultsCount.getCount());
+            System.out.println("======================");
+        }
     }
 
     public static WebDriver getWebDriverNoProxy() {

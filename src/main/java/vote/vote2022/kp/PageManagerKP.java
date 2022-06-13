@@ -10,7 +10,7 @@ import utils.configurations.Participants;
 import vote.browsers.model.Process;
 import vote.pagemanager.PageManagerImpl;
 import vote.pagemanager.model.Participant;
-import vote.pagemanager.model.VoteCount;
+import vote.pagemanager.model.ResultsCount;
 import vote.pagemanager.model.VotePage;
 
 import java.util.ArrayList;
@@ -99,8 +99,8 @@ public class PageManagerKP extends PageManagerImpl {
     }
 
     @Override
-    protected List<VoteCount> getVoteCountList(Document pageSource) {
-        List<VoteCount> voteCountList = new ArrayList<>();
+    protected List<ResultsCount> getVoteCountList(Document pageSource) {
+        List<ResultsCount> resultsCountList = new ArrayList<>();
         Elements pollResultsAnswer = getPollResultsAnswer(pageSource);
         int id = 1;
         for (Element resultAnswer : pollResultsAnswer) {
@@ -109,15 +109,15 @@ public class PageManagerKP extends PageManagerImpl {
             String count = Utils.substringBeforeSpace(pollResultsCount);
             String percent = Utils.substringAfterSpace(pollResultsCount);
 
-            VoteCount voteCount = new VoteCount();
-            voteCount.setId(id++);
-            voteCount.setTitle(pollResultAnswerTitle);
-            voteCount.setCount(count);
-            voteCount.setPercent(percent);
+            ResultsCount resultsCount = new ResultsCount();
+            resultsCount.setId(id++);
+            resultsCount.setTitle(pollResultAnswerTitle);
+            resultsCount.setCount(count);
+            resultsCount.setPercent(percent);
 
-            voteCountList.add(voteCount);
+            resultsCountList.add(resultsCount);
         }
-        return voteCountList;
+        return resultsCountList;
     }
 
     private Elements getPollResultsAnswer(Document pageSource) {

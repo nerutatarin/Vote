@@ -1,7 +1,7 @@
 proxySettings:
   proxyEnabled: false
-  torProxy: true
-  webProxy: false
+  torProxy: false
+  webProxy: true
 browsersType:
   chromium:
     key: "webdriver.chrome.driver"

@@ -1,5 +1,17 @@
 package utils;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import org.apache.commons.io.IOUtils;
+
+import java.io.*;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
 public class Utils {
     public static final String UTF8_BOM = "\uFEFF";
 
@@ -27,5 +39,82 @@ public class Utils {
 
     public static boolean isBlankString(String value) {
         return value == null || value.trim().length() == 0;
+    }
+
+    public static <T> void objectToFileWithObjectMapper(T object, String fileName) {
+        if (object == null) return;
+        ObjectMapper objectMapper = new ObjectMapper();
+        try (FileWriter file = new FileWriter(fileName)){
+            objectMapper.writeValue(file, object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> void objectToFileWithObjectMapperPretty(T object, String fileName) {
+        if (object == null) return;
+        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
+        try (FileWriter file = new FileWriter(fileName)){
+            objectWriter.writeValue(file, object);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> void objectToFileWithGson(T object, String fileName) {
+        if (object == null) return;
+        Gson gson = new Gson();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            gson.toJson(object, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> void objectToFileWithGsonPretty(T object, String fileName) {
+        if (object == null) return;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            gson.toJson(object, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T> T fileToObjectWithGson(String fileName, Class<T> clazz) {
+        Gson gson = new Gson();
+        try (Reader reader = new FileReader(fileName)) {
+            return gson.fromJson(reader, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static <T> T fileToObjectWithGsonExposeMode(String fileName, Class<T> clazz) {
+        Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+
+        try (Reader reader = new FileReader(fileName)) {
+            return gson.fromJson(reader, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static <T> T fileToListObjectWithGson(String fileName, Class<T> clazz) {
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<T>>() {}.getType();
+        return gson.fromJson(loadFileFromClasspath(fileName), listType);
+    }
+
+    private static String loadFileFromClasspath(String fileName) {
+        ClassLoader classLoader = Utils.class.getClassLoader();
+        try (InputStream inputStream = classLoader.getResourceAsStream(fileName)) {
+            return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
