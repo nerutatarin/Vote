@@ -29,14 +29,6 @@ public abstract class BasicClient {
     public BasicClient() {
     }
 
-    public BasicClient(String url) {
-        this(url, new ClientConfig());
-    }
-
-    public BasicClient(String url, ClientConfig config) {
-
-    }
-
     protected <T> T getApi(Class<T> clazz, String baseUrl) {
         ClientConfig clientConfig = new ClientConfig();
 
