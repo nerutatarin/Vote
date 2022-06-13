@@ -2,16 +2,16 @@ package service.pagemanager.model;
 
 import java.util.List;
 
-public class VotePage {
+public class PageVote {
     private String titleNomination;
-    private List<Participant> participant;
+    private List<ParticipantVote> participantVote;
 
-    public List<Participant> getParticipant() {
-        return participant;
+    public List<ParticipantVote> getParticipant() {
+        return participantVote;
     }
 
-    public void setParticipant(List<Participant> participant) {
-        this.participant = participant;
+    public void setParticipant(List<ParticipantVote> participantVote) {
+        this.participantVote = participantVote;
     }
 
     public String getTitleNomination() {
@@ -26,7 +26,7 @@ public class VotePage {
     public String toString() {
         return "{" +
                 "titleNomination='" + titleNomination + '\'' +
-                ", participant=" + participant +
+                ", participant=" + participantVote +
                 '}';
     }
 }

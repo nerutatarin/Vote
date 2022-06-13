@@ -4,7 +4,7 @@ import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import service.configurations.browsers.Options;
+import service.configurations.Options;
 import utils.RandomUserAgent;
 
 import java.time.Duration;

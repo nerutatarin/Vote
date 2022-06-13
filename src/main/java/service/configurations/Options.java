@@ -1,4 +1,4 @@
-package service.configurations.browsers;
+package service.configurations;
 
 public class Options {
 

@@ -1,6 +1,6 @@
 package service.pagemanager.model;
 
-public class ResultsCount {
+public class ResultsVote {
     private int id;
     private String title;
     private String count;

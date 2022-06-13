@@ -2,7 +2,7 @@ package service.browsers;
 
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.edge.EdgeOptions;
-import service.configurations.browsers.Options;
+import service.configurations.Options;
 import utils.RandomUserAgent;
 
 import java.time.Duration;

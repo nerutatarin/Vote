@@ -8,9 +8,9 @@ import org.openqa.selenium.WebDriver;
 import service.browsers.model.Process;
 import service.configurations.Participants;
 import service.pagemanager.PageManagerImpl;
-import service.pagemanager.model.Participant;
-import service.pagemanager.model.ResultsCount;
-import service.pagemanager.model.VotePage;
+import service.pagemanager.model.PageVote;
+import service.pagemanager.model.ParticipantVote;
+import service.pagemanager.model.ResultsVote;
 import utils.Utils;
 
 import java.util.ArrayList;
@@ -29,22 +29,22 @@ public class PageManagerKP extends PageManagerImpl {
         super(webDriver, process);
     }
 
-    protected void getVotePages(Document pageSource, List<VotePage> votePages) {
+    protected void getVotePages(Document pageSource, List<PageVote> pageVotes) {
         Elements questionData = getQuestionData(pageSource);
         for (Element question : questionData) {
             String title = question.selectFirst("div.question").text();
 
-            List<Participant> participantList = getParticipantsOfNominations(question);
+            List<ParticipantVote> participantVoteList = getParticipantsOfNominations(question);
 
-            VotePage votePage = new VotePage();
-            votePage.setTitleNomination(title.substring(3).trim());
-            votePage.setParticipant(participantList);
+            PageVote pageVote = new PageVote();
+            pageVote.setTitleNomination(title.substring(3).trim());
+            pageVote.setParticipant(participantVoteList);
 
-            votePages.add(votePage);
+            pageVotes.add(pageVote);
         }
     }
 
-    private List<Participant> getParticipantsOfNominations(Element question) {
+    private List<ParticipantVote> getParticipantsOfNominations(Element question) {
         Elements answers = question.getElementsByClass("answers");
         return answers.stream()
                 .findFirst()
@@ -52,21 +52,21 @@ public class PageManagerKP extends PageManagerImpl {
                 .orElse(new ArrayList<>());
     }
 
-    private List<Participant> getParticipants(Element answer) {
+    private List<ParticipantVote> getParticipants(Element answer) {
         Elements labels = answer.select("label");
-        List<Participant> participants = new ArrayList<>();
+        List<ParticipantVote> participantVotes = new ArrayList<>();
         for (Element el : labels) {
             String inputMO = el.attr("for");
             String titleMO = el.ownText();
 
-            Participant participant = new Participant();
-            participant.setId(Integer.parseInt(inputMO.substring(3)));
-            participant.setInput(inputMO);
-            participant.setTitleMO(titleMO);
+            ParticipantVote participantVote = new ParticipantVote();
+            participantVote.setId(Integer.parseInt(inputMO.substring(3)));
+            participantVote.setInput(inputMO);
+            participantVote.setTitleMO(titleMO);
 
-            participants.add(participant);
+            participantVotes.add(participantVote);
         }
-        return participants;
+        return participantVotes;
     }
 
     private Elements getQuestionData(Document pageSource) {
@@ -81,13 +81,13 @@ public class PageManagerKP extends PageManagerImpl {
     @Override
     protected List<String> getInputsListLocatorById() {
         List<String> list = new ArrayList<>();
-        for (VotePage votePage : votePageList) {
-            List<Participant> participantList = votePage.getParticipant();
-            for (Participant participant : participantList) {
+        for (PageVote pageVote : pageVoteList) {
+            List<ParticipantVote> participantVoteList = pageVote.getParticipant();
+            for (ParticipantVote participantVote : participantVoteList) {
                 for (Participants.Participant allow : getAllowParticipants()) {
-                    String titleNomination = votePage.getTitleNomination();
-                    if (allow.getNomination().contains(titleNomination) && allow.getTitle().contains(participant.getTitleMO())) {
-                        String input = participant.getInput();
+                    String titleNomination = pageVote.getTitleNomination();
+                    if (allow.getNomination().contains(titleNomination) && allow.getTitle().contains(participantVote.getTitleMO())) {
+                        String input = participantVote.getInput();
                         list.add(input);
                     }
                 }
@@ -98,25 +98,25 @@ public class PageManagerKP extends PageManagerImpl {
     }
 
     @Override
-    protected List<ResultsCount> getVoteCountList(Document pageSource) {
-        List<ResultsCount> resultsCountList = new ArrayList<>();
+    protected List<ResultsVote> getVoteCountList(Document pageSource) {
+        List<ResultsVote> resultsVoteList = new ArrayList<>();
         Elements pollResultsAnswer = getPollResultsAnswer(pageSource);
         int id = 1;
         for (Element resultAnswer : pollResultsAnswer) {
-            String pollResultAnswerTitle = resultAnswer.select("span.unicredit_poll_results_answer>:not(a[href])").first().ownText();
+            Element pollResultAnswerTitle = resultAnswer.select("span.unicredit_poll_results_answer>:not(a[href])").first();
             String pollResultsCount = resultAnswer.getElementsByClass("unicredit_poll_results_count").text();
             String count = Utils.substringBeforeSpace(pollResultsCount);
             String percent = Utils.substringAfterSpace(pollResultsCount);
 
-            ResultsCount resultsCount = new ResultsCount();
-            resultsCount.setId(id++);
-            resultsCount.setTitle(pollResultAnswerTitle);
-            resultsCount.setCount(count);
-            resultsCount.setPercent(percent);
+            ResultsVote resultsVote = new ResultsVote();
+            resultsVote.setId(id++);
+            if (pollResultAnswerTitle != null) resultsVote.setTitle(pollResultAnswerTitle.ownText());
+            resultsVote.setCount(count);
+            resultsVote.setPercent(percent);
 
-            resultsCountList.add(resultsCount);
+            resultsVoteList.add(resultsVote);
         }
-        return resultsCountList;
+        return resultsVoteList;
     }
 
     private Elements getPollResultsAnswer(Document pageSource) {

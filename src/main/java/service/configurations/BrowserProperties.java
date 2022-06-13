@@ -1,4 +1,4 @@
-package service.configurations.browsers;
+package service.configurations;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

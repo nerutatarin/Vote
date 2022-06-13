@@ -9,11 +9,11 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import service.browsers.Browsers;
 import service.browsers.Firefox;
 import service.browsers.model.Process;
-import service.configurations.browsers.BrowserProperties;
-import service.configurations.browsers.BrowserType;
-import service.configurations.browsers.Options;
-import service.configurations.browsers.ProxySettings;
-import service.pagemanager.model.ResultsCount;
+import service.configurations.BrowserProperties;
+import service.configurations.BrowserType;
+import service.configurations.Options;
+import service.configurations.ProxySettings;
+import service.pagemanager.model.ResultsVote;
 import service.telegrambot.TelegramBot;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
@@ -60,7 +60,7 @@ public class Config {
 
     private static void getResultsCount() {
         Results results = new Results();
-        List<ResultsCount> resultsCountList = results.getResults();
+        List<ResultsVote> resultsVoteList = results.getResults();
         System.out.println();
     }
 

@@ -3,7 +3,7 @@ package service.browsers;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
-import service.configurations.browsers.Options;
+import service.configurations.Options;
 import utils.RandomUserAgent;
 
 import java.time.Duration;

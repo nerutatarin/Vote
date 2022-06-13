@@ -1,6 +1,6 @@
 package service.pagemanager.model;
 
-public class Participant {
+public class ParticipantVote {
     private int id;
     private String input;
     private String titleMO;

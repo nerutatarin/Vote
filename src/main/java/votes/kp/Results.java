@@ -9,7 +9,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import service.pagemanager.model.ResultsCount;
+import service.pagemanager.model.ResultsVote;
 import utils.Utils;
 import votes.kp.model.CookieKP;
 
@@ -19,7 +19,7 @@ import java.util.Set;
 
 public class Results {
 
-    public List<ResultsCount> getResults() {
+    public List<ResultsVote> getResults() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("moz:headless", false);
 
@@ -85,8 +85,8 @@ public class Results {
         return Jsoup.parse(webDriver.getPageSource());
     }
 
-    private List<ResultsCount> getVoteCountList(Document pageSource) {
-        List<ResultsCount> resultsCountList = new ArrayList<>();
+    private List<ResultsVote> getVoteCountList(Document pageSource) {
+        List<ResultsVote> resultsVoteList = new ArrayList<>();
         Elements pollResultsAnswer = getPollResultsAnswer(pageSource);
         int id = 1;
         for (Element resultAnswer : pollResultsAnswer) {
@@ -95,15 +95,15 @@ public class Results {
             String count = Utils.substringBeforeSpace(pollResultsCount);
             String percent = Utils.substringAfterSpace(pollResultsCount);
 
-            ResultsCount resultsCount = new ResultsCount();
-            resultsCount.setId(id++);
-            resultsCount.setTitle(pollResultAnswerTitle);
-            resultsCount.setCount(count);
-            resultsCount.setPercent(percent);
+            ResultsVote resultsVote = new ResultsVote();
+            resultsVote.setId(id++);
+            resultsVote.setTitle(pollResultAnswerTitle);
+            resultsVote.setCount(count);
+            resultsVote.setPercent(percent);
 
-            resultsCountList.add(resultsCount);
+            resultsVoteList.add(resultsVote);
         }
-        return resultsCountList;
+        return resultsVoteList;
     }
 
     private Elements getPollResultsAnswer(Document pageSource) {

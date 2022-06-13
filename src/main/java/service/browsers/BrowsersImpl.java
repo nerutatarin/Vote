@@ -7,10 +7,10 @@ import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import service.browsers.model.Process;
-import service.configurations.browsers.BrowserProperties;
-import service.configurations.browsers.BrowserType;
-import service.configurations.browsers.Options;
-import service.configurations.browsers.ProxySettings;
+import service.configurations.BrowserProperties;
+import service.configurations.BrowserType;
+import service.configurations.Options;
+import service.configurations.ProxySettings;
 import service.proxy.ProxyFactory;
 import utils.ProcessKiller;
 

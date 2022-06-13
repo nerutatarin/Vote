@@ -8,8 +8,8 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import service.browsers.model.Process;
 import service.configurations.Participants;
-import service.pagemanager.model.ResultsCount;
-import service.pagemanager.model.VotePage;
+import service.pagemanager.model.PageVote;
+import service.pagemanager.model.ResultsVote;
 import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
@@ -30,7 +30,7 @@ public abstract class PageManagerImpl implements PageManager {
     protected WebDriver webDriver;
     protected Process process;
     protected String browserName;
-    protected List<VotePage> votePageList;
+    protected List<PageVote> pageVoteList;
     protected Participants participants;
 
     public PageManagerImpl(WebDriver webDriver) {
@@ -60,16 +60,16 @@ public abstract class PageManagerImpl implements PageManager {
 
         Document pageSource = getPageSource();
         if (pageSource == null) throw new TimeoutException();
-        votePageList = parseVotePage(pageSource);
+        pageVoteList = parseVotePage(pageSource);
     }
 
-    public List<VotePage> parseVotePage(Document pageSource) {
-        List<VotePage> votePages = new ArrayList<>();
-        getVotePages(pageSource, votePages);
-        return votePages;
+    public List<PageVote> parseVotePage(Document pageSource) {
+        List<PageVote> pageVotes = new ArrayList<>();
+        getVotePages(pageSource, pageVotes);
+        return pageVotes;
     }
 
-    protected abstract void getVotePages(Document pageSource, List<VotePage> votePages);
+    protected abstract void getVotePages(Document pageSource, List<PageVote> pageVotes);
 
     public void voteInput() {
         getInputsListLocatorById().forEach(inp -> {
@@ -108,10 +108,10 @@ public abstract class PageManagerImpl implements PageManager {
         Document pageSource = getPageSource();
         if (pageSource == null) return;
 
-        List<ResultsCount> resultsCounts = getVoteCountList(pageSource);
-        if (resultsCounts == null || resultsCounts.isEmpty()) return;
+        List<ResultsVote> resultsVotes = getVoteCountList(pageSource);
+        if (resultsVotes == null || resultsVotes.isEmpty()) return;
 
-        for (ResultsCount vCount : resultsCounts) {
+        for (ResultsVote vCount : resultsVotes) {
             if (getInputsListLocatorById().contains(vCount.getInputId())) {
                 log.info(browserName + " " + vCount);
 
@@ -140,5 +140,5 @@ public abstract class PageManagerImpl implements PageManager {
         return Jsoup.parse(webDriver.getPageSource());
     }
 
-    protected abstract List<ResultsCount> getVoteCountList(Document pageSource);
+    protected abstract List<ResultsVote> getVoteCountList(Document pageSource);
 }
