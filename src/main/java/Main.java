@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         for (int i = 0; i < 1; i++) {
 
-            int count = 1;
+            int count = 10000;
 
             List<Browsers> browsers = asList(new Firefox());
 

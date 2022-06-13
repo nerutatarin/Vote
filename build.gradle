@@ -55,6 +55,7 @@ dependencies {
 
     /*TelegramBot*/
     implementation 'org.telegram:telegrambots:6.0.1'
+    compileOnly 'org.projectlombok:lombok:1.18.24'
 
     //implementation "junit:junit:4.12"
 }

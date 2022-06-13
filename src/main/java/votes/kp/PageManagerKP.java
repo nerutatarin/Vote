@@ -20,11 +20,10 @@ import java.util.stream.Collectors;
 import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
-    private final String RKIB = "МЗ РБ ГБУЗ Республиканская клиническая инфекционная больница";
-    private final String RD3 = "ГБУЗ РБ Родильный дом № 3 г. Уфа";
-    private final String DP4 = "ГБУЗ РБ Детская поликлиника № 4 г. Уфа";
-    private final String GB18 = "ГБУЗ РБ Городская клиническая больница № 18 г. Уфа";
-    //private final List<String> participantsList = Collections.singletonList(RKIB);
+
+    public PageManagerKP(WebDriver webDriver) {
+        super(webDriver);
+    }
 
     public PageManagerKP(WebDriver webDriver, Process process) {
         super(webDriver, process);

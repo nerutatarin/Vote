@@ -1,12 +1,14 @@
 package votes.kp;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import io.github.bonigarcia.wdm.managers.FirefoxDriverManager;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.DesiredCapabilities;
 import service.pagemanager.model.ResultsCount;
 import utils.Utils;
 import votes.kp.model.CookieKP;
@@ -18,20 +20,23 @@ import java.util.Set;
 public class Results {
 
     public List<ResultsCount> getResults() {
-        WebDriver webDriver = WebDriverManager.firefoxdriver().create();
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setCapability("moz:headless", false);
+
+        WebDriverManager webDriverManager = new FirefoxDriverManager();
+        webDriverManager.capabilities(capabilities);
+        WebDriver webDriver = webDriverManager.create();
+
         try {
+            //CookieKP[] cookieKPS = fileToObjectWithGson();
+            //addCookie(webDriver, cookieKPS);
+
             webDriver.get("https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022");
             Document pageSource = getPageSource(webDriver);
             if (pageSource == null) return null;
 
             Set<Cookie> cookies = getCookies(webDriver);
-            //if (cookies.size() == 0) return null;
-
-            //objectToFileWithGson(cookies);
-
-            CookieKP[] cookieKPS = fileToObjectWithGson();
-
-            addCookie(webDriver, cookieKPS);
+            System.out.println(cookies);
 
             return getVoteCountList(pageSource);
         } catch (Exception e) {
@@ -41,7 +46,7 @@ public class Results {
     }
 
     private CookieKP[] fileToObjectWithGson() {
-        String fileName = "src/resources/gson_cookie_kp.json";
+        String fileName = "src/resources/cookie_before_vote.json";
         return Utils.fileToObjectWithGson(fileName, CookieKP[].class);
     }
 
@@ -60,10 +65,10 @@ public class Results {
     }
 
     private void addCookie(WebDriver webDriver, CookieKP[] cookieKPS) {
-        Cookie cookie = null;
+        if (cookieKPS == null) return;
 
         for (CookieKP cookieKP : cookieKPS) {
-            cookie = new Cookie(cookieKP.getName(),
+            Cookie cookie = new Cookie(cookieKP.getName(),
                     cookieKP.getValue(),
                     cookieKP.getDomain(),
                     cookieKP.getPath(),
@@ -71,11 +76,9 @@ public class Results {
                     cookieKP.isSecure(),
                     cookieKP.isHttpOnly(),
                     cookieKP.getSameSite());
+
+            webDriver.manage().addCookie(cookie);
         }
-
-        if (cookie == null) return;
-
-        webDriver.manage().addCookie(cookie);
     }
 
     private Document getPageSource(WebDriver webDriver) {

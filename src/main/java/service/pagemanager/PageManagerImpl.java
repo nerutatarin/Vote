@@ -33,6 +33,10 @@ public abstract class PageManagerImpl implements PageManager {
     protected List<VotePage> votePageList;
     protected Participants participants;
 
+    public PageManagerImpl(WebDriver webDriver) {
+        this.webDriver = webDriver;
+    }
+
     public PageManagerImpl(WebDriver webDriver, Process process) {
         this.webDriver = webDriver;
         this.process = process;
@@ -85,6 +89,9 @@ public abstract class PageManagerImpl implements PageManager {
         log.info(browserName + " Кнопка голосования нажата: ");
 
         sleep();
+
+        String fileName = "src/resources/cookie_before_vote.json";
+        saveCookie(fileName);
     }
 
     private void sleep() {
@@ -98,9 +105,6 @@ public abstract class PageManagerImpl implements PageManager {
     protected abstract By getButtonLocator();
 
     public void voteLogging(IPAddress IPAddress) {
-        String fileName = "src/resources/cookie_before_vote.json";
-        saveCookie(fileName);
-
         Document pageSource = getPageSource();
         if (pageSource == null) return;
 

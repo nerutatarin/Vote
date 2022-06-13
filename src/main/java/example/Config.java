@@ -1,19 +1,26 @@
 package example;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.telegram.telegrambots.meta.TelegramBotsApi;
+import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import service.browsers.Browsers;
 import service.browsers.Firefox;
+import service.browsers.model.Process;
 import service.configurations.browsers.BrowserProperties;
 import service.configurations.browsers.BrowserType;
 import service.configurations.browsers.Options;
 import service.configurations.browsers.ProxySettings;
 import service.pagemanager.model.ResultsCount;
+import service.telegrambot.TelegramBot;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
 import utils.retrofit.services.myip.IpSeeipService;
 import utils.retrofit.services.myip.response.IPAddressInfo;
+import votes.kp.PageManagerKP;
 import votes.kp.Results;
 
 import java.util.List;
@@ -23,19 +30,38 @@ public class Config {
     private static final Logger log = Logger.getLogger(Config.class);
 
     public static void main(String[] args) {
-        getResultsCount();
+        TelegramBotInit();
+    }
+
+    private static void TelegramBotInit() {
+        try {
+            TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
+            telegramBotsApi.registerBot(new TelegramBot());
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static void voteTest(){
+        WebDriver webDriver = WebDriverManager.firefoxdriver().create();
+        try {
+            Process process = new Process();
+            process.setBrowserName("firefox");
+            PageManagerKP pageManagerKP = new PageManagerKP(webDriver, process);
+            pageManagerKP.votePage("https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022");
+            pageManagerKP.voteInput();
+            pageManagerKP.voteButton();
+        } catch (Exception e) {
+            webDriver.close();
+        } finally {
+            webDriver.close();
+        }
     }
 
     private static void getResultsCount() {
         Results results = new Results();
         List<ResultsCount> resultsCountList = results.getResults();
-        if (resultsCountList == null) return;
-
-        for (ResultsCount resultsCount : resultsCountList) {
-            System.out.println("======================");
-            System.out.println(resultsCount.getTitle() + " : "  + resultsCount.getCount());
-            System.out.println("======================");
-        }
+        System.out.println();
     }
 
     public static WebDriver getWebDriverNoProxy() {
