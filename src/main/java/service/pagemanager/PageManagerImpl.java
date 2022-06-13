@@ -90,6 +90,8 @@ public abstract class PageManagerImpl implements PageManager {
 
         sleep();
 
+        saveResults();
+
         String fileName = "src/resources/cookie_before_vote.json";
         saveCookie(fileName);
     }
@@ -124,6 +126,14 @@ public abstract class PageManagerImpl implements PageManager {
                 writeToLog.ipCountryCount(ip, country, count);
             }
         }
+    }
+
+    private void saveResults() {
+        Document pageSource = getPageSource();
+        List<ResultsVote> resultsVotes = getVoteCountList(pageSource);
+
+        String fileName = "src/resources/results_votes.json";
+        Utils.objectListToFileWithGsonPretty(resultsVotes, fileName);
     }
 
     private void saveCookie(String fileName) {

@@ -12,24 +12,29 @@ import static java.util.Arrays.asList;
 
 public class Main {
     public static void main(String[] args) {
-        TelegramBotInit();
-
-        for (int i = 0; i < 1; i++) {
-
-            int count = 10000;
-
-            List<Browsers> browsers = asList(new Firefox());
-
-            browsers.forEach(browser -> new VoteKP(browser, count).start());
-        }
+        telegramBotInit();
+        //singleThreadVoteInit();
     }
 
-    private static void TelegramBotInit() {
+    private static void telegramBotInit() {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(new TelegramBot());
         } catch (TelegramApiException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private static void singleThreadVoteInit() {
+        int count = 1;
+        new VoteKP(new Firefox(), count).start();
+    }
+
+    private static void threadVoteInit(int thread) {
+        for (int i = 0; i < thread; i++) {
+            int count = 1;
+            List<Browsers> browsers = asList(new Firefox());
+            browsers.forEach(browser -> new VoteKP(browser, count).start());
         }
     }
 }

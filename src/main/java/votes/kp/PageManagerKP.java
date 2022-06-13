@@ -110,7 +110,7 @@ public class PageManagerKP extends PageManagerImpl {
 
             ResultsVote resultsVote = new ResultsVote();
             resultsVote.setId(id++);
-            if (pollResultAnswerTitle != null) resultsVote.setTitle(pollResultAnswerTitle.ownText());
+            if (pollResultAnswerTitle != null) resultsVote.setTitle(Utils.removeUTF8BOM(pollResultAnswerTitle.ownText()));
             resultsVote.setCount(count);
             resultsVote.setPercent(percent);
 

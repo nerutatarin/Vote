@@ -81,6 +81,26 @@ public class Utils {
         }
     }
 
+    public static <T> List<T> fileToArrayObjectWithGson(String fileName, Class<T> clazz) {
+        try (Reader reader = new FileReader(fileName)) {
+            ListOfJson<T> typeOfT = new ListOfJson<>(clazz);
+            new Gson().fromJson(reader, typeOfT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static <T> void objectListToFileWithGsonPretty(List<T> object, String fileName) {
+        if (object == null || object.size() == 0) return;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter(fileName)) {
+            gson.toJson(object, writer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static <T> T fileToObjectWithGson(String fileName, Class<T> clazz) {
         Gson gson = new Gson();
         try (Reader reader = new FileReader(fileName)) {

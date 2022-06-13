@@ -1,5 +1,7 @@
 package example;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +17,7 @@ import service.configurations.Options;
 import service.configurations.ProxySettings;
 import service.pagemanager.model.ResultsVote;
 import service.telegrambot.TelegramBot;
+import utils.Utils;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
@@ -23,6 +26,11 @@ import utils.retrofit.services.myip.response.IPAddressInfo;
 import votes.kp.PageManagerKP;
 import votes.kp.Results;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +38,22 @@ public class Config {
     private static final Logger log = Logger.getLogger(Config.class);
 
     public static void main(String[] args) {
-        TelegramBotInit();
+        String fileName = "src/resources/results_votes.json";
+        List<ResultsVote> resultsVotes = Utils.fileToArrayObjectWithGson(fileName, ResultsVote.class);
+        System.out.println(resultsVotes);
+    }
+
+    private static void test (){
+        String fileName = "src/resources/results_votes.json";
+        Gson gson = new Gson();
+        List<ResultsVote> vote = new ArrayList<>();
+        try (Reader reader = new FileReader(fileName)) {
+            Type type = new TypeToken<List<ResultsVote>>(){}.getType();
+            vote = gson.fromJson(reader, type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println(vote);
     }
 
     private static void TelegramBotInit() {

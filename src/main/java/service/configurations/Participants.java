@@ -6,6 +6,8 @@ import static utils.parsers.YamlParser.yamlParser;
 
 public class Participants {
 
+    private int numberOfVotes;
+
     private List<Participant> participants;
 
     public List<Participant> getParticipants() {
@@ -18,6 +20,22 @@ public class Participants {
 
     public Participants parse() {
         return yamlParser(getClass(), "participants.yaml");
+    }
+
+    public int getNumberOfVotes() {
+        return numberOfVotes;
+    }
+
+    public void setNumberOfVotes(int numberOfVotes) {
+        this.numberOfVotes = numberOfVotes;
+    }
+
+    @Override
+    public String toString() {
+        return "Participants{" +
+                "numberOfVotes=" + numberOfVotes +
+                ", participants=" + participants +
+                '}';
     }
 
     public static class Participant {
