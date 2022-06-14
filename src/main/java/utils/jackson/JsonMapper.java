@@ -16,11 +16,21 @@ import java.util.List;
 
 public class JsonMapper {
 
-    public static <T> List<T> fileToObject(String fileName, Class<T> type) {
-        return fileToObject(fileName, ArrayList.class, type);
+    public static <T> T fileToObject(String fileName, Class<T> clazz) {
+        final ObjectMapper mapper = newMapper();
+        try (Reader reader = new FileReader(fileName)){
+            return mapper.readValue(reader, clazz);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public static <T> List<T> fileToObject(String fileName, Class<? extends Collection> type, Class<T> elementType) {
+    public static <T> List<T> fileToListObject(String fileName, Class<T> type) {
+        return fileToListObject(fileName, ArrayList.class, type);
+    }
+
+    public static <T> List<T> fileToListObject(String fileName, Class<? extends Collection> type, Class<T> elementType) {
         final ObjectMapper mapper = newMapper();
         try (Reader reader = new FileReader(fileName)){
             return mapper.readValue(reader, mapper.getTypeFactory().constructCollectionType(type, elementType));

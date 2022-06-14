@@ -35,7 +35,7 @@ public class PageManagerOrgZdrav extends PageManagerImpl {
     }
 
     @Override
-    protected List<ResultsVote> getVoteCountList(Document pageSource) {
+    protected ResultsVote getResultsVote(Document pageSource) {
         return null;
     }
 

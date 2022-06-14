@@ -1,6 +1,7 @@
 package service.telegrambot;
 
 import service.telegrambot.commands.*;
+import utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +16,6 @@ public class CommandsFactory {
 
     private static final Map<String, Commands> filterFactory = new HashMap<>();
 
-
     static {
         filterFactory.put(COMMAND_START, new CommandStart());
         filterFactory.put(COMMAND_STATUS, new CommandStatus());
@@ -29,6 +29,6 @@ public class CommandsFactory {
     }
 
     private static String getCommand(String text) {
-        return text.split(" ")[0];
+        return Utils.substringBeforeSpace(text);
     }
 }

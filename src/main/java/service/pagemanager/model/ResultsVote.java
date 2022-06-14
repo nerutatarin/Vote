@@ -1,52 +1,36 @@
 package service.pagemanager.model;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 public class ResultsVote {
-    private int id;
-    private String title;
-    private String count;
-    private String percent;
 
-    public String getInputId() {
-        return "inp" + id;
+    private Date timeStamp;
+
+    private List<ResultVote> resultVotes = new ArrayList<>();
+
+    public Date getTimeStamp() {
+        return timeStamp;
     }
 
-    public String getPercent() {
-        return percent;
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
-    public void setPercent(String percent) {
-        this.percent = percent;
+    public List<ResultVote> getResultVotes() {
+        return resultVotes;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getCount() {
-        return count;
-    }
-
-    public void setCount(String count) {
-        this.count = count;
+    public void setResultVotes(List<ResultVote> resultVotes) {
+        this.resultVotes = resultVotes;
     }
 
     @Override
     public String toString() {
-        return "{" +
-                "title='" + title + '\'' +
-                ", count='" + count + '\'' +
+        return "ResultsVote{" +
+                "timeStamp=" + timeStamp +
+                ", resultVotes=" + resultVotes +
                 '}';
     }
 }

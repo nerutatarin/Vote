@@ -10,10 +10,12 @@ import service.configurations.Participants;
 import service.pagemanager.PageManagerImpl;
 import service.pagemanager.model.PageVote;
 import service.pagemanager.model.ParticipantVote;
+import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
 import utils.Utils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -98,25 +100,30 @@ public class PageManagerKP extends PageManagerImpl {
     }
 
     @Override
-    protected List<ResultsVote> getVoteCountList(Document pageSource) {
-        List<ResultsVote> resultsVoteList = new ArrayList<>();
+    protected ResultsVote getResultsVote(Document pageSource) {
+        ResultsVote resultsVote = new ResultsVote();
+
+        List<ResultVote> resultVoteList = new ArrayList<>();
         Elements pollResultsAnswer = getPollResultsAnswer(pageSource);
         int id = 1;
         for (Element resultAnswer : pollResultsAnswer) {
             Element pollResultAnswerTitle = resultAnswer.select("span.unicredit_poll_results_answer>:not(a[href])").first();
             String pollResultsCount = resultAnswer.getElementsByClass("unicredit_poll_results_count").text();
-            String count = Utils.substringBeforeSpace(pollResultsCount);
-            String percent = Utils.substringAfterSpace(pollResultsCount);
+            String count = Utils.substringBeforeSpaceByRegex(pollResultsCount);
+            String percent = Utils.substringAfterSpaceByRegex(pollResultsCount);
 
-            ResultsVote resultsVote = new ResultsVote();
-            resultsVote.setId(id++);
-            if (pollResultAnswerTitle != null) resultsVote.setTitle(Utils.removeUTF8BOM(pollResultAnswerTitle.ownText()));
-            resultsVote.setCount(count);
-            resultsVote.setPercent(percent);
+            ResultVote resultVote = new ResultVote();
+            resultVote.setId(id++);
+            if (pollResultAnswerTitle != null) resultVote.setTitle(Utils.removeUTF8BOM(pollResultAnswerTitle.ownText()));
+            resultVote.setCount(count);
+            resultVote.setPercent(percent);
 
-            resultsVoteList.add(resultsVote);
+            resultVoteList.add(resultVote);
         }
-        return resultsVoteList;
+
+        resultsVote.setTimeStamp(new Date());
+        resultsVote.setResultVotes(resultVoteList);
+        return resultsVote;
     }
 
     private Elements getPollResultsAnswer(Document pageSource) {

@@ -9,6 +9,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import service.browsers.model.Process;
 import service.configurations.Participants;
 import service.pagemanager.model.PageVote;
+import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
@@ -111,10 +112,13 @@ public abstract class PageManagerImpl implements PageManager {
         Document pageSource = getPageSource();
         if (pageSource == null) return;
 
-        List<ResultsVote> resultsVotes = getVoteCountList(pageSource);
-        if (resultsVotes == null || resultsVotes.isEmpty()) return;
+        ResultsVote resultsVote = getResultsVote(pageSource);
+        if (resultsVote == null) return;
 
-        for (ResultsVote vCount : resultsVotes) {
+        List<ResultVote> resultVoteList = resultsVote.getResultVotes();
+        if (resultVoteList == null || resultVoteList.isEmpty()) return;
+
+        for (ResultVote vCount : resultVoteList) {
             if (getInputsListLocatorById().contains(vCount.getInputId())) {
                 log.info(browserName + " " + vCount);
 
@@ -136,10 +140,14 @@ public abstract class PageManagerImpl implements PageManager {
 
     private void saveResults() {
         Document pageSource = getPageSource();
-        List<ResultsVote> resultsVotes = getVoteCountList(pageSource);
+        ResultsVote resultsVote = getResultsVote(pageSource);
 
         String fileName = "src/resources/results_votes.json";
-        JsonMapper.objectListToFilePretty(resultsVotes, fileName);
+
+
+        if (resultsVote == null) return;
+
+        JsonMapper.objectToFilePretty(resultsVote, fileName);
     }
 
     private void saveCookie(String fileName) {
@@ -156,5 +164,5 @@ public abstract class PageManagerImpl implements PageManager {
         return Jsoup.parse(webDriver.getPageSource());
     }
 
-    protected abstract List<ResultsVote> getVoteCountList(Document pageSource);
+    protected abstract ResultsVote getResultsVote(Document pageSource);
 }

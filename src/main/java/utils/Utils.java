@@ -26,12 +26,29 @@ public class Utils {
     public static String substringBeforeSpace(String str) {
         if (str == null || str.isEmpty()) return str;
 
-        return str.replaceAll("\\S+$", "").trim();
+        return str.split(" ")[0];
     }
 
-    public static String substringAfterSpace(String str) {
+    /**
+     * Возвращает подстроку до первого пробела
+     * @param str
+     * @return
+     */
+    public static String substringBeforeSpaceByRegex(String str) {
         if (str == null || str.isEmpty()) return str;
 
+        return str.replaceAll("\\S+", "").trim();
+    }
+
+    /**
+     * Возвращает подстроку после первого пробела
+     * @param str
+     * @return
+     */
+    public static String substringAfterSpaceByRegex(String str) {
+        if (str == null || str.isEmpty()) return str;
+
+       // return str.replaceAll("\\s+([^\\n]+)", "").trim();
         return str.replaceAll("^\\S+\\s", "");
     }
 

@@ -9,7 +9,7 @@ import org.jsoup.select.Elements;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import service.pagemanager.model.ResultsVote;
+import service.pagemanager.model.ResultVote;
 import utils.Utils;
 import utils.jackson.JsonMapper;
 import votes.kp.model.CookieKP;
@@ -20,7 +20,7 @@ import java.util.Set;
 
 public class Results {
 
-    public List<ResultsVote> getResults() {
+    public List<ResultVote> getResults() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("moz:headless", false);
 
@@ -86,25 +86,25 @@ public class Results {
         return Jsoup.parse(webDriver.getPageSource());
     }
 
-    private List<ResultsVote> getVoteCountList(Document pageSource) {
-        List<ResultsVote> resultsVoteList = new ArrayList<>();
+    private List<ResultVote> getVoteCountList(Document pageSource) {
+        List<ResultVote> resultVoteList = new ArrayList<>();
         Elements pollResultsAnswer = getPollResultsAnswer(pageSource);
         int id = 1;
         for (Element resultAnswer : pollResultsAnswer) {
             String pollResultAnswerTitle = resultAnswer.select("span.unicredit_poll_results_answer>:not(a[href])").first().ownText();
             String pollResultsCount = resultAnswer.getElementsByClass("unicredit_poll_results_count").text();
-            String count = Utils.substringBeforeSpace(pollResultsCount);
-            String percent = Utils.substringAfterSpace(pollResultsCount);
+            String count = Utils.substringBeforeSpaceByRegex(pollResultsCount);
+            String percent = Utils.substringAfterSpaceByRegex(pollResultsCount);
 
-            ResultsVote resultsVote = new ResultsVote();
-            resultsVote.setId(id++);
-            resultsVote.setTitle(pollResultAnswerTitle);
-            resultsVote.setCount(count);
-            resultsVote.setPercent(percent);
+            ResultVote resultVote = new ResultVote();
+            resultVote.setId(id++);
+            resultVote.setTitle(pollResultAnswerTitle);
+            resultVote.setCount(count);
+            resultVote.setPercent(percent);
 
-            resultsVoteList.add(resultsVote);
+            resultVoteList.add(resultVote);
         }
-        return resultsVoteList;
+        return resultVoteList;
     }
 
     private Elements getPollResultsAnswer(Document pageSource) {

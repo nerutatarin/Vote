@@ -1,24 +1,23 @@
 package service.telegrambot.commands;
 
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class CommandStatus extends CommandsImpl {
+    private static final Logger log = Logger.getLogger(CommandStatus.class);
 
     private final String STATUS_OK = "OK";
 
     @Override
-    public void execute(SendMessage message, Update update) {
-        Long userId = update.getMessage().getChatId();
+    public SendMessage execute(Long userId, String text) {
+        stringMessage();
 
-        stringBuild();
+        log.info(STATUS_OK);
 
-        log.info(builder.toString());
-
-        messageBuild(message, userId);
+        return sendMessageBuild(userId, STATUS_OK);
     }
 
-    protected void stringBuild() {
-        builder.append(STATUS_OK);
+    public String stringMessage() {
+        return STATUS_OK;
     }
 }

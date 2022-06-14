@@ -1,25 +1,21 @@
 package service.telegrambot.commands;
 
+import org.apache.log4j.Logger;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
 
 public class CommandStart extends CommandsImpl {
+    private static final Logger log = Logger.getLogger(CommandStatus.class);
+
     @Override
-    public void execute(SendMessage message, Update update) {
-        Long userId = update.getMessage().getChatId();
+    public SendMessage execute(Long userId, String text) {
+        String stringMessage = stringMessage();
 
-        stringBuild();
+        log.info(stringMessage);
 
-        log.info(builder.toString());
-
-        messageBuild(message, userId);
+        return sendMessageBuild(userId, stringMessage);
     }
 
-    protected void stringBuild() {
-        builder.append("/status - Статус сервера")
-                .append("\n")
-                .append("/participants - Список участников")
-                .append("\n")
-                .append("/resultsvote - Результаты голосования");
+    public String stringMessage() {
+        return "/status - Статус сервера" + "\n" + "/participants - Список участников" + "\n" + "/resultsvote - Результаты голосования";
     }
 }

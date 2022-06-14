@@ -30,21 +30,24 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
+            Long userId = update.getMessage().getChatId();
             String text = update.getMessage().getText();
+            Integer messageId = update.getMessage().getMessageId();
 
-            SendMessage message = new SendMessage();
+            log.info("InputData: " + "userId=" + userId + " text=" + text + " messageId=" + messageId);
+
             Commands commands = CommandsFactory.getInstance(text);
-            commands.execute(message, update);
+            SendMessage sendMessage = commands.execute(userId, text);
 
             try {
-                Integer messageId = update.getMessage().getMessageId();
-                message.setReplyToMessageId(messageId); //Нужно ли отвечать на сообщение?
-                execute(message);
+                sendMessage.setReplyToMessageId(messageId); //Нужно ли отвечать на сообщение?
+
+                execute(sendMessage);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
 
-            log.info("OutputData: " + "userId=" + message.getChatId() + " text=" + message.getText() + " messageId=" + message.getReplyToMessageId());
+            log.info("OutputData: " + "userId=" + sendMessage.getChatId() + " text=" + sendMessage.getText() + " messageId=" + sendMessage.getReplyToMessageId());
         }
     }
 

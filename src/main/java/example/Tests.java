@@ -17,7 +17,7 @@ import service.configurations.BrowserProperties;
 import service.configurations.BrowserType;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
-import service.pagemanager.model.ResultsVote;
+import service.pagemanager.model.ResultVote;
 import service.telegrambot.TelegramBot;
 import utils.gson.GsonMapper;
 import utils.ipaddress.IPAddressGetter;
@@ -36,23 +36,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Config {
-    private static final Logger log = Logger.getLogger(Config.class);
+public class Tests {
+    private static final Logger log = Logger.getLogger(Tests.class);
 
     public static void main(String[] args) {
         String fileName = "src/resources/results_votes.json";
 
         //List<ResultsVote> resultsVotes = JsonMapper.fileToObject(fileName, ResultsVote.class);
-        List<ResultsVote> resultsVotes = GsonMapper.fileToObject(fileName, ResultsVote.class);
+        List<ResultVote> resultVotes = GsonMapper.fileToObject(fileName, ResultVote.class);
 
-        if (resultsVotes == null) return;
-        for (ResultsVote resultsVote : resultsVotes) {
-            String s = resultsVote.getTitle() + " : " + resultsVote.getCount();
+        if (resultVotes == null) return;
+        for (ResultVote resultVote : resultVotes) {
+            String s = resultVote.getTitle() + " : " + resultVote.getCount();
             System.out.println(s);
         }
     }
 
-    private static <T> ResultsVote[] fileToStringsObjectWithJackson(String fileName, T ResultsVote) {
+    private static <T> ResultVote[] fileToStringsObjectWithJackson(String fileName, T ResultsVote) {
         ObjectMapper mapper = new ObjectMapper();
 
         try (Reader reader = new FileReader(fileName)){
@@ -77,9 +77,9 @@ public class Config {
     private static void test (){
         String fileName = "src/resources/results_votes.json";
         Gson gson = new Gson();
-        List<ResultsVote> vote = new ArrayList<>();
+        List<ResultVote> vote = new ArrayList<>();
         try (Reader reader = new FileReader(fileName)) {
-            Type type = new TypeToken<List<ResultsVote>>(){}.getType();
+            Type type = new TypeToken<List<ResultVote>>(){}.getType();
             vote = gson.fromJson(reader, type);
         } catch (IOException e) {
             e.printStackTrace();
@@ -114,7 +114,7 @@ public class Config {
 
     private static void getResultsCount() {
         Results results = new Results();
-        List<ResultsVote> resultsVoteList = results.getResults();
+        List<ResultVote> resultVoteList = results.getResults();
         System.out.println();
     }
 
