@@ -1,5 +1,7 @@
 package example;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import io.github.bonigarcia.wdm.WebDriverManager;
@@ -17,7 +19,7 @@ import service.configurations.Options;
 import service.configurations.ProxySettings;
 import service.pagemanager.model.ResultsVote;
 import service.telegrambot.TelegramBot;
-import utils.Utils;
+import utils.gson.GsonMapper;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
@@ -39,8 +41,37 @@ public class Config {
 
     public static void main(String[] args) {
         String fileName = "src/resources/results_votes.json";
-        List<ResultsVote> resultsVotes = Utils.fileToArrayObjectWithGson(fileName, ResultsVote.class);
-        System.out.println(resultsVotes);
+
+        //List<ResultsVote> resultsVotes = JsonMapper.fileToObject(fileName, ResultsVote.class);
+        List<ResultsVote> resultsVotes = GsonMapper.fileToObject(fileName, ResultsVote.class);
+
+        if (resultsVotes == null) return;
+        for (ResultsVote resultsVote : resultsVotes) {
+            String s = resultsVote.getTitle() + " : " + resultsVote.getCount();
+            System.out.println(s);
+        }
+    }
+
+    private static <T> ResultsVote[] fileToStringsObjectWithJackson(String fileName, T ResultsVote) {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try (Reader reader = new FileReader(fileName)){
+            Type type = new TypeToken<T[]>(){}.getType();
+            return mapper.readValue(reader, (JavaType) type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static <T> List<T> fileToArrayObjectWithGson(String fileName, T clazz) {
+        try (Reader reader = new FileReader(fileName)) {
+            Type type = new TypeToken<List<T>>(){}.getType();
+            new Gson().fromJson(reader, type);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private static void test (){

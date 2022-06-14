@@ -26,8 +26,7 @@ public class Main {
     }
 
     private static void singleThreadVoteInit() {
-        int count = 1;
-        new VoteKP(new Firefox(), count).start();
+        new VoteKP(new Firefox(), 1).start();
     }
 
     private static void threadVoteInit(int thread) {

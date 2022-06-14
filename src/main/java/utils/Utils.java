@@ -1,7 +1,5 @@
 package utils;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -39,26 +37,6 @@ public class Utils {
 
     public static boolean isBlankString(String value) {
         return value == null || value.trim().length() == 0;
-    }
-
-    public static <T> void objectToFileWithObjectMapper(T object, String fileName) {
-        if (object == null) return;
-        ObjectMapper objectMapper = new ObjectMapper();
-        try (FileWriter file = new FileWriter(fileName)){
-            objectMapper.writeValue(file, object);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static <T> void objectToFileWithObjectMapperPretty(T object, String fileName) {
-        if (object == null) return;
-        ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
-        try (FileWriter file = new FileWriter(fileName)){
-            objectWriter.writeValue(file, object);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public static <T> void objectToFileWithGson(T object, String fileName) {

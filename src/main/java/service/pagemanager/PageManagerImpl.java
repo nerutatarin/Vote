@@ -10,9 +10,9 @@ import service.browsers.model.Process;
 import service.configurations.Participants;
 import service.pagemanager.model.PageVote;
 import service.pagemanager.model.ResultsVote;
-import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
+import utils.jackson.JsonMapper;
 import votes.kp.PageManagerKP;
 
 import java.time.Duration;
@@ -61,6 +61,7 @@ public abstract class PageManagerImpl implements PageManager {
         Document pageSource = getPageSource();
         if (pageSource == null) throw new TimeoutException();
         pageVoteList = parseVotePage(pageSource);
+        saveVoteList(pageVoteList);
     }
 
     public List<PageVote> parseVotePage(Document pageSource) {
@@ -128,12 +129,17 @@ public abstract class PageManagerImpl implements PageManager {
         }
     }
 
+    private void saveVoteList(List<PageVote> pageVoteList) {
+        String fileName = "src/resources/page_vote.json";
+        JsonMapper.objectListToFilePretty(pageVoteList, fileName);
+    }
+
     private void saveResults() {
         Document pageSource = getPageSource();
         List<ResultsVote> resultsVotes = getVoteCountList(pageSource);
 
         String fileName = "src/resources/results_votes.json";
-        Utils.objectListToFileWithGsonPretty(resultsVotes, fileName);
+        JsonMapper.objectListToFilePretty(resultsVotes, fileName);
     }
 
     private void saveCookie(String fileName) {
@@ -143,7 +149,7 @@ public abstract class PageManagerImpl implements PageManager {
             return;
         }
 
-        Utils.objectToFileWithGson(cookies, fileName);
+        JsonMapper.objectToFilePretty(cookies, fileName);
     }
 
     private Document getPageSource() {
