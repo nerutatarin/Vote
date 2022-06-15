@@ -42,19 +42,14 @@ public class CommandResultsVote extends CommandsImpl {
         for (ResultVote result : resultVoteList) {
             String title = result.getTitle();
             int id = result.getId();
-            String s = Utils.substringAfterSpaceByRegex(text);
 
-            if (title.contains(text)){
+            String substring = Utils.firstSubstringAfterSpace(text);
+            if (title.contains(substring)) {
                 return result;
-            }
-
-            int parseInt = Integer.parseInt(s);
-
-            if (id == parseInt) {
+            } else if (id == Utils.parseInt(substring)) {
                 return result;
             }
         }
-
         return null;
     }
 
@@ -62,7 +57,13 @@ public class CommandResultsVote extends CommandsImpl {
         if (resultVote == null) {
             stringMessage.append("Искомый участник не найден!");
         } else {
-            stringMessage.append(timestamp).append(" ").append(resultVote.toString());
+            stringMessage
+                    .append(timestamp)
+                    .append("\n")
+                    .append(resultVote.getTitle())
+                    .append("\n")
+                    .append(resultVote.getCount())
+                    .append("\n");
         }
     }
 }
