@@ -18,13 +18,12 @@ import service.configurations.BrowserType;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
 import service.pagemanager.model.ResultVote;
+import service.retrofit.api.myip.IpSeeipService;
+import service.retrofit.api.myip.response.IPAddressInfo;
 import service.telegrambot.TelegramBot;
-import utils.gson.GsonMapper;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
-import service.retrofit.api.myip.IpSeeipService;
-import service.retrofit.api.myip.response.IPAddressInfo;
 import votes.kp.PageManagerKP;
 import votes.kp.Results;
 
@@ -36,20 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import static utils.Utils.createDirectoryIfNoExistInWorkDir;
+
 public class Tests {
     private static final Logger log = Logger.getLogger(Tests.class);
 
     public static void main(String[] args) {
-        String fileName = "src/resources/results_votes.json";
-
-        //List<ResultsVote> resultsVotes = JsonMapper.fileToObject(fileName, ResultsVote.class);
-        List<ResultVote> resultVotes = GsonMapper.fileToListObject(fileName, ResultVote.class);
-
-        if (resultVotes == null) return;
-        for (ResultVote resultVote : resultVotes) {
-            String s = resultVote.getTitle() + " : " + resultVote.getCount();
-            System.out.println(s);
-        }
+        createDirectoryIfNoExistInWorkDir("src.resources.test");
     }
 
     private static <T> ResultVote[] fileToStringsObjectWithJackson(String fileName, T ResultsVote) {

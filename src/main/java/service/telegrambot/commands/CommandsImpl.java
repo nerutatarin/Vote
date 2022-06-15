@@ -2,15 +2,17 @@ package service.telegrambot.commands;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import service.browsers.Firefox;
+import utils.Utils;
 import votes.kp.VoteKP;
 
 public abstract class CommandsImpl implements Commands {
 
     protected SendMessage sendMessage = new SendMessage();
-
     protected final StringBuilder stringMessage = new StringBuilder();
+    protected String message;
 
-    public CommandsImpl() {
+    protected String getMessage(String text) {
+        return message = Utils.firstSubstringAfterSpace(text);
     }
 
     protected void singleThreadVoteInit() {

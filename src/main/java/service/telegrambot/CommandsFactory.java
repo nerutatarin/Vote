@@ -13,7 +13,6 @@ public class CommandsFactory {
     private static final String COMMAND_PARTICIPANTS = "/participants";
     private static final String COMMAND_RESULTS_VOTE = "/resultsvote";
     private static final String COMMAND_DEFAULT = "";
-
     private static final Map<String, Commands> filterFactory = new HashMap<>();
 
     static {

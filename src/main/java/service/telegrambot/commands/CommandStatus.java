@@ -5,7 +5,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 
 public class CommandStatus extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandStatus.class);
-
     private final String STATUS_OK = "OK";
 
     @Override

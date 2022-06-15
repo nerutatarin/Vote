@@ -19,37 +19,33 @@ public class CommandResultsVote extends CommandsImpl {
 
     @Override
     public SendMessage execute(Long userId, String text) {
-        ResultsVote resultsVote = JsonMapper.fileToObject(fileName, ResultsVote.class);
+        getMessage(text);
 
-        List<ResultVote> resultVoteList = null;
-        if (resultsVote != null) {
-            timestamp = resultsVote.getTimeStamp();
-            resultVoteList = resultsVote.getResultVotes();
+        if (!message.equals("") && !message.isEmpty()) {
+            ResultsVote resultsVote = JsonMapper.fileToObject(fileName, ResultsVote.class);
+
+            List<ResultVote> resultVoteList = null;
+            if (resultsVote != null) {
+                timestamp = resultsVote.getTimeStamp();
+                resultVoteList = resultsVote.getResultVotes();
+            }
+
+            resultVote = getResultVote(resultVoteList);
         }
 
-        resultVote = getResultVote(text, resultVoteList);
-
         stringMessage();
-
         log.debug(getClass().getSimpleName() + ": " + stringMessage);
 
         return sendMessageBuild(userId);
     }
 
-    private ResultVote getResultVote(String text, List<ResultVote> resultVoteList) {
+    private ResultVote getResultVote(List<ResultVote> resultVoteList) {
         if (resultVoteList == null) return null;
 
         for (ResultVote result : resultVoteList) {
-            String title = result.getTitle();
-            int id = result.getId();
-
-            String substring = Utils.firstSubstringAfterSpace(text);
-            if (title.contains(substring)) {
-                return result;
-            } else if (id == Utils.parseInt(substring)) {
-                return result;
-            }
+            if (result.getId() == Utils.parseInt(message)) return result;
         }
+
         return null;
     }
 
