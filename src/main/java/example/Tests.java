@@ -23,8 +23,8 @@ import utils.gson.GsonMapper;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
-import utils.retrofit.services.myip.IpSeeipService;
-import utils.retrofit.services.myip.response.IPAddressInfo;
+import service.retrofit.api.myip.IpSeeipService;
+import service.retrofit.api.myip.response.IPAddressInfo;
 import votes.kp.PageManagerKP;
 import votes.kp.Results;
 

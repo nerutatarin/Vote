@@ -4,8 +4,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
 import service.browsers.model.Process;
 import service.configurations.ProxySettings;
-import utils.retrofit.services.webproxy.freeproxy.FreeProxyService;
-import utils.retrofit.services.webproxy.freeproxy.response.FreeProxyMedium;
+import service.retrofit.api.freeproxy.FreeProxyService;
+import service.retrofit.api.freeproxy.response.FreeProxyMedium;
 
 import static org.apache.log4j.Logger.getLogger;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;

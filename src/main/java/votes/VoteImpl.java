@@ -12,7 +12,7 @@ import utils.WriteToLog;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
-import utils.retrofit.services.myip.IpSeeipService;
+import service.retrofit.api.myip.IpSeeipService;
 
 import java.util.ArrayList;
 import java.util.List;
