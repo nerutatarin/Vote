@@ -3,7 +3,7 @@ package service.configurations;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import static utils.parsers.YamlParser.yamlParser;
+import static utils.yaml.YamlParser.yamlParser;
 
 public class BrowserProperties {
 

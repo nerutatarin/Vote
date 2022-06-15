@@ -10,7 +10,6 @@ import java.util.List;
 
 public class CommandParticipants extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandStatus.class);
-    private final StringBuilder stringMessage = new StringBuilder();
     private final String fileName = "src/resources/page_vote.json";
 
     @Override
@@ -19,9 +18,9 @@ public class CommandParticipants extends CommandsImpl {
 
         getParticipants(pageVotes);
 
-        log.info(stringMessage);
+        log.debug(getClass().getSimpleName() + ": " + stringMessage);
 
-        return sendMessageBuild(userId, stringMessage.toString());
+        return sendMessageBuild(userId);
     }
 
     private void getParticipants(List<PageVote> pageVotes) {
@@ -29,9 +28,7 @@ public class CommandParticipants extends CommandsImpl {
     }
 
     private void getParticipant(PageVote pageVote) {
-        for (ParticipantVote participantVote : pageVote.getParticipant()) {
-            stringMessage(participantVote);
-        }
+        pageVote.getParticipant().forEach(this::stringMessage);
     }
 
     public void stringMessage(ParticipantVote participant) {

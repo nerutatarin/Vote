@@ -12,12 +12,12 @@ public class CommandStatus extends CommandsImpl {
     public SendMessage execute(Long userId, String text) {
         stringMessage();
 
-        log.info(STATUS_OK);
+        log.debug(getClass().getSimpleName() + ": " + stringMessage);
 
-        return sendMessageBuild(userId, STATUS_OK);
+        return sendMessageBuild(userId);
     }
 
-    public String stringMessage() {
-        return STATUS_OK;
+    public void stringMessage() {
+        stringMessage.append(STATUS_OK);
     }
 }

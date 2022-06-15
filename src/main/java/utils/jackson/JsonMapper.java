@@ -16,6 +16,13 @@ import java.util.List;
 
 public class JsonMapper {
 
+    /**
+     * Десериализуем файл в объект
+     * @param fileName
+     * @param clazz
+     * @return
+     * @param <T>
+     */
     public static <T> T fileToObject(String fileName, Class<T> clazz) {
         final ObjectMapper mapper = newMapper();
         try (Reader reader = new FileReader(fileName)){
@@ -26,10 +33,25 @@ public class JsonMapper {
         return null;
     }
 
+    /**
+     * Десериализуем файл в лист объектов
+     * @param fileName
+     * @param type
+     * @return
+     * @param <T>
+     */
     public static <T> List<T> fileToListObject(String fileName, Class<T> type) {
         return fileToListObject(fileName, ArrayList.class, type);
     }
 
+    /**
+     * Десериализуем файл в лист объектов
+     * @param fileName
+     * @param type
+     * @param elementType
+     * @return
+     * @param <T>
+     */
     public static <T> List<T> fileToListObject(String fileName, Class<? extends Collection> type, Class<T> elementType) {
         final ObjectMapper mapper = newMapper();
         try (Reader reader = new FileReader(fileName)){
@@ -48,6 +70,12 @@ public class JsonMapper {
         return mapper;
     }
 
+    /**
+     * Сериализуем объект в файл
+     * @param object
+     * @param fileName
+     * @param <T>
+     */
     public static <T> void objectToFile(T object, String fileName) {
         if (object == null) return;
         ObjectMapper objectMapper = new ObjectMapper();
@@ -58,6 +86,12 @@ public class JsonMapper {
         }
     }
 
+    /**
+     * Сериализуем объект в файл. Красивый режим
+     * @param object
+     * @param fileName
+     * @param <T>
+     */
     public static <T> void objectToFilePretty(T object, String fileName) {
         if (object == null) return;
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
@@ -68,6 +102,12 @@ public class JsonMapper {
         }
     }
 
+    /**
+     * Сериализуем лист объектов в файл. Красивый режим
+     * @param object
+     * @param fileName
+     * @param <T>
+     */
     public static <T> void objectListToFilePretty(List<T> object, String fileName) {
         if (object == null || object.size() == 0) return;
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();

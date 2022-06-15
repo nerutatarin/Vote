@@ -2,7 +2,7 @@ package service.configurations;
 
 import java.util.List;
 
-import static utils.parsers.YamlParser.yamlParser;
+import static utils.yaml.YamlParser.yamlParser;
 
 public class Participants {
 

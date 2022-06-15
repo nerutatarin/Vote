@@ -11,6 +11,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import service.pagemanager.model.ResultVote;
 import utils.Utils;
+import utils.gson.GsonMapper;
 import utils.jackson.JsonMapper;
 import votes.kp.model.CookieKP;
 
@@ -48,7 +49,7 @@ public class Results {
 
     private CookieKP[] fileToObjectWithGson() {
         String fileName = "src/resources/cookie_before_vote.json";
-        return Utils.fileToObjectWithGson(fileName, CookieKP[].class);
+        return GsonMapper.fileToObject(fileName, CookieKP[].class);
     }
 
     private void objectToFileWithObjectMapper(Set<Cookie> cookies) {
@@ -58,7 +59,7 @@ public class Results {
 
     private void objectToFileWithGson(Set<Cookie> cookies) {
         String fileName = "src/resources/gson_cookie_kp.json";
-        Utils.objectToFileWithGsonPretty(cookies, fileName);
+        GsonMapper.objectToFilePretty(cookies, fileName);
     }
 
     private Set<Cookie> getCookies(WebDriver webDriver) {

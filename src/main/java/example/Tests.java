@@ -43,7 +43,7 @@ public class Tests {
         String fileName = "src/resources/results_votes.json";
 
         //List<ResultsVote> resultsVotes = JsonMapper.fileToObject(fileName, ResultsVote.class);
-        List<ResultVote> resultVotes = GsonMapper.fileToObject(fileName, ResultVote.class);
+        List<ResultVote> resultVotes = GsonMapper.fileToListObject(fileName, ResultVote.class);
 
         if (resultVotes == null) return;
         for (ResultVote resultVote : resultVotes) {

@@ -1,4 +1,4 @@
-package utils.parsers;
+package utils.yaml;
 
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.Constructor;

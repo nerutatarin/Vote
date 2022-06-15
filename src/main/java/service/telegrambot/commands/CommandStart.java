@@ -8,14 +8,19 @@ public class CommandStart extends CommandsImpl {
 
     @Override
     public SendMessage execute(Long userId, String text) {
-        String stringMessage = stringMessage();
+        stringMessage();
 
-        log.info(stringMessage);
+        log.debug(getClass().getSimpleName() + ": " + stringMessage);
 
-        return sendMessageBuild(userId, stringMessage);
+        return sendMessageBuild(userId);
     }
 
-    public String stringMessage() {
-        return "/status - Статус сервера" + "\n" + "/participants - Список участников" + "\n" + "/resultsvote - Результаты голосования";
+    public void stringMessage() {
+        stringMessage
+                .append("/status - Статус сервера")
+                .append("\n")
+                .append("/participants - Список участников")
+                .append("\n")
+                .append("/resultsvote - Результаты голосования");
     }
 }

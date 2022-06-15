@@ -28,9 +28,12 @@ public class CommandResultsVote extends CommandsImpl {
         }
 
         resultVote = getResultVote(text, resultVoteList);
-        String stringMessage = stringMessage();
 
-        return sendMessageBuild(userId, stringMessage);
+        stringMessage();
+
+        log.debug(getClass().getSimpleName() + ": " + stringMessage);
+
+        return sendMessageBuild(userId);
     }
 
     private ResultVote getResultVote(String text, List<ResultVote> resultVoteList) {
@@ -55,11 +58,11 @@ public class CommandResultsVote extends CommandsImpl {
         return null;
     }
 
-    private String stringMessage() {
+    private void stringMessage() {
         if (resultVote == null) {
-            return "Искомый участник не найден!";
+            stringMessage.append("Искомый участник не найден!");
         } else {
-            return timestamp + " " + resultVote.toString();
+            stringMessage.append(timestamp).append(" ").append(resultVote.toString());
         }
     }
 }

@@ -1,6 +1,6 @@
 package service.telegrambot.configurations;
 
-import static utils.parsers.YamlParser.yamlParser;
+import static utils.yaml.YamlParser.yamlParser;
 
 public class TelegramProperties {
     private String name;

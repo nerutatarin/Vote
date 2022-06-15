@@ -8,15 +8,20 @@ public abstract class CommandsImpl implements Commands {
 
     protected SendMessage sendMessage = new SendMessage();
 
-    public CommandsImpl() {}
+    protected final StringBuilder stringMessage = new StringBuilder();
+
+    public CommandsImpl() {
+    }
 
     protected void singleThreadVoteInit() {
         new VoteKP(new Firefox(), 1).start();
     }
-    
-    protected SendMessage sendMessageBuild(Long userId, String stringMessage) {
+
+    protected SendMessage sendMessageBuild(Long userId) {
         sendMessage.setChatId(String.valueOf(userId));
-        sendMessage.setText(stringMessage);
+        sendMessage.setText(stringMessage.toString());
+
+        if (stringMessage.length() > 0) stringMessage.setLength(0);
         return sendMessage;
     }
 }

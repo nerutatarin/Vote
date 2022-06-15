@@ -34,7 +34,7 @@ public class TelegramBot extends TelegramLongPollingBot {
             String text = update.getMessage().getText();
             Integer messageId = update.getMessage().getMessageId();
 
-            log.info("InputData: " + "userId=" + userId + " text=" + text + " messageId=" + messageId);
+            log.debug("InputData: " + "userId=" + userId + " text=" + text + " messageId=" + messageId);
 
             Commands commands = CommandsFactory.getInstance(text);
             SendMessage sendMessage = commands.execute(userId, text);
@@ -47,7 +47,7 @@ public class TelegramBot extends TelegramLongPollingBot {
                 e.printStackTrace();
             }
 
-            log.info("OutputData: " + "userId=" + sendMessage.getChatId() + " text=" + sendMessage.getText() + " messageId=" + sendMessage.getReplyToMessageId());
+            log.debug("OutputData: " + "userId=" + sendMessage.getChatId() + " text=" + sendMessage.getText() + " messageId=" + sendMessage.getReplyToMessageId());
         }
     }
 
