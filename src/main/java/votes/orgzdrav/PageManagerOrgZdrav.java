@@ -5,7 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import service.browsers.model.Process;
 import service.pagemanager.PageManagerImpl;
-import service.pagemanager.model.PageVote;
+import service.pagemanager.model.PageVoteMap;
 import service.pagemanager.model.ResultsVote;
 
 import java.util.List;
@@ -20,13 +20,13 @@ public class PageManagerOrgZdrav extends PageManagerImpl {
     }
 
     @Override
-    protected By getButtonLocator() {
-        return xpath("/html/body/section[@class='ftco-section']//button[@type='button']");
+    protected PageVoteMap getVotePages(Document pageSource) {
+        return null;
     }
 
     @Override
-    protected void getVotePages(Document pageSource, List<PageVote> pageVotes) {
-
+    protected By getButtonLocator() {
+        return xpath("/html/body/section[@class='ftco-section']//button[@type='button']");
     }
 
     @Override

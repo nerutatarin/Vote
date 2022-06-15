@@ -4,6 +4,8 @@ public class ParticipantVote {
     private int id;
     private String input;
     private String title;
+    private String count;
+    private String percent;
 
     public int getId() {
         return id;
@@ -29,12 +31,30 @@ public class ParticipantVote {
         this.title = title;
     }
 
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String count) {
+        this.count = count;
+    }
+
+    public String getPercent() {
+        return percent;
+    }
+
+    public void setPercent(String percent) {
+        this.percent = percent;
+    }
+
     @Override
     public String toString() {
-        return "Participant{" +
+        return "ParticipantVote{" +
                 "id=" + id +
                 ", input='" + input + '\'' +
                 ", title='" + title + '\'' +
+                ", count='" + count + '\'' +
+                ", percent='" + percent + '\'' +
                 '}';
     }
 }

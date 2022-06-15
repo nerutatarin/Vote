@@ -3,7 +3,6 @@ package utils.gson;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import utils.ListOfJson;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -41,23 +40,6 @@ public class GsonMapper {
         try (Reader reader = new FileReader(JSON_PATH + fileName)){
             Type typeToken = TypeToken.getParameterized(type, elementType).getType();
             return new Gson().fromJson(reader, typeToken);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * Десериализуем файл в лист объектов
-     * @param fileName
-     * @param clazz
-     * @return
-     * @param <T>
-     */
-    public static <T> List<T> fileToArrayObject(String fileName, Class<T> clazz) {
-        try (Reader reader = new FileReader(JSON_PATH + fileName)) {
-            ListOfJson<T> typeOfT = new ListOfJson<>(clazz);
-            new Gson().fromJson(reader, typeOfT);
         } catch (IOException e) {
             e.printStackTrace();
         }

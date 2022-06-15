@@ -8,7 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import service.browsers.model.Process;
 import service.configurations.Participants;
-import service.pagemanager.model.PageVote;
+import service.pagemanager.model.PageVoteMap;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
 import utils.Utils;
@@ -18,7 +18,6 @@ import utils.jackson.JsonMapper;
 import votes.kp.PageManagerKP;
 
 import java.time.Duration;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -33,7 +32,7 @@ public abstract class PageManagerImpl implements PageManager {
     protected WebDriver webDriver;
     protected Process process;
     protected String browserName;
-    protected List<PageVote> pageVoteList;
+    protected PageVoteMap pageVoteMap;
     protected Participants participants;
 
     public PageManagerImpl(WebDriver webDriver) {
@@ -62,18 +61,13 @@ public abstract class PageManagerImpl implements PageManager {
         saveCookie(fileName);
 
         Document pageSource = getPageSource();
+
         if (pageSource == null) throw new TimeoutException();
-        pageVoteList = parseVotePage(pageSource);
-        saveVoteList(pageVoteList);
+        pageVoteMap = getVotePages(pageSource);
+        saveVoteList(pageVoteMap);
     }
 
-    public List<PageVote> parseVotePage(Document pageSource) {
-        List<PageVote> pageVotes = new ArrayList<>();
-        getVotePages(pageSource, pageVotes);
-        return pageVotes;
-    }
-
-    protected abstract void getVotePages(Document pageSource, List<PageVote> pageVotes);
+    protected abstract PageVoteMap getVotePages(Document pageSource);
 
     public void voteInput() {
         getInputsListLocatorById().forEach(inp -> {
@@ -135,9 +129,9 @@ public abstract class PageManagerImpl implements PageManager {
         }
     }
 
-    private void saveVoteList(List<PageVote> pageVoteList) {
+    private void saveVoteList(PageVoteMap pageVoteList) {
         String fileName = "page_vote.json";
-        JsonMapper.objectListToFilePretty(pageVoteList, fileName);
+        JsonMapper.objectToFilePretty(pageVoteList, fileName);
     }
 
     private void saveResults() {

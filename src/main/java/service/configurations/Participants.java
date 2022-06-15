@@ -18,16 +18,16 @@ public class Participants {
         this.participants = participants;
     }
 
-    public Participants parse() {
-        return yamlParser(getClass(), "participants.yaml");
-    }
-
     public int getNumberOfVotes() {
         return numberOfVotes;
     }
 
     public void setNumberOfVotes(int numberOfVotes) {
         this.numberOfVotes = numberOfVotes;
+    }
+
+    public Participants parse() {
+        return yamlParser(getClass(), "participants.yaml");
     }
 
     @Override
