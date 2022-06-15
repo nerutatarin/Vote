@@ -3,7 +3,7 @@ package service.pagemanager.model;
 public class ParticipantVote {
     private int id;
     private String input;
-    private String titleMO;
+    private String title;
 
     public int getId() {
         return id;
@@ -21,12 +21,12 @@ public class ParticipantVote {
         this.input = input;
     }
 
-    public String getTitleMO() {
-        return titleMO;
+    public String getTitle() {
+        return title;
     }
 
-    public void setTitleMO(String titleMO) {
-        this.titleMO = titleMO;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ParticipantVote {
         return "Participant{" +
                 "id=" + id +
                 ", input='" + input + '\'' +
-                ", titleMO='" + titleMO + '\'' +
+                ", title='" + title + '\'' +
                 '}';
     }
 }

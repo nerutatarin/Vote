@@ -32,6 +32,6 @@ public class CommandParticipants extends CommandsImpl {
     }
 
     public void stringMessage(ParticipantVote participant) {
-        stringMessage.append(participant.getId()).append("-").append(participant.getTitleMO()).append("\n");
+        stringMessage.append(participant.getId()).append("-").append(participant.getTitle()).append("\n");
     }
 }

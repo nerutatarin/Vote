@@ -1,5 +1,6 @@
 package votes.kp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -34,41 +35,56 @@ public class PageManagerKP extends PageManagerImpl {
     protected void getVotePages(Document pageSource, List<PageVote> pageVotes) {
         Elements questionData = getQuestionData(pageSource);
         for (Element question : questionData) {
-            String title = question.selectFirst("div.question").text();
-
-            List<ParticipantVote> participantVoteList = getParticipantsOfNominations(question);
-
-            PageVote pageVote = new PageVote();
-            pageVote.setTitleNomination(title.substring(3).trim());
-            pageVote.setParticipant(participantVoteList);
-
+            PageVote pageVote = createPageVote(question);
             pageVotes.add(pageVote);
         }
     }
 
+    @NotNull
+    private PageVote createPageVote(Element question) {
+        PageVote pageVote = new PageVote();
+
+        String nomination = question.selectFirst("div.question").text();
+        List<ParticipantVote> participantVoteList = getParticipantsOfNominations(question);
+
+        pageVote.setTimeStamp(new Date());
+        pageVote.setNomination(nomination.substring(3).trim());
+        pageVote.setParticipant(participantVoteList);
+        return pageVote;
+    }
+
     private List<ParticipantVote> getParticipantsOfNominations(Element question) {
-        Elements answers = question.getElementsByClass("answers");
-        return answers.stream()
+        return getAnswers(question).stream()
                 .findFirst()
                 .map(this::getParticipants)
                 .orElse(new ArrayList<>());
     }
 
+    @NotNull
+    private Elements getAnswers(Element question) {
+        return question.getElementsByClass("answers");
+    }
+
     private List<ParticipantVote> getParticipants(Element answer) {
-        Elements labels = answer.select("label");
         List<ParticipantVote> participantVotes = new ArrayList<>();
-        for (Element el : labels) {
-            String inputMO = el.attr("for");
-            String titleMO = el.ownText();
+
+        for (Element label : getLabels(answer)) {
+            String input = label.attr("for");
+            String title = label.ownText();
 
             ParticipantVote participantVote = new ParticipantVote();
-            participantVote.setId(Integer.parseInt(inputMO.substring(3)));
-            participantVote.setInput(inputMO);
-            participantVote.setTitleMO(titleMO);
+            participantVote.setId(Integer.parseInt(input.substring(3)));
+            participantVote.setInput(input);
+            participantVote.setTitle(title);
 
             participantVotes.add(participantVote);
         }
         return participantVotes;
+    }
+
+    @NotNull
+    private Elements getLabels(Element answer) {
+        return answer.select("label");
     }
 
     private Elements getQuestionData(Document pageSource) {
@@ -87,8 +103,8 @@ public class PageManagerKP extends PageManagerImpl {
             List<ParticipantVote> participantVoteList = pageVote.getParticipant();
             for (ParticipantVote participantVote : participantVoteList) {
                 for (Participants.Participant allow : getAllowParticipants()) {
-                    String titleNomination = pageVote.getTitleNomination();
-                    if (allow.getNomination().contains(titleNomination) && allow.getTitle().contains(participantVote.getTitleMO())) {
+                    String titleNomination = pageVote.getNomination();
+                    if (allow.getNomination().contains(titleNomination) && allow.getTitle().contains(participantVote.getTitle())) {
                         String input = participantVote.getInput();
                         list.add(input);
                     }

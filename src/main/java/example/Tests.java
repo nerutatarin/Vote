@@ -1,9 +1,5 @@
 package example;
 
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -18,20 +14,17 @@ import service.configurations.BrowserType;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
 import service.pagemanager.model.ResultVote;
+import service.pagemanager.model.ResultsVote;
 import service.retrofit.api.myip.IpSeeipService;
 import service.retrofit.api.myip.response.IPAddressInfo;
 import service.telegrambot.TelegramBot;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
+import utils.jackson.JsonMapper;
 import votes.kp.PageManagerKP;
 import votes.kp.Results;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,41 +35,21 @@ public class Tests {
     private static String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json";
 
     public static void main(String[] args) {
+
     }
 
-    private static <T> ResultVote[] fileToStringsObjectWithJackson(String fileName, T ResultsVote) {
-        ObjectMapper mapper = new ObjectMapper();
-
-        try (Reader reader = new FileReader(fileName)){
-            Type type = new TypeToken<T[]>(){}.getType();
-            return mapper.readValue(reader, (JavaType) type);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public static <T> List<T> fileToArrayObjectWithGson(String fileName, T clazz) {
-        try (Reader reader = new FileReader(fileName)) {
-            Type type = new TypeToken<List<T>>(){}.getType();
-            new Gson().fromJson(reader, type);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     private static void test (){
         String fileName = "results_votes.json";
-        Gson gson = new Gson();
-        List<ResultVote> vote = new ArrayList<>();
-        try (Reader reader = new FileReader(fileName)) {
-            Type type = new TypeToken<List<ResultVote>>(){}.getType();
-            vote = gson.fromJson(reader, type);
-        } catch (IOException e) {
-            e.printStackTrace();
+        ResultsVote resultsVotes = JsonMapper.fileToObject(fileName, ResultsVote.class);
+        List<ResultVote> resultVotes = resultsVotes.getResultVotes();
+        for (ResultVote vote : resultVotes) {
+            if (vote.getId() == 19) {
+
+            }
         }
-        System.out.println(vote);
+
+
     }
 
     private static void TelegramBotInit() {
