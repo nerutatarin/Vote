@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static utils.Thesaurus.JSON_PATH;
+
 public class GsonMapper {
 
     /**
@@ -36,7 +38,7 @@ public class GsonMapper {
      * @param <T>
      */
     public static <T> List<T> fileToListObject(String fileName, Class<? extends Collection> type, Class<T> elementType) {
-        try (Reader reader = new FileReader(fileName)){
+        try (Reader reader = new FileReader(JSON_PATH + fileName)){
             Type typeToken = TypeToken.getParameterized(type, elementType).getType();
             return new Gson().fromJson(reader, typeToken);
         } catch (IOException e) {
@@ -53,7 +55,7 @@ public class GsonMapper {
      * @param <T>
      */
     public static <T> List<T> fileToArrayObject(String fileName, Class<T> clazz) {
-        try (Reader reader = new FileReader(fileName)) {
+        try (Reader reader = new FileReader(JSON_PATH + fileName)) {
             ListOfJson<T> typeOfT = new ListOfJson<>(clazz);
             new Gson().fromJson(reader, typeOfT);
         } catch (IOException e) {
@@ -71,7 +73,7 @@ public class GsonMapper {
      */
     public static <T> T fileToObject(String fileName, Class<T> clazz) {
         Gson gson = new Gson();
-        try (Reader reader = new FileReader(fileName)) {
+        try (Reader reader = new FileReader(JSON_PATH + fileName)) {
             return gson.fromJson(reader, clazz);
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,7 +90,7 @@ public class GsonMapper {
     public static <T> void objectToFile(T object, String fileName) {
         if (object == null) return;
         Gson gson = new Gson();
-        try (FileWriter writer = new FileWriter(fileName)) {
+        try (FileWriter writer = new FileWriter(JSON_PATH + fileName)) {
             gson.toJson(object, writer);
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,7 +106,7 @@ public class GsonMapper {
     public static <T> void objectToFilePretty(T object, String fileName) {
         if (object == null) return;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(fileName)) {
+        try (FileWriter writer = new FileWriter(JSON_PATH + fileName)) {
             gson.toJson(object, writer);
         } catch (IOException e) {
             e.printStackTrace();
@@ -120,7 +122,7 @@ public class GsonMapper {
     public static <T> void objectsListToFilePretty(List<T> object, String fileName) {
         if (object == null || object.size() == 0) return;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        try (FileWriter writer = new FileWriter(fileName)) {
+        try (FileWriter writer = new FileWriter(JSON_PATH + fileName)) {
             gson.toJson(object, writer);
         } catch (IOException e) {
             e.printStackTrace();

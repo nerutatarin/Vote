@@ -1,6 +1,7 @@
 package utils;
 
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -9,13 +10,13 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static utils.Thesaurus.DEFAULT_BASE_LOG_PATH;
 import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
+import static utils.Utils.createDirectoryIfNoExistInWorkDir;
 
 public class WriteToLog {
     private final Logger log = Logger.getLogger(WriteToLog.class);
     private final String dirName;
-
-    private final String pathToLog = "src/resources/logs/";
     private String fileName;
     private StringBuilder messageString = new StringBuilder();
 
@@ -53,8 +54,8 @@ public class WriteToLog {
     }
 
     private void write(StringBuilder messageString) {
-        File directory = verifyDirectory();
-        File logFile = createLogFile(directory);
+        File dir = createDir();
+        File logFile = createLogFile(dir);
 
         try (PrintWriter writer = new PrintWriter(new FileWriter(logFile, true))) {
             writer.write(messageString.toString());
@@ -64,13 +65,10 @@ public class WriteToLog {
         }
     }
 
-    private File verifyDirectory() {
-        File directory = new File(pathToLog + dirName + "/");
-
-        if (directory.exists()) return directory;
-
-        directory.mkdirs();
-        return directory;
+    @NotNull
+    private File createDir() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM");
+        return createDirectoryIfNoExistInWorkDir(DEFAULT_BASE_LOG_PATH + simpleDateFormat.format(new Date()) + "/" + dirName + "/");
     }
 
     private File createLogFile(File directory) {

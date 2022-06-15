@@ -13,7 +13,7 @@ import java.util.List;
 public class CommandResultsVote extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandStatus.class);
 
-    private final String fileName = "src/resources/results_votes.json";
+    private final String fileName = "results_votes.json";
     private ResultVote resultVote;
     private Date timestamp;
 

@@ -48,17 +48,17 @@ public class Results {
     }
 
     private CookieKP[] fileToObjectWithGson() {
-        String fileName = "src/resources/cookie_before_vote.json";
+        String fileName = "cookie_before_vote.json";
         return GsonMapper.fileToObject(fileName, CookieKP[].class);
     }
 
     private void objectToFileWithObjectMapper(Set<Cookie> cookies) {
-        String fileName = "src/resources/object_mapper_cookie_kp.json";
+        String fileName = "object_mapper_cookie_kp.json";
         JsonMapper.objectToFile(cookies, fileName);
     }
 
     private void objectToFileWithGson(Set<Cookie> cookies) {
-        String fileName = "src/resources/gson_cookie_kp.json";
+        String fileName = "gson_cookie_kp.json";
         GsonMapper.objectToFilePretty(cookies, fileName);
     }
 

@@ -53,4 +53,9 @@ public class Thesaurus {
     }
 
     public static final String IFCONFIGME_URL = "https://ifconfig.me/";
+
+    public static final String DEFAULT_BASE_LOG_PATH = "log/";
+    public static final String DEFAULT_BASE_FILE_STORAGE_PATH = "filestorage/";
+    public static final String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json/";
+
 }

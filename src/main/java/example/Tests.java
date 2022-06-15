@@ -35,13 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static utils.Utils.createDirectoryIfNoExistInWorkDir;
+import static utils.Thesaurus.DEFAULT_BASE_FILE_STORAGE_PATH;
 
 public class Tests {
     private static final Logger log = Logger.getLogger(Tests.class);
+    private static String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json";
 
     public static void main(String[] args) {
-        createDirectoryIfNoExistInWorkDir("src.resources.test");
     }
 
     private static <T> ResultVote[] fileToStringsObjectWithJackson(String fileName, T ResultsVote) {
@@ -67,7 +67,7 @@ public class Tests {
     }
 
     private static void test (){
-        String fileName = "src/resources/results_votes.json";
+        String fileName = "results_votes.json";
         Gson gson = new Gson();
         List<ResultVote> vote = new ArrayList<>();
         try (Reader reader = new FileReader(fileName)) {

@@ -10,7 +10,7 @@ import java.util.List;
 
 public class CommandParticipants extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandStatus.class);
-    private final String fileName = "src/resources/page_vote.json";
+    private final String fileName = "page_vote.json";
 
     @Override
     public SendMessage execute(Long userId, String text) {

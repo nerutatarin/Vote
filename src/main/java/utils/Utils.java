@@ -157,14 +157,11 @@ public class Utils {
         }
     }
 
-    public static File createDirectoryIfNoExistInWorkDir(String dirName )
-    {
-        File dir = new File( dirName );
-        if( !dir.exists() )
-        {
-            // каталог log взят, т.к. он обязательно есть в рабочем каталоге
-            File logFile = new File( "log" );
-            dir = new File( logFile.getAbsolutePath() + "/../" + dirName );
+    public static File createDirectoryIfNoExistInWorkDir(String dirName) {
+        File dir = new File(dirName);
+        if (!dir.exists()) {
+            File logFile = new File("src");
+            dir = new File(logFile.getAbsolutePath() + "/../" + dirName);
             dir.mkdirs();
         }
         return dir;

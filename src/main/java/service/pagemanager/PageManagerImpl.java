@@ -11,6 +11,7 @@ import service.configurations.Participants;
 import service.pagemanager.model.PageVote;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
+import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
 import utils.jackson.JsonMapper;
@@ -23,6 +24,7 @@ import java.util.Set;
 
 import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.By.id;
+import static utils.Thesaurus.JSON_PATH;
 
 public abstract class PageManagerImpl implements PageManager {
     private static final Logger log = getLogger(PageManagerKP.class);
@@ -56,7 +58,7 @@ public abstract class PageManagerImpl implements PageManager {
         webDriver.get(baseUrl);
         wait.until(ExpectedConditions.titleIs("Клиника года - 2022. Уфа."));
 
-        String fileName = "src/resources/cookie_after_vote.json";
+        String fileName = "cookie_after_vote.json";
         saveCookie(fileName);
 
         Document pageSource = getPageSource();
@@ -94,7 +96,7 @@ public abstract class PageManagerImpl implements PageManager {
 
         saveResults();
 
-        String fileName = "src/resources/cookie_before_vote.json";
+        String fileName = "cookie_before_vote.json";
         saveCookie(fileName);
     }
 
@@ -134,7 +136,7 @@ public abstract class PageManagerImpl implements PageManager {
     }
 
     private void saveVoteList(List<PageVote> pageVoteList) {
-        String fileName = "src/resources/page_vote.json";
+        String fileName = "page_vote.json";
         JsonMapper.objectListToFilePretty(pageVoteList, fileName);
     }
 
@@ -142,15 +144,15 @@ public abstract class PageManagerImpl implements PageManager {
         Document pageSource = getPageSource();
         ResultsVote resultsVote = getResultsVote(pageSource);
 
-        String fileName = "src/resources/results_votes.json";
-
-
         if (resultsVote == null) return;
 
+        String fileName = "results_votes.json";
         JsonMapper.objectToFilePretty(resultsVote, fileName);
     }
 
     private void saveCookie(String fileName) {
+        Utils.createDirectoryIfNoExistInWorkDir(JSON_PATH);
+
         Set<Cookie> cookies = webDriver.manage().getCookies();
         if (cookies.size() == 0) {
             log.info(browserName + " " + "Не удалось получить куки!");
