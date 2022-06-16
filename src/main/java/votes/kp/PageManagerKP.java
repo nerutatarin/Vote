@@ -14,6 +14,7 @@ import service.pagemanager.model.ParticipantVote;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
 import utils.Utils;
+import utils.jackson.JsonMapper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -51,7 +52,8 @@ public class PageManagerKP extends PageManagerImpl {
         for (Element label : getLabels(questionData)) {
             participantVoteList.add(getParticipantVote(label));
         }
-       return participantVoteList;
+        JsonMapper.objectListToFilePretty(participantVoteList, "participants.json");
+        return participantVoteList;
     }
 
     @NotNull
