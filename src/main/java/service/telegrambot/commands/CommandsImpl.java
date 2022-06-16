@@ -2,28 +2,32 @@ package service.telegrambot.commands;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import service.webdriver.browsers.Firefox;
-import utils.Utils;
 import votes.kp.VoteKP;
 
 public abstract class CommandsImpl implements Commands {
 
-    protected SendMessage sendMessage = new SendMessage();
-    protected final StringBuilder stringMessage = new StringBuilder();
-    protected String message;
-
-    protected String getMessage(String text) {
-        return message = Utils.firstSubstringAfterSpace(text);
-    }
-
+    protected String data;
     protected void singleThreadVoteInit() {
         new VoteKP(new Firefox(), 1).start();
     }
 
-    protected SendMessage sendMessageBuild(Long userId) {
-        sendMessage.setChatId(String.valueOf(userId));
-        sendMessage.setText(stringMessage.toString());
+    @Override
+    public SendMessage execute(String chatId, String data) {
+        this.data = data;
+        return sendMessage(chatId);
+    }
 
-        if (stringMessage.length() > 0) stringMessage.setLength(0);
+    private SendMessage sendMessage(String chatId) {
+        StringBuilder stringBuild = replyMessageMake();
+
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(chatId);
+        sendMessage.setText(stringBuild.toString());
+
+        if (stringBuild.length() > 0) stringBuild.setLength(0);
         return sendMessage;
     }
+
+    protected abstract StringBuilder replyMessageMake();
+
 }

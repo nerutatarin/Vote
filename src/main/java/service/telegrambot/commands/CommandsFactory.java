@@ -5,28 +5,24 @@ import utils.Utils;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandsFactory {
+import static service.telegrambot.commands.CommandsEnum.*;
 
-    private static final String COMMAND_START = "/start";
-    private static final String COMMAND_STATUS = "/status";
-    private static final String COMMAND_PARTICIPANTS = "/participants";
-    private static final String COMMAND_RESULTS_VOTE = "/resultsvote";
-    private static final String COMMAND_DEFAULT = "";
+public class CommandsFactory {
     private static final Map<String, Commands> filterFactory = new HashMap<>();
 
     static {
-        filterFactory.put(COMMAND_START, new CommandStart());
-        filterFactory.put(COMMAND_STATUS, new CommandStatus());
-        filterFactory.put(COMMAND_PARTICIPANTS, new CommandParticipants());
-        filterFactory.put(COMMAND_RESULTS_VOTE, new CommandResultsVote());
-        filterFactory.put(COMMAND_DEFAULT, new CommandDefault());
+        filterFactory.put(COMMAND_START.getValue(), new CommandStart());
+        filterFactory.put(COMMAND_STATUS.getValue(), new CommandStatus());
+        filterFactory.put(COMMAND_PARTICIPANTS.getValue(), new CommandParticipants());
+        filterFactory.put(COMMAND_RESULTS_VOTE.getValue(), new CommandResultsVote());
+        filterFactory.put(COMMAND_DEFAULT.getValue(), new CommandDefault());
     }
 
-    public static Commands getInstance(String text) {
-        return filterFactory.get(getCommand(text));
+    public static Commands getInstance(String data) {
+        return filterFactory.get(getCommand(data));
     }
 
-    private static String getCommand(String text) {
-        return Utils.substringBeforeSpace(text);
+    private static String getCommand(String data) {
+        return Utils.substringBeforeSpace(data);
     }
 }
