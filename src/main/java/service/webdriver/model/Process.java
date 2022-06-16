@@ -1,4 +1,4 @@
-package service.browsers.model;
+package service.webdriver.model;
 
 public class Process {
     private String browserName;

@@ -6,7 +6,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import service.browsers.model.Process;
+import service.webdriver.model.Process;
 import service.configurations.Participants;
 import service.pagemanager.PageManagerImpl;
 import service.pagemanager.model.PageVoteMap;
@@ -83,19 +83,19 @@ public class PageManagerKP extends PageManagerImpl {
 
     @Override
     protected List<String> getInputsListLocatorById() {
-        Map<String, List<ParticipantVote>> participantsMap = pageVoteMap.getParticipantsMap();
-        List<String> list = new ArrayList<>();
-        for (Map.Entry<String, List<ParticipantVote>> entry : participantsMap.entrySet()) {
-            String key = entry.getKey();
-            List<ParticipantVote> value = entry.getValue();
-            Map<String, String> allowParticipants = getAllowParticipants();
-            if (allowParticipants.containsKey(key)) {
-                value.stream()
-                        .filter(participantVote -> getAllowParticipants().containsValue(participantVote.getTitle()))
-                        .map(ParticipantVote::getInput).forEach(list::add);
-            }
+        List<String> inputs = new ArrayList<>();
+        pageVoteMap.getParticipantsMap().forEach((key, value) -> isAllowNomination(inputs, key, value));
+        return inputs;
+    }
+
+    private void isAllowNomination(List<String> inputs, String nomination, List<ParticipantVote> participantVotes) {
+        if (getAllowParticipants().containsKey(nomination)) {
+            getInputsForAllowParticipants(inputs, participantVotes);
         }
-        return list;
+    }
+
+    private void getInputsForAllowParticipants(List<String> inputs, List<ParticipantVote> participantVotes) {
+        participantVotes.stream().filter(participant -> getAllowParticipants().containsValue(participant.getTitle())).map(ParticipantVote::getInput).forEach(inputs::add);
     }
 
     @Override

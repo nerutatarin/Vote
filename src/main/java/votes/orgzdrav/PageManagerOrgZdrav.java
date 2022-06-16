@@ -3,7 +3,7 @@ package votes.orgzdrav;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import service.browsers.model.Process;
+import service.webdriver.model.Process;
 import service.pagemanager.PageManagerImpl;
 import service.pagemanager.model.PageVoteMap;
 import service.pagemanager.model.ResultsVote;

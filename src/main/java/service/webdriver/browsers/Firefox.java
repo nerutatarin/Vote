@@ -1,15 +1,16 @@
-package service.browsers;
+package service.webdriver.browsers;
 
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import service.configurations.Options;
+import service.webdriver.drivers.DriversFactory;
 import utils.RandomUserAgent;
 
 import java.time.Duration;
 
-public class Firefox extends BrowsersFactory {
+public class Firefox extends DriversFactory {
 
     @Override
     protected FirefoxOptions getOptions() {

@@ -6,6 +6,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import service.telegrambot.commands.Commands;
+import service.telegrambot.commands.CommandsFactory;
 import service.telegrambot.configurations.TelegramProperties;
 
 public class TelegramBot extends TelegramLongPollingBot {

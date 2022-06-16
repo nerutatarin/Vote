@@ -1,7 +1,7 @@
 package service.telegrambot.commands;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import service.browsers.Firefox;
+import service.webdriver.browsers.Firefox;
 import utils.Utils;
 import votes.kp.VoteKP;
 

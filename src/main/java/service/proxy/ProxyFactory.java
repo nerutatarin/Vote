@@ -2,7 +2,7 @@ package service.proxy;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
-import service.browsers.model.Process;
+import service.webdriver.model.Process;
 import service.configurations.ProxySettings;
 import service.retrofit.api.freeproxy.FreeProxyService;
 import service.retrofit.api.freeproxy.response.FreeProxyMedium;

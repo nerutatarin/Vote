@@ -1,8 +1,8 @@
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import service.browsers.Browsers;
-import service.browsers.Firefox;
+import service.webdriver.Browsers;
+import service.webdriver.browsers.Firefox;
 import service.telegrambot.TelegramBot;
 import votes.kp.VoteKP;
 

@@ -1,18 +1,19 @@
-package service.browsers;
+package service.webdriver.browsers;
 
 import org.openqa.selenium.PageLoadStrategy;
-import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.opera.OperaOptions;
 import service.configurations.Options;
+import service.webdriver.drivers.DriversFactory;
 import utils.RandomUserAgent;
 
 import java.time.Duration;
 import java.util.Collections;
 
-public class MsEdge extends BrowsersFactory {
+public class Opera extends DriversFactory {
 
     @Override
-    protected EdgeOptions getOptions() {
-        EdgeOptions options = new EdgeOptions();
+    protected OperaOptions getOptions() {
+        OperaOptions options = new OperaOptions();
         //options.addArguments("--enable-automation");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         options.setExperimentalOption("useAutomationExtension", false);
@@ -33,8 +34,10 @@ public class MsEdge extends BrowsersFactory {
         return options;
     }
 
-    private void mainOptions(EdgeOptions options) {
+    private void mainOptions(OperaOptions options) {
         Options browserOptions = getBrowserOptions();
+
+        if (browserOptions.isHeadless()) options.addArguments("--headless");
 
         options.setPageLoadTimeout(Duration.ofSeconds(browserOptions.getPageLoadTimeout()));
         options.setImplicitWaitTimeout(Duration.ofSeconds(browserOptions.getImplicitWaitTimeout()));
@@ -43,7 +46,6 @@ public class MsEdge extends BrowsersFactory {
         options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
         options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
 
-        options.setHeadless(browserOptions.isHeadless());
         options.setProxy(getProxy());
     }
 }

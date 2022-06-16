@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import service.browsers.model.Process;
+import service.webdriver.model.Process;
 import service.configurations.Participants;
 import service.pagemanager.model.PageVoteMap;
 import service.pagemanager.model.ResultVote;

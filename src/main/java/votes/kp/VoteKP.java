@@ -1,8 +1,8 @@
 package votes.kp;
 
 import org.openqa.selenium.WebDriver;
-import service.browsers.Browsers;
-import service.browsers.model.Process;
+import service.webdriver.Browsers;
+import service.webdriver.model.Process;
 import votes.VoteImpl;
 
 import java.util.List;

@@ -1,19 +1,19 @@
-package service.browsers;
+package service.webdriver.browsers;
 
 import org.openqa.selenium.PageLoadStrategy;
-import org.openqa.selenium.chrome.ChromeDriverLogLevel;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.edge.EdgeOptions;
 import service.configurations.Options;
+import service.webdriver.drivers.DriversFactory;
 import utils.RandomUserAgent;
 
 import java.time.Duration;
 import java.util.Collections;
 
-public class Chromium extends BrowsersFactory {
+public class MsEdge extends DriversFactory {
 
     @Override
-    protected ChromeOptions getOptions() {
-        ChromeOptions options = new ChromeOptions();
+    protected EdgeOptions getOptions() {
+        EdgeOptions options = new EdgeOptions();
         //options.addArguments("--enable-automation");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         options.setExperimentalOption("useAutomationExtension", false);
@@ -34,7 +34,7 @@ public class Chromium extends BrowsersFactory {
         return options;
     }
 
-    private void mainOptions(ChromeOptions options) {
+    private void mainOptions(EdgeOptions options) {
         Options browserOptions = getBrowserOptions();
 
         options.setPageLoadTimeout(Duration.ofSeconds(browserOptions.getPageLoadTimeout()));
@@ -42,7 +42,6 @@ public class Chromium extends BrowsersFactory {
         options.setScriptTimeout(Duration.ofSeconds(browserOptions.getScriptTimeout()));
 
         options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
-        options.setLogLevel(ChromeDriverLogLevel.valueOf(browserOptions.getLogLevel()));
         options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
 
         options.setHeadless(browserOptions.isHeadless());

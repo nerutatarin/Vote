@@ -1,4 +1,4 @@
-package service.browsers;
+package service.webdriver;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
@@ -6,7 +6,7 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import service.browsers.model.Process;
+import service.webdriver.model.Process;
 import service.configurations.BrowserProperties;
 import service.configurations.BrowserType;
 import service.configurations.Options;
