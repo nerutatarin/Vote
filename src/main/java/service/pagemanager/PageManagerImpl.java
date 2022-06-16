@@ -6,11 +6,12 @@ import org.jsoup.nodes.Document;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import service.webdriver.model.Process;
 import service.configurations.Participants;
 import service.pagemanager.model.PageVoteMap;
+import service.pagemanager.model.ParticipantVote;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
+import service.webdriver.model.Process;
 import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
@@ -64,7 +65,7 @@ public abstract class PageManagerImpl implements PageManager {
 
         if (pageSource == null) throw new TimeoutException();
         pageVoteMap = getVotePages(pageSource);
-        saveVoteList(pageVoteMap);
+        savePageVote(pageVoteMap);
     }
 
     protected abstract PageVoteMap getVotePages(Document pageSource);
@@ -129,9 +130,12 @@ public abstract class PageManagerImpl implements PageManager {
         }
     }
 
-    private void saveVoteList(PageVoteMap pageVoteList) {
-        String fileName = "page_vote.json";
-        JsonMapper.objectToFilePretty(pageVoteList, fileName);
+    protected abstract List<ParticipantVote> getParticipantVotes();
+
+    private void savePageVote(PageVoteMap pageVoteMap) {
+        JsonMapper.objectToFilePretty(pageVoteMap, "page_vote.json");
+
+        JsonMapper.objectListToFilePretty(getParticipantVotes(), "participants.json");
     }
 
     private void saveResults() {

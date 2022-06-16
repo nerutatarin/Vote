@@ -6,15 +6,14 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import service.webdriver.model.Process;
 import service.configurations.Participants;
 import service.pagemanager.PageManagerImpl;
 import service.pagemanager.model.PageVoteMap;
 import service.pagemanager.model.ParticipantVote;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
+import service.webdriver.model.Process;
 import utils.Utils;
-import utils.jackson.JsonMapper;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -22,6 +21,8 @@ import java.util.stream.Collectors;
 import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
+
+    public List<ParticipantVote> participantVotes = new ArrayList<>();
 
     public PageManagerKP(WebDriver webDriver) {
         super(webDriver);
@@ -52,7 +53,6 @@ public class PageManagerKP extends PageManagerImpl {
         for (Element label : getLabels(questionData)) {
             participantVoteList.add(getParticipantVote(label));
         }
-        JsonMapper.objectListToFilePretty(participantVoteList, "participants.json");
         return participantVoteList;
     }
 
@@ -71,6 +71,7 @@ public class PageManagerKP extends PageManagerImpl {
         participantVote.setInput(inputId);
         participantVote.setTitle(Utils.removeUTF8BOM(participant));
 
+        participantVotes.add(participantVote);
         return participantVote;
     }
 
@@ -81,6 +82,11 @@ public class PageManagerKP extends PageManagerImpl {
     @Override
     protected By getButtonLocator() {
         return id("submit_vote");
+    }
+
+    @Override
+    protected List<ParticipantVote> getParticipantVotes() {
+        return participantVotes;
     }
 
     @Override
