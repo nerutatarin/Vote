@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import service.configurations.Participants;
 import service.pagemanager.model.PageVoteMap;
 import service.pagemanager.model.ParticipantVote;
-import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
 import service.webdriver.model.Process;
 import utils.Utils;
@@ -17,10 +16,16 @@ import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
 import utils.jackson.JsonMapper;
 import votes.kp.PageManagerKP;
+import votes.kp.ParserBeforePage;
+import votes.kp.ParserPageImpl;
+import votes.kp.model.ParserAfterPage;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.apache.log4j.Logger.getLogger;
 import static org.openqa.selenium.By.id;
@@ -33,8 +38,8 @@ public abstract class PageManagerImpl implements PageManager {
     protected WebDriver webDriver;
     protected Process process;
     protected String browserName;
-    protected PageVoteMap pageVoteMap;
     protected Participants participants;
+    protected PageVoteMap pageVoteMap;
 
     public PageManagerImpl(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -62,13 +67,11 @@ public abstract class PageManagerImpl implements PageManager {
         saveCookie(fileName);
 
         Document pageSource = getPageSource();
-
         if (pageSource == null) throw new TimeoutException();
-        pageVoteMap = getVotePages(pageSource);
-        savePageVote(pageVoteMap);
-    }
 
-    protected abstract PageVoteMap getVotePages(Document pageSource);
+        ParserPageImpl parserPage = new ParserBeforePage();
+        pageVoteMap = parserPage.getPageVoteMap(pageSource);
+    }
 
     public void voteInput() {
         getInputsListLocatorById().forEach(inp -> {
@@ -109,33 +112,26 @@ public abstract class PageManagerImpl implements PageManager {
         Document pageSource = getPageSource();
         if (pageSource == null) return;
 
-        ResultsVote resultsVote = getResultsVote(pageSource);
-        if (resultsVote == null) return;
+        ParserPageImpl parserPage = new ParserAfterPage();
+        PageVoteMap voteMap = parserPage.getPageVoteMap(pageSource);
+        Map<String, List<ParticipantVote>> participantsMap = voteMap.getParticipantsMap();
+        List<ParticipantVote> participantVoteList = participantsMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
 
-        List<ResultVote> resultVoteList = resultsVote.getResultVotes();
-        if (resultVoteList == null || resultVoteList.isEmpty()) return;
+        if (Utils.nullOrEmpty(participantVoteList)) return;
 
-        for (ResultVote vCount : resultVoteList) {
-            if (getInputsListLocatorById().contains(vCount.getInputId())) {
-                log.info(browserName + " " + vCount);
-
+        for (ParticipantVote participantVote : participantVoteList) {
+            if (getInputsListLocatorById().contains(participantVote.getInput())) {
+                log.info(browserName + " " + participantVote);
                 String ip = IPAddress.getIp();
                 String country = IPAddress.getCountry();
-                String count = vCount.getCount().trim();
 
-                String title = vCount.getTitle();
+                String title = participantVote.getTitle();
+                String count = participantVote.getCount().trim();
+
                 WriteToLog writeToLog = new WriteToLog(browserName, title);
                 writeToLog.ipCountryCount(ip, country, count);
             }
         }
-    }
-
-    protected abstract List<ParticipantVote> getParticipantVotes();
-
-    private void savePageVote(PageVoteMap pageVoteMap) {
-        JsonMapper.objectToFilePretty(pageVoteMap, "page_vote.json");
-
-        JsonMapper.objectListToFilePretty(getParticipantVotes(), "participants.json");
     }
 
     private void saveResults() {
@@ -160,7 +156,7 @@ public abstract class PageManagerImpl implements PageManager {
         JsonMapper.objectToFilePretty(cookies, fileName);
     }
 
-    private Document getPageSource() {
+    protected Document getPageSource() {
         return Jsoup.parse(webDriver.getPageSource());
     }
 

@@ -3,7 +3,9 @@ package utils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class Utils {
     private static final String UTF8_BOM = "\uFEFF";
@@ -165,5 +167,16 @@ public class Utils {
             dir.mkdirs();
         }
         return dir;
+    }
+
+    public static <T> List<T> concat(List<T> first, List<T> second) {
+        ArrayList<T> result = new ArrayList<>(first);
+        result.addAll(second);
+
+        return result;
+    }
+
+    public static boolean nullOrEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
     }
 }

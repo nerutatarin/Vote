@@ -6,18 +6,20 @@ import org.openqa.selenium.WebDriver;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import service.webdriver.Browsers;
-import service.webdriver.browsers.Firefox;
-import service.webdriver.model.Process;
 import service.configurations.BrowserProperties;
 import service.configurations.BrowserType;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
+import service.pagemanager.model.PageVoteMap;
+import service.pagemanager.model.ParticipantVote;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.ResultsVote;
 import service.retrofit.api.myip.IpSeeipService;
 import service.retrofit.api.myip.response.IPAddressInfo;
 import service.telegrambot.TelegramBot;
+import service.webdriver.Browsers;
+import service.webdriver.browsers.Firefox;
+import service.webdriver.model.Process;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
@@ -25,8 +27,10 @@ import utils.jackson.JsonMapper;
 import votes.kp.PageManagerKP;
 import votes.kp.Results;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static utils.Thesaurus.DEFAULT_BASE_FILE_STORAGE_PATH;
 
@@ -35,7 +39,12 @@ public class Tests {
     private static String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json";
 
     public static void main(String[] args) {
+        PageVoteMap pageVoteMap = JsonMapper.fileToObject("page_vote.json", PageVoteMap.class);
+        Map<String, List<ParticipantVote>> participantsMap = pageVoteMap.getParticipantsMap();
 
+        List<ParticipantVote> result = participantsMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+
+        System.out.println(result);
     }
 
 

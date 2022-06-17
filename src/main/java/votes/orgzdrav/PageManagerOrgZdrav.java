@@ -3,11 +3,9 @@ package votes.orgzdrav;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import service.pagemanager.model.ParticipantVote;
-import service.webdriver.model.Process;
 import service.pagemanager.PageManagerImpl;
-import service.pagemanager.model.PageVoteMap;
 import service.pagemanager.model.ResultsVote;
+import service.webdriver.model.Process;
 
 import java.util.List;
 
@@ -21,18 +19,8 @@ public class PageManagerOrgZdrav extends PageManagerImpl {
     }
 
     @Override
-    protected PageVoteMap getVotePages(Document pageSource) {
-        return null;
-    }
-
-    @Override
     protected By getButtonLocator() {
         return xpath("/html/body/section[@class='ftco-section']//button[@type='button']");
-    }
-
-    @Override
-    protected List<ParticipantVote> getParticipantVotes() {
-        return null;
     }
 
     @Override
