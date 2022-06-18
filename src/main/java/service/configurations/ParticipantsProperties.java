@@ -4,7 +4,7 @@ import java.util.List;
 
 import static utils.yaml.YamlParser.yamlParser;
 
-public class Participants {
+public class ParticipantsProperties {
 
     private int numberOfVotes;
 
@@ -26,7 +26,7 @@ public class Participants {
         this.numberOfVotes = numberOfVotes;
     }
 
-    public Participants parse() {
+    public ParticipantsProperties parse() {
         return yamlParser(getClass(), "participants.yaml");
     }
 

@@ -1,18 +1,19 @@
 package votes;
 
+import example.VoteException;
 import org.apache.log4j.Logger;
 import org.jetbrains.annotations.Nullable;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import service.pagemanager.PageManager;
+import service.retrofit.api.myip.IpSeeipService;
 import service.webdriver.Browsers;
 import service.webdriver.browsers.Firefox;
 import service.webdriver.model.Process;
-import service.pagemanager.PageManager;
 import utils.WriteToLog;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
-import service.retrofit.api.myip.IpSeeipService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +52,8 @@ public abstract class VoteImpl extends Thread implements Vote {
             try {
                 log.info(browser.getBrowserName() + " Попытка № " + i);
                 init();
+            } catch (VoteException e) {
+                new WriteToLog(browserName).error(e.getMessage());
             } catch (TimeoutException e) {
                 log.error(browserName + " Превышено время ожидания загрузки страницы!");
                 new WriteToLog(browserName).error(e.getLocalizedMessage());

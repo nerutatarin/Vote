@@ -25,14 +25,15 @@ public class JsonMapper {
      * @param fileName
      * @param clazz
      * @param <T>
-     * @return
+     * @return Object
      */
-    public static <T> T fileToObject(String fileName, Class<T> clazz) {
+    public static <T> T fileToObject(String fileName, Class<T> clazz){
         final ObjectMapper mapper = newMapper();
         try (Reader reader = new FileReader(JSON_PATH + fileName)) {
             return mapper.readValue(reader, clazz);
         } catch (IOException e) {
             e.printStackTrace();
+            //throw new VoteException("Ошибка десериализации файла " + PAGE_BEFORE_VOTING_JSON);
         }
         return null;
     }

@@ -1,11 +1,10 @@
 package service.telegrambot.commands;
 
-import utils.Utils;
-
 import java.util.HashMap;
 import java.util.Map;
 
 import static service.telegrambot.commands.CommandsEnum.*;
+import static utils.Utils.substringBeforeSpace;
 
 public class CommandsFactory {
     private static final Map<String, Commands> filterFactory = new HashMap<>();
@@ -13,8 +12,8 @@ public class CommandsFactory {
     static {
         filterFactory.put(COMMAND_START.getValue(), new CommandStart());
         filterFactory.put(COMMAND_STATUS.getValue(), new CommandStatus());
-        filterFactory.put(COMMAND_PARTICIPANTS.getValue(), new CommandParticipants());
-        filterFactory.put(COMMAND_RESULTS_VOTE.getValue(), new CommandResultsVote());
+        filterFactory.put(COMMAND_MEMBERS.getValue(), new CommandMembers());
+        filterFactory.put(COMMAND_RESULT.getValue(), new CommandResult());
         filterFactory.put(COMMAND_DEFAULT.getValue(), new CommandDefault());
     }
 
@@ -23,6 +22,6 @@ public class CommandsFactory {
     }
 
     private static String getCommand(String data) {
-        return Utils.substringBeforeSpace(data);
+        return substringBeforeSpace(data);
     }
 }

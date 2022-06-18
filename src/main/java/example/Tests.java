@@ -10,10 +10,8 @@ import service.configurations.BrowserProperties;
 import service.configurations.BrowserType;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
-import service.pagemanager.model.PageVoteMap;
-import service.pagemanager.model.ParticipantVote;
-import service.pagemanager.model.ResultVote;
-import service.pagemanager.model.ResultsVote;
+import service.pagemanager.model.Member;
+import service.pagemanager.model.VotingPage;
 import service.retrofit.api.myip.IpSeeipService;
 import service.retrofit.api.myip.response.IPAddressInfo;
 import service.telegrambot.TelegramBot;
@@ -25,7 +23,6 @@ import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
 import utils.jackson.JsonMapper;
 import votes.kp.PageManagerKP;
-import votes.kp.Results;
 
 import java.util.Collection;
 import java.util.List;
@@ -39,26 +36,12 @@ public class Tests {
     private static String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json";
 
     public static void main(String[] args) {
-        PageVoteMap pageVoteMap = JsonMapper.fileToObject("page_vote.json", PageVoteMap.class);
-        Map<String, List<ParticipantVote>> participantsMap = pageVoteMap.getParticipantsMap();
+        VotingPage votingPage = JsonMapper.fileToObject("page_vote", VotingPage.class);
+        Map<String, List<Member>> participantsMap = votingPage.getMembers();
 
-        List<ParticipantVote> result = participantsMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        List<Member> result = participantsMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
 
         System.out.println(result);
-    }
-
-
-    private static void test (){
-        String fileName = "results_votes.json";
-        ResultsVote resultsVotes = JsonMapper.fileToObject(fileName, ResultsVote.class);
-        List<ResultVote> resultVotes = resultsVotes.getResultVotes();
-        for (ResultVote vote : resultVotes) {
-            if (vote.getId() == 19) {
-
-            }
-        }
-
-
     }
 
     private static void TelegramBotInit() {
@@ -84,12 +67,6 @@ public class Tests {
         } finally {
             webDriver.close();
         }
-    }
-
-    private static void getResultsCount() {
-        Results results = new Results();
-        List<ResultVote> resultVoteList = results.getResults();
-        System.out.println();
     }
 
     public static WebDriver getWebDriverNoProxy() {

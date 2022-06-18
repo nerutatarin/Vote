@@ -1,4 +1,4 @@
-package votes.kp.model;
+package service.pagemanager.model;
 
 import java.util.List;
 

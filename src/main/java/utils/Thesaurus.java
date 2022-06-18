@@ -58,4 +58,13 @@ public class Thesaurus {
     public static final String DEFAULT_BASE_FILE_STORAGE_PATH = "filestorage/";
     public static final String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json/";
 
+
+    public static class FilesNameJson {
+        public static final String PAGE_AFTER_VOTING_JSON = "page_after_voting.json";
+        public static final String PAGE_BEFORE_VOTING_JSON = "page_before_voting.json";
+        public static final String COOKIE_AFTER_VOTING_JSON = "cookie_after_voting.json";
+        public static final String COOKIE_BEFORE_VOTING_JSON = "cookie_before_voting.json";
+
+        public static final String PARTICIPANTS_JSON = "participants.json";
+    }
 }

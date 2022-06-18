@@ -1,6 +1,6 @@
 package service.pagemanager.model;
 
-public class ParticipantVote {
+public class Member {
     private int id;
     private String input;
     private String title;
@@ -47,9 +47,13 @@ public class ParticipantVote {
         this.percent = percent;
     }
 
+    public String getInputById(){
+        return "inp" + id;
+    }
+
     @Override
     public String toString() {
-        return "ParticipantVote{" +
+        return "Member{" +
                 "id=" + id +
                 ", input='" + input + '\'' +
                 ", title='" + title + '\'' +

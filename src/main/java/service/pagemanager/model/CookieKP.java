@@ -1,4 +1,4 @@
-package votes.kp.model;
+package service.pagemanager.model;
 
 import com.google.gson.annotations.Expose;
 

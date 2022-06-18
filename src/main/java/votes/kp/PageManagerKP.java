@@ -1,20 +1,23 @@
 package votes.kp;
 
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import service.configurations.Participants;
+import service.configurations.ParticipantsProperties;
 import service.pagemanager.PageManagerImpl;
-import service.pagemanager.model.ParticipantVote;
-import service.pagemanager.model.ResultsVote;
+import service.pagemanager.model.Member;
+import service.pagemanager.model.VotingPage;
+import service.pagemanager.parserpage.ParserPageAfterVoting;
+import service.pagemanager.parserpage.ParserPageBeforeVoting;
+import service.pagemanager.parserpage.ParserPageImpl;
 import service.webdriver.model.Process;
 
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toMap;
 import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
@@ -27,38 +30,54 @@ public class PageManagerKP extends PageManagerImpl {
         super(webDriver, process);
     }
 
+    @NotNull
     @Override
-    protected By getButtonLocator() {
-        return id("submit_vote");
+    protected String getPageTitle() {
+        return "Клиника года - 2022. Уфа.";
     }
 
     @Override
-    protected ResultsVote getResultsVote(Document pageSource) {
-        return null;
+    protected void allowInputs() {
+        VotingPage votingPage = getPageBeforeVoting(getPageSource());
+        if (votingPage == null) return;
+
+        votingPage.getMembers().forEach(this::isAllowNomination);;
     }
 
     @Override
-    protected List<String> getInputsListLocatorById() {
-        List<String> inputs = new ArrayList<>();
-        pageVoteMap.getParticipantsMap().forEach((key, value) -> isAllowNomination(inputs, key, value));
-        return inputs;
+    protected VotingPage getPageBeforeVoting(Document pageSource) {
+        ParserPageImpl parserPage = new ParserPageBeforeVoting();
+        return parserPage.getPageVoteMap(pageSource);
     }
 
-    private void isAllowNomination(List<String> inputs, String nomination, List<ParticipantVote> participantVotes) {
+    @Override
+    protected VotingPage getPageAfterVoting(Document pageSource) {
+        ParserPageImpl parserPage = new ParserPageAfterVoting();
+        return parserPage.getPageVoteMap(pageSource);
+    }
+
+    private void isAllowNomination(String nomination, List<Member> members) {
         if (getAllowParticipants().containsKey(nomination)) {
-            getInputsForAllowParticipants(inputs, participantVotes);
+            getInputsForAllowParticipants(members);
         }
     }
 
-    private void getInputsForAllowParticipants(List<String> inputs, List<ParticipantVote> participantVotes) {
-        participantVotes.stream().filter(participant -> getAllowParticipants().containsValue(participant.getTitle())).map(ParticipantVote::getInput).forEach(inputs::add);
+    private void getInputsForAllowParticipants(List<Member> members) {
+        members.stream()
+                .filter(member -> getAllowParticipants().containsValue(member.getTitle()))
+                .map(Member::getInput).forEach(inputs::add);
     }
 
     private Map<String, String> getAllowParticipants() {
-        return participants
+        return participantsProperties
                 .getParticipants()
                 .stream()
-                .filter(Participants.Participant::getAllow)
-                .collect(Collectors.toMap(Participants.Participant::getNomination, Participants.Participant::getTitle, (a, b) -> b, LinkedHashMap::new));
+                .filter(ParticipantsProperties.Participant::getAllow)
+                .collect(toMap(ParticipantsProperties.Participant::getNomination, ParticipantsProperties.Participant::getTitle, (a, b) -> b, LinkedHashMap::new));
+    }
+
+    @Override
+    protected By getButtonLocator() {
+        return id("submit_vote");
     }
 }

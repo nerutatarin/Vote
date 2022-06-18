@@ -6,6 +6,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class Utils {
     private static final String UTF8_BOM = "\uFEFF";
@@ -178,5 +179,9 @@ public class Utils {
 
     public static boolean nullOrEmpty(Collection<?> collection) {
         return collection == null || collection.isEmpty();
+    }
+
+    public static boolean nullOrEmpty(Map<?, ?> map) {
+        return map == null || map.isEmpty();
     }
 }
