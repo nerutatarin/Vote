@@ -16,6 +16,6 @@ public class CommandStart extends CommandsImpl {
                 .append("\n")
                 .append("/nominations - Список номинаций")
                 .append("\n")
-                .append("/result - Результат голосования");
+                .append("/result - Результат голосования. Принимает аргумент id участника. Без аргумента возвращает результат по участникам из конфига");
     }
 }
