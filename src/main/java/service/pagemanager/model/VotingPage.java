@@ -2,11 +2,10 @@ package service.pagemanager.model;
 
 import utils.Utils;
 
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class VotingPage {
 
@@ -33,9 +32,13 @@ public class VotingPage {
         Map<String, List<Member>> members = getMembers();
         if (Utils.nullOrEmpty(members)) return null;
 
-        return members.values().stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        List<Member> list = new ArrayList<>();
+        for (List<Member> memberList : members.values()) {
+            for (Member member : memberList) {
+                list.add(member);
+            }
+        }
+        return list;
     }
 
     @Override

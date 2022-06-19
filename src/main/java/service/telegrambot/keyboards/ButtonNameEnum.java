@@ -1,9 +1,9 @@
 package service.telegrambot.keyboards;
 
 public enum ButtonNameEnum {
-    GET_STATUS_SERVER("Статус сервера"),
-    GET_PARTICIPANTS("Участники голосования"),
-    GET_RESULTS_VOTE("Результаты голосования");
+    GET_STATUS("Статус сервера"),
+    GET_MEMBERS("Участники голосования"),
+    GET_RESULT("Результат голосования");
 
     private final String buttonName;
 

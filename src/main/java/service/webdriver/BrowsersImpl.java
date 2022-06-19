@@ -6,12 +6,12 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import service.webdriver.model.Process;
-import service.configurations.BrowserProperties;
-import service.configurations.BrowserType;
+import service.configurations.BrowserConfig;
+import service.configurations.Browsers;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
 import service.proxy.ProxyFactory;
+import service.webdriver.model.Process;
 import utils.ProcessKiller;
 
 import java.util.Map;
@@ -19,45 +19,45 @@ import java.util.Map;
 import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
 import static org.apache.log4j.Logger.getLogger;
 
-public abstract class BrowsersImpl implements Browsers {
+public abstract class BrowsersImpl implements service.webdriver.Browsers {
     private static final Logger log = getLogger(BrowsersImpl.class);
 
-    protected final BrowserProperties browserProperties;
+    protected final BrowserConfig browserConfig;
     protected final String browserName;
     protected boolean isProxy;
     protected WebDriver webDriver;
     protected Process process;
 
     public BrowsersImpl() {
-        this.browserProperties = getBrowserProperties();
+        this.browserConfig = getBrowserConfig();
         this.isProxy = getProxySettings().getProxyEnabled();
         this.process = new Process();
         this.browserName = getBrowserName();
         killAllRunningProcesses();
     }
 
-    private BrowserProperties getBrowserProperties() {
-        return new BrowserProperties().parse();
+    private BrowserConfig getBrowserConfig() {
+        return new BrowserConfig().parse();
     }
 
     protected ProxySettings getProxySettings() {
-        return browserProperties.getProxySettings();
+        return browserConfig.getProxySettings();
     }
 
     public String getBrowserName() {
         return toLowerCase(this.getClass().getSimpleName());
     }
 
-    protected Map<String, BrowserType> getBrowsersType() {
-        return browserProperties.getBrowsersType();
+    protected Map<String, Browsers> getBrowsers() {
+        return browserConfig.getBrowsers();
     }
 
-    protected BrowserType getBrowserType() {
-        return getBrowsersType().get(getBrowserName());
+    protected Browsers getBrowser() {
+        return getBrowsers().get(getBrowserName());
     }
 
     protected Options getBrowserOptions() {
-        return getBrowserType().getOptions();
+        return getBrowser().getOptions();
     }
 
     @Override
@@ -83,7 +83,7 @@ public abstract class BrowsersImpl implements Browsers {
     }
 
     private String getDriverName() {
-        return getBrowsersType().get(browserName).getName();
+        return getBrowsers().get(browserName).getName();
     }
 
     protected abstract <T> T getOptions();

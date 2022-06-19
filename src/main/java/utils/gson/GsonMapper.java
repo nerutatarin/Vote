@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import static utils.Thesaurus.JSON_PATH;
+import static utils.Thesaurus.DirectoriesName.JSON_PATH;
 
 public class GsonMapper {
 

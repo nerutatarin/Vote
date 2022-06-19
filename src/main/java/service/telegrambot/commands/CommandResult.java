@@ -1,18 +1,20 @@
 package service.telegrambot.commands;
 
 import org.apache.log4j.Logger;
-import org.jetbrains.annotations.NotNull;
+import service.configurations.MemberConfig;
+import service.configurations.VoteConfig;
+import service.configurations.VoteMode;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.VotingPage;
 import utils.Utils;
+import votes.KeepDistance;
+import votes.ModelKeepDistance;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
+import static java.lang.Math.subtractExact;
 import static utils.Thesaurus.FilesNameJson.PAGE_AFTER_VOTING_JSON;
 import static utils.Utils.*;
 import static utils.jackson.JsonMapper.fileToObject;
@@ -27,12 +29,10 @@ public class CommandResult extends CommandsImpl {
     }
 
     private StringBuilder getStringBuilder() {
-        String substringAfterSpace = firstSubstringAfterSpace(data);
-        if (isBlankString(substringAfterSpace)) return null;
+        ResultVote result = getResultVote();
 
-        ResultVote result = getResultVote(substringAfterSpace);
         if (result == null) {
-            return new StringBuilder().append("Искомый участник не найден!");
+            return testResult();
         } else {
             return new StringBuilder()
                     .append(timestamp)
@@ -44,31 +44,74 @@ public class CommandResult extends CommandsImpl {
         }
     }
 
-    private ResultVote getResultVote(String newData) {
+    private StringBuilder testResult() {
+        MemberConfig memberConfig = new MemberConfig().parse();
+        if (memberConfig == null) {
+            log.error("Конфиг участников голосования не найден: memberConfig = " + memberConfig);
+            return null;
+        }
+
+        VoteConfig voteConfig = new VoteConfig().parse();
+        if (voteConfig == null) {
+            log.error("Конфиг голосования не найден: voteConfig = " + voteConfig);
+            return null;
+        }
+        VoteMode voteMode = voteConfig.getVoteMode();
+
+        KeepDistance keepDistance = new KeepDistance(voteMode, memberConfig);
+        List<ModelKeepDistance> keepDistances = keepDistance.init();
+
+        for (ModelKeepDistance distance : keepDistances) {
+            if (distance.getMemberRank() == 1) {
+                int diffCount = subtractExact(distance.getMemberCount(), distance.getCompetitorCount());
+                return new StringBuilder()
+                        .append("Участник: ")
+                        .append("\n")
+                        .append(distance.getMember())
+                        .append("\n")
+                        .append("занимает ")
+                        .append(distance.getMemberRank())
+                        .append("-е место с ")
+                        .append(distance.getMemberCount())
+                        .append(" голосов, опережая конкурента на")
+                        .append(diffCount);
+
+            } else {
+                int diffCount = subtractExact(distance.getCompetitorCount(), distance.getMemberCount());
+                return new StringBuilder()
+                        .append("Участник: ")
+                        .append("\n")
+                        .append(distance.getMember())
+                        .append("\n")
+                        .append("занимает ")
+                        .append(distance.getMemberRank())
+                        .append("-е место с ")
+                        .append(distance.getMemberCount())
+                        .append(" голосов, опережая конкурента на")
+                        .append(diffCount);
+            }
+        }
+        return new StringBuilder()
+                .append("Искомый участник не найден!");
+    }
+
+    private ResultVote getResultVote() {
+        String substringAfterSpace = firstSubstringAfterSpace(data);
+        if (isBlankString(substringAfterSpace)) return null;
+
         VotingPage votingPage = fileToObject(PAGE_AFTER_VOTING_JSON, VotingPage.class);
         if (votingPage == null) return null;
         timestamp = votingPage.getTimeStamp();
 
-        Map<String, List<Member>> members = votingPage.getMembers();
-        if (Utils.nullOrEmpty(members)) return null;
-
-        List<Member> memberList = getMemberList(members);
+        List<Member> memberList = votingPage.getMemberList();
         if (Utils.nullOrEmpty(memberList)) return null;
 
         ResultVote resultVote = new ResultVote();
         memberList.stream()
-                .filter(participantVote -> isMemberId(newData, participantVote))
+                .filter(participantVote -> isMemberId(substringAfterSpace, participantVote))
                 .forEach(participantVote -> fillResultVote(resultVote, participantVote));
 
         return resultVote;
-    }
-
-    @NotNull
-    private List<Member> getMemberList(Map<String, List<Member>> participantsMap) {
-        return participantsMap.values()
-                .stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
     }
 
     private void fillResultVote(ResultVote resultVote, Member member) {

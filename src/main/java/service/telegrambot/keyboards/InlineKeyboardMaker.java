@@ -7,6 +7,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKe
 import java.util.ArrayList;
 import java.util.List;
 
+import static service.telegrambot.commands.CommandsEnum.*;
 import static service.telegrambot.keyboards.ButtonNameEnum.*;
 
 /**
@@ -19,9 +20,9 @@ public class InlineKeyboardMaker {
     public InlineKeyboardMarkup createInlineKeyboard() {
         InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
 
-        InlineKeyboardButton buttonStatus = buildButton(GET_STATUS_SERVER.getButtonName(), "/status");
-        InlineKeyboardButton buttonParticipants = buildButton(GET_PARTICIPANTS.getButtonName(), "/participants");
-        InlineKeyboardButton buttonResults = buildButton(GET_RESULTS_VOTE.getButtonName(), "/resultsvote");
+        InlineKeyboardButton buttonStatus = buildButton(GET_STATUS.getButtonName(), COMMAND_STATUS.getValue());
+        InlineKeyboardButton buttonParticipants = buildButton(GET_MEMBERS.getButtonName(), COMMAND_MEMBERS.getValue());
+        InlineKeyboardButton buttonResults = buildButton(GET_RESULT.getButtonName(), COMMAND_RESULT.getValue());
 
         List<InlineKeyboardButton> firstRow = new ArrayList<>();
         firstRow.add(buttonStatus);

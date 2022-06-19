@@ -10,8 +10,8 @@ public class CommandStart extends CommandsImpl {
         return new StringBuilder()
                 .append("/status - Статус сервера")
                 .append("\n")
-                .append("/participants - Список участников")
+                .append("/members - Список участников")
                 .append("\n")
-                .append("/resultsvote - Результаты голосования");
+                .append("/result - Результат голосования");
     }
 }

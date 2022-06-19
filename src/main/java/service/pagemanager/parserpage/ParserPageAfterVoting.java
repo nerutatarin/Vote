@@ -37,7 +37,7 @@ public class ParserPageAfterVoting extends ParserPageImpl {
         member.setId(id++);
         member.setInput("inp" + member.getId());
         member.setTitle(removeUTF8BOM(pollResultAnswer.ownText()));
-        member.setCount(count);
+        member.setCount(parseInt(count));
         member.setPercent(percent);
 
         return member;

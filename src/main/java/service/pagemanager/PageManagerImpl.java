@@ -6,7 +6,7 @@ import org.jsoup.nodes.Document;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import service.configurations.ParticipantsProperties;
+import service.configurations.MemberConfig;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.VotingPage;
 import service.webdriver.model.Process;
@@ -36,7 +36,7 @@ public abstract class PageManagerImpl implements PageManager {
     protected WebDriver webDriver;
     protected Process process;
     protected String browserName;
-    protected ParticipantsProperties participantsProperties;
+    protected MemberConfig memberConfig;
     protected List<String> inputs = new ArrayList<>();
 
     public PageManagerImpl(WebDriver webDriver) {
@@ -47,11 +47,11 @@ public abstract class PageManagerImpl implements PageManager {
         this.webDriver = webDriver;
         this.process = process;
         browserName = process.getBrowserName();
-        participantsProperties = getParticipants();
+        memberConfig = getMemberConfig();
     }
 
-    private ParticipantsProperties getParticipants() {
-        return new ParticipantsProperties().parse();
+    private MemberConfig getMemberConfig() {
+        return new MemberConfig().parse();
     }
 
     public void votePage(String baseUrl) {
@@ -132,7 +132,7 @@ public abstract class PageManagerImpl implements PageManager {
                 String country = IPAddress.getCountry();
 
                 String title = member.getTitle();
-                String count = member.getCount().trim();
+                int count = member.getCount();
 
                 WriteToLog writeToLog = new WriteToLog(browserName, title);
                 writeToLog.ipCountryCount(ip, country, count);

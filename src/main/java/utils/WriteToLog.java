@@ -10,8 +10,8 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static utils.Thesaurus.DEFAULT_BASE_LOG_PATH;
 import static utils.Thesaurus.DateTimePatterns.PATTERN_DDMMYYYYHHMMSS;
+import static utils.Thesaurus.DirectoriesName.DEFAULT_BASE_LOG_PATH;
 import static utils.Utils.createDirectoryIfNoExistInWorkDir;
 
 public class WriteToLog {
@@ -39,7 +39,7 @@ public class WriteToLog {
         write(messageString);
     }
 
-    public void ipCountryCount(String ip, String country, String count) {
+    public void ipCountryCount(String ip, String country, int count) {
         getMessageString()
                 .append(" ip: ").append(ip)
                 .append(" country: ").append(country)

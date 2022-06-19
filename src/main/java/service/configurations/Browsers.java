@@ -1,12 +1,22 @@
 package service.configurations;
 
-public class BrowserType {
+public class Browsers {
+
+    private boolean enable;
 
     private String key;
 
     private String name;
 
     private Options options;
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
+    }
 
     public String getKey() {
         return key;
@@ -34,8 +44,9 @@ public class BrowserType {
 
     @Override
     public String toString() {
-        return "BrowserType{" +
-                "key='" + key + '\'' +
+        return "Browsers{" +
+                "isEnable=" + enable +
+                ", key='" + key + '\'' +
                 ", name='" + name + '\'' +
                 ", options=" + options +
                 '}';

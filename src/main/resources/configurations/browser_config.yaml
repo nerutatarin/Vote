@@ -2,8 +2,9 @@ proxySettings:
   proxyEnabled: false
   torProxy: false
   webProxy: true
-browsersType:
+browsers:
   chromium:
+    enable: false
     key: "webdriver.chrome.driver"
     name: "chromedriver"
     options:
@@ -15,6 +16,7 @@ browsersType:
       scriptTimeout: 30
       acceptInsecureCerts: true
   chrome:
+    enable: false
     key: "webdriver.chrome.driver"
     name: "chromedriver"
     options:
@@ -26,6 +28,7 @@ browsersType:
       scriptTimeout: 30
       acceptInsecureCerts: true
   firefox:
+    enable: true
     key: "webdriver.gecko.driver"
     name: "geckodriver"
     options:
@@ -37,6 +40,7 @@ browsersType:
       scriptTimeout: 30
       acceptInsecureCerts: true
   msedge:
+    enable: false
     key: "webdriver.edge.driver"
     name: "msedgedriver"
     options:
@@ -47,6 +51,7 @@ browsersType:
       scriptTimeout: 30
       acceptInsecureCerts: true
   opera:
+    enable: false
     key: "webdriver.opera.driver"
     name: "operadriver"
     options:

@@ -17,11 +17,11 @@ public class ReplyKeyboardMaker {
     public ReplyKeyboardMarkup getMainMenuKeyboard() {
 
         KeyboardRow row1 = new KeyboardRow();
-        row1.add(new KeyboardButton(GET_STATUS_SERVER.getButtonName()));
-        row1.add(new KeyboardButton(GET_PARTICIPANTS.getButtonName()));
+        row1.add(new KeyboardButton(GET_STATUS.getButtonName()));
+        row1.add(new KeyboardButton(GET_MEMBERS.getButtonName()));
 
         KeyboardRow row2 = new KeyboardRow();
-        row2.add(new KeyboardButton(GET_RESULTS_VOTE.getButtonName()));
+        row2.add(new KeyboardButton(GET_RESULT.getButtonName()));
 
         List<KeyboardRow> keyboard = new ArrayList<>();
         keyboard.add(row1);

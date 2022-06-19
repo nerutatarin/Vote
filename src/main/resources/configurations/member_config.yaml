@@ -1,17 +1,16 @@
-numberOfVotes: 1
-participants:
+members:
   - title: "МЗ РБ ГБУЗ Республиканская клиническая инфекционная больница"
-    allow: false
+    allow: true
     nomination: "2. Лучший специализированный медицинский центр"
   - title: "ГБУЗ РБ Детская поликлиника № 4 г. Уфа"
-    allow: false
+    allow: true
     nomination: "14. Лучшая детская поликлиника"
   - title: "ГБУЗ РБ Городская клиническая больница № 18 г. Уфа"
-    allow: true
+    allow: false
     nomination: "1. Лучшая государственная многопрофильная больница"
   - title: "ГБУЗ РБ Родильный дом № 3 г. Уфа"
-    allow: false
+    allow: true
     nomination: "5. Лучший роддом Башкирии"
   - title: "Стоматологическое отделение при поликлинике N1 ГБУЗ РБ ГКБ N18 г.Уфы"
-    allow: true
+    allow: false
     nomination: "6. Лучшая государственная стоматология для взрослых"

@@ -6,8 +6,8 @@ import org.openqa.selenium.WebDriver;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import service.configurations.BrowserProperties;
-import service.configurations.BrowserType;
+import service.configurations.BrowserConfig;
+import service.configurations.Browsers;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
 import service.pagemanager.model.Member;
@@ -15,7 +15,6 @@ import service.pagemanager.model.VotingPage;
 import service.retrofit.api.myip.IpSeeipService;
 import service.retrofit.api.myip.response.IPAddressInfo;
 import service.telegrambot.TelegramBot;
-import service.webdriver.Browsers;
 import service.webdriver.browsers.Firefox;
 import service.webdriver.model.Process;
 import utils.ipaddress.IPAddressGetter;
@@ -29,7 +28,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static utils.Thesaurus.DEFAULT_BASE_FILE_STORAGE_PATH;
+import static utils.Thesaurus.DirectoriesName.DEFAULT_BASE_FILE_STORAGE_PATH;
 
 public class Tests {
     private static final Logger log = Logger.getLogger(Tests.class);
@@ -70,19 +69,19 @@ public class Tests {
     }
 
     public static WebDriver getWebDriverNoProxy() {
-        Browsers browser = new Firefox();
+        service.webdriver.Browsers browser = new Firefox();
         return browser.getWebDriver();
     }
 
     public static WebDriver getWebDriverProxy() {
-        Browsers browser = new Firefox();
+        service.webdriver.Browsers browser = new Firefox();
         return browser.getWebDriver();
     }
 
     private static void yamlParserTest() {
-        BrowserProperties browserProperties = new BrowserProperties().parse();
-        Map<String, BrowserType> browsersType = browserProperties.getBrowsersType();
-        BrowserType firefox = browsersType.get("firefox");
+        BrowserConfig browserConfig = new BrowserConfig().parse();
+        Map<String, Browsers> browsersType = browserConfig.getBrowsers();
+        Browsers firefox = browsersType.get("firefox");
         System.out.println(firefox.getName());
 
         Options options = firefox.getOptions();
@@ -91,7 +90,7 @@ public class Tests {
         boolean isHeadless = options.isHeadless();
         System.out.println(isHeadless);
 
-        ProxySettings proxySettings = browserProperties.getProxySettings();
+        ProxySettings proxySettings = browserConfig.getProxySettings();
         System.out.println(proxySettings);
     }
 

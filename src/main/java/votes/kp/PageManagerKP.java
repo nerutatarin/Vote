@@ -4,7 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jsoup.nodes.Document;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import service.configurations.ParticipantsProperties;
 import service.pagemanager.PageManagerImpl;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.VotingPage;
@@ -13,11 +12,9 @@ import service.pagemanager.parserpage.ParserPageBeforeVoting;
 import service.pagemanager.parserpage.ParserPageImpl;
 import service.webdriver.model.Process;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static java.util.stream.Collectors.toMap;
 import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
@@ -57,23 +54,20 @@ public class PageManagerKP extends PageManagerImpl {
     }
 
     private void isAllowNomination(String nomination, List<Member> members) {
-        if (getAllowParticipants().containsKey(nomination)) {
+        if (getAllowMembers().containsKey(nomination)) {
             getInputsForAllowParticipants(members);
         }
     }
 
     private void getInputsForAllowParticipants(List<Member> members) {
         members.stream()
-                .filter(member -> getAllowParticipants().containsValue(member.getTitle()))
-                .map(Member::getInput).forEach(inputs::add);
+                .filter(member -> getAllowMembers().containsValue(member.getTitle()))
+                .map(service.pagemanager.model.Member::getInput)
+                .forEach(inputs::add);
     }
 
-    private Map<String, String> getAllowParticipants() {
-        return participantsProperties
-                .getParticipants()
-                .stream()
-                .filter(ParticipantsProperties.Participant::getAllow)
-                .collect(toMap(ParticipantsProperties.Participant::getNomination, ParticipantsProperties.Participant::getTitle, (a, b) -> b, LinkedHashMap::new));
+    private Map<String, String> getAllowMembers() {
+        return memberConfig.getAllowMembers();
     }
 
     @Override

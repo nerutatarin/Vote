@@ -15,7 +15,7 @@ public class RoutingUpdate {
             Message message = update.getMessage();
             if (message != null) {
                 MessageHandler messageHandler = new MessageHandler();
-                return messageHandler.messageHandler(update.getMessage());
+                return messageHandler.messageHandler(message);
             }
         }
         return null;

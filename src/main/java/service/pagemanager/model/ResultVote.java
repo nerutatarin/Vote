@@ -3,7 +3,7 @@ package service.pagemanager.model;
 public class ResultVote {
     private int id;
     private String title;
-    private String count;
+    private int count;
 
     public int getId() {
         return id;
@@ -21,11 +21,11 @@ public class ResultVote {
         this.title = title;
     }
 
-    public String getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(int count) {
         this.count = count;
     }
 

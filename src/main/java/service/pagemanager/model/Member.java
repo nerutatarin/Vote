@@ -1,10 +1,10 @@
 package service.pagemanager.model;
 
-public class Member {
+public class Member{
     private int id;
     private String input;
     private String title;
-    private String count;
+    private int count;
     private String percent;
 
     public int getId() {
@@ -31,11 +31,11 @@ public class Member {
         this.title = title;
     }
 
-    public String getCount() {
+    public int getCount() {
         return count;
     }
 
-    public void setCount(String count) {
+    public void setCount(int count) {
         this.count = count;
     }
 

@@ -1,44 +1,44 @@
 package service.configurations;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
+import static java.util.stream.Collectors.toMap;
+import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
 import static utils.yaml.YamlParser.yamlParser;
 
-public class ParticipantsProperties {
+public class MemberConfig {
 
-    private int numberOfVotes;
+    private List<Member> members;
 
-    private List<Participant> participants;
-
-    public List<Participant> getParticipants() {
-        return participants;
+    public List<Member> getMembers() {
+        return members;
     }
 
-    public void setParticipants(List<Participant> participants) {
-        this.participants = participants;
+    public Map<String, String> getAllowMembers() {
+        return getMembers()
+                .stream()
+                .filter(Member::getAllow)
+                .collect(toMap(Member::getNomination, Member::getTitle, (a, b) -> b, LinkedHashMap::new));
     }
 
-    public int getNumberOfVotes() {
-        return numberOfVotes;
+    public void setMembers(List<Member> members) {
+        this.members = members;
     }
 
-    public void setNumberOfVotes(int numberOfVotes) {
-        this.numberOfVotes = numberOfVotes;
-    }
-
-    public ParticipantsProperties parse() {
-        return yamlParser(getClass(), "participants.yaml");
+    public MemberConfig parse() {
+        return yamlParser(getClass(), MEMBER_CONFIG_YAML);
     }
 
     @Override
     public String toString() {
-        return "Participants{" +
-                "numberOfVotes=" + numberOfVotes +
-                ", participants=" + participants +
+        return "MemberConfig{" +
+                "members=" + members +
                 '}';
     }
 
-    public static class Participant {
+    public static class Member {
 
         private String title;
         private String nomination;
@@ -70,7 +70,7 @@ public class ParticipantsProperties {
 
         @Override
         public String toString() {
-            return "Participant{" +
+            return "Member{" +
                     "title='" + title + '\'' +
                     ", nomination='" + nomination + '\'' +
                     ", allow=" + allow +
