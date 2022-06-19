@@ -15,6 +15,9 @@ import votes.kp.VoteKP;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.sum;
 import static java.lang.Math.subtractExact;
@@ -44,9 +47,17 @@ public class Main {
         }
         VoteMode voteMode = voteConfig.getVoteMode();
 
-        singleVoteInit(voteConfig.getVoteMode().getVoteCount());
         telegramBotInit();
-        keepDistance(memberConfig, voteMode);
+
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        service.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                singleVoteInit(voteConfig.getVoteMode().getVoteCount());
+                keepDistance(memberConfig, voteMode);
+            }
+        }, 0, 1, TimeUnit.HOURS);
+        service.shutdown();
     }
 
     public static void singleVoteInit(int count) {

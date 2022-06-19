@@ -1,12 +1,23 @@
 package votes;
 
+import java.util.Date;
+
 public class ModelKeepDistance {
+    private Date timeStamp;
     private String member;
     private int memberRank;
     private int memberCount;
     private String competitor;
     private int competitorRank;
     private int competitorCount;
+
+    public Date getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(Date timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 
     public String getMember() {
         return member;
@@ -58,8 +69,9 @@ public class ModelKeepDistance {
 
     @Override
     public String toString() {
-        return "{" +
-                "member='" + member + '\'' +
+        return "ModelKeepDistance{" +
+                "timeStamp=" + timeStamp +
+                ", member='" + member + '\'' +
                 ", memberRank=" + memberRank +
                 ", memberCount=" + memberCount +
                 ", competitor='" + competitor + '\'' +

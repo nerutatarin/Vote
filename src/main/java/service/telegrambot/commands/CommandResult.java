@@ -15,6 +15,7 @@ import java.util.Date;
 import java.util.List;
 
 import static java.lang.Math.subtractExact;
+import static java.util.Collections.singleton;
 import static utils.Thesaurus.FilesNameJson.PAGE_AFTER_VOTING_JSON;
 import static utils.Utils.*;
 import static utils.jackson.JsonMapper.fileToObject;
@@ -30,11 +31,18 @@ public class CommandResult extends CommandsImpl {
 
     private StringBuilder getStringBuilder() {
         ResultVote result = getResultVote();
+        StringBuilder stringBuilder = new StringBuilder();
 
-        if (result == null) {
-            return testResult();
+        if (result == null || result.getTitle() == null) {
+            stringBuilder = testResult(stringBuilder);
+
+            if (nullOrEmpty(singleton(stringBuilder))) {
+                return new StringBuilder().append("Искомый участник не найден!");
+            }
+
+            return stringBuilder;
         } else {
-            return new StringBuilder()
+            return stringBuilder
                     .append(timestamp)
                     .append("\n")
                     .append(result.getTitle())
@@ -44,7 +52,7 @@ public class CommandResult extends CommandsImpl {
         }
     }
 
-    private StringBuilder testResult() {
+    private StringBuilder testResult(StringBuilder stringBuilder) {
         MemberConfig memberConfig = new MemberConfig().parse();
         if (memberConfig == null) {
             log.error("Конфиг участников голосования не найден: memberConfig = " + memberConfig);
@@ -64,7 +72,9 @@ public class CommandResult extends CommandsImpl {
         for (ModelKeepDistance distance : keepDistances) {
             if (distance.getMemberRank() == 1) {
                 int diffCount = subtractExact(distance.getMemberCount(), distance.getCompetitorCount());
-                return new StringBuilder()
+                stringBuilder
+                        .append(distance.getTimeStamp())
+                        .append("\n")
                         .append("Участник: ")
                         .append("\n")
                         .append(distance.getMember())
@@ -73,12 +83,21 @@ public class CommandResult extends CommandsImpl {
                         .append(distance.getMemberRank())
                         .append("-е место с ")
                         .append(distance.getMemberCount())
-                        .append(" голосов, опережая конкурента на")
-                        .append(diffCount);
+                        .append(" голосов, опережая конкурента ")
+                        .append("\n")
+                        .append(distance.getCompetitor())
+                        .append("\n")
+                        .append("на ")
+                        .append(diffCount)
+                        .append(" голосов ")
+                        .append("\n")
+                        .append("\n");
 
             } else {
                 int diffCount = subtractExact(distance.getCompetitorCount(), distance.getMemberCount());
-                return new StringBuilder()
+                stringBuilder
+                        .append(distance.getTimeStamp())
+                        .append("\n")
                         .append("Участник: ")
                         .append("\n")
                         .append(distance.getMember())
@@ -87,12 +106,18 @@ public class CommandResult extends CommandsImpl {
                         .append(distance.getMemberRank())
                         .append("-е место с ")
                         .append(distance.getMemberCount())
-                        .append(" голосов, опережая конкурента на")
-                        .append(diffCount);
+                        .append(" голосов, отставая от конкурента ")
+                        .append("\n")
+                        .append(distance.getCompetitor())
+                        .append("\n")
+                        .append(" на ")
+                        .append(diffCount)
+                        .append(" голосов ")
+                        .append("\n")
+                        .append("\n");
             }
         }
-        return new StringBuilder()
-                .append("Искомый участник не найден!");
+        return stringBuilder;
     }
 
     private ResultVote getResultVote() {
