@@ -49,10 +49,15 @@ public class Main {
 
         telegramBotInit();
 
+        shuduledRun(memberConfig, voteConfig, voteMode);
+    }
+
+    private static void shuduledRun(MemberConfig memberConfig, VoteConfig voteConfig, VoteMode voteMode) {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
+                log.info("shuduledRun!");
                 singleVoteInit(voteConfig.getVoteMode().getVoteCount());
                 keepDistance(memberConfig, voteMode);
             }

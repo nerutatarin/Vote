@@ -11,7 +11,6 @@ import java.util.*;
 import static java.lang.Math.subtractExact;
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
 import static utils.Thesaurus.FilesNameJson.PAGE_AFTER_VOTING_JSON;
 import static utils.jackson.JsonMapper.fileToObject;
 
@@ -46,9 +45,13 @@ public class KeepDistance {
     }
 
     private Map<String, List<Member>> getSortedMemberList(Map<String, List<Member>> members, Map<String, String> allowMembers) {
-        return members.keySet().stream()
-                .filter(allowMembers::containsKey)
-                .collect(toMap(key -> key, key -> sortByCount(members.get(key)), (a, b) -> b, LinkedHashMap::new));
+        LinkedHashMap<String, List<Member>> map = new LinkedHashMap<>();
+        for (String key : members.keySet()) {
+            if (allowMembers.containsKey(key)) {
+                map.put(key, sortByCount(members.get(key)));
+            }
+        }
+        return map;
     }
 
     private List<Member> sortByCount(List<Member> memberList) {

@@ -41,6 +41,10 @@ public class VotingPage {
         return list;
     }
 
+    public List<String> getNominations() {
+        return new ArrayList<>(members.keySet());
+    }
+
     @Override
     public String toString() {
         return "VotingPage{" +

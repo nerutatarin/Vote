@@ -14,6 +14,8 @@ public class CommandsFactory {
         filterFactory.put(COMMAND_STATUS.getValue(), new CommandStatus());
         filterFactory.put(COMMAND_MEMBERS.getValue(), new CommandMembers());
         filterFactory.put(COMMAND_RESULT.getValue(), new CommandResult());
+        filterFactory.put(COMMAND_VOTE.getValue(), new CommandVote());
+        filterFactory.put(COMMAND_NOMINATIONS.getValue(), new CommandNominations());
         filterFactory.put(COMMAND_DEFAULT.getValue(), new CommandDefault());
     }
 
