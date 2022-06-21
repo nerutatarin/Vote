@@ -18,16 +18,23 @@ public abstract class CommandsImpl implements Commands {
     }
 
     private SendMessage sendMessage(String chatId) {
-        StringBuilder stringBuild = replyMessageMake();
+        StringBuilder replyMessage = replyMessageMake();
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
-        sendMessage.setText(stringBuild.toString());
+        sendMessage.setText(validReplyMessage(replyMessage));
 
-        if (stringBuild.length() > 0) stringBuild.setLength(0);
+        if (replyMessage.length() > 0) replyMessage.setLength(0);
         return sendMessage;
+    }
+
+    private String validReplyMessage(StringBuilder stringBuild) {
+        return stringBuild == null ? getErrorMessage() : stringBuild.toString();
     }
 
     protected abstract StringBuilder replyMessageMake();
 
+    private String getErrorMessage() {
+        return "На сервере произошла ошибка!";
+    }
 }

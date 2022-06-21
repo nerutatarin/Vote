@@ -3,20 +3,23 @@ package service.telegrambot.commands;
 import org.apache.log4j.Logger;
 import service.configurations.MemberConfig;
 import service.configurations.VoteConfig;
-import service.configurations.VoteMode;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.VotingPage;
 import utils.Utils;
-import votes.KeepDistance;
-import votes.ModelKeepDistance;
+import votes.MemberRank;
+import votes.MemberRanks;
 
 import java.util.Date;
 import java.util.List;
 
 import static java.lang.Math.subtractExact;
 import static java.util.Collections.singleton;
+import static service.telegrambot.commands.CommandsEnum.COMMAND_RESULT;
+import static utils.Thesaurus.FilesNameJson.MEMBER_RANKS_JSON;
 import static utils.Thesaurus.FilesNameJson.PAGE_AFTER_VOTING_JSON;
+import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
+import static utils.Thesaurus.FilesNameYaml.VOTE_CONFIG_YAML;
 import static utils.Utils.*;
 import static utils.jackson.JsonMapper.fileToObject;
 
@@ -26,66 +29,52 @@ public class CommandResult extends CommandsImpl {
 
     @Override
     protected StringBuilder replyMessageMake() {
-        return getStringBuilder();
+        if (data.equals(COMMAND_RESULT.getValue())) return getResultDefault();
+
+        String substringAfterSpace = firstSubstringAfterSpace(data);
+        return getResultById(substringAfterSpace);
     }
 
-    private StringBuilder getStringBuilder() {
-        ResultVote result = getResultVote();
+    private StringBuilder getResultDefault() {
         StringBuilder stringBuilder = new StringBuilder();
 
-        if (result == null || result.getTitle() == null) {
-            stringBuilder = testResult(stringBuilder);
-
-            if (nullOrEmpty(singleton(stringBuilder))) {
-                return new StringBuilder().append("Искомый участник не найден!");
-            }
-
-            return stringBuilder;
-        } else {
-            return stringBuilder
-                    .append(timestamp)
-                    .append("\n")
-                    .append(result.getTitle())
-                    .append("\n")
-                    .append(result.getCount())
-                    .append("\n");
-        }
-    }
-
-    private StringBuilder testResult(StringBuilder stringBuilder) {
         MemberConfig memberConfig = new MemberConfig().parse();
         if (memberConfig == null) {
-            log.error("Конфиг участников голосования не найден: memberConfig = " + memberConfig);
+            log.error("Не найден файл: " + MEMBER_CONFIG_YAML);
             return null;
         }
 
         VoteConfig voteConfig = new VoteConfig().parse();
         if (voteConfig == null) {
-            log.error("Конфиг голосования не найден: voteConfig = " + voteConfig);
+            log.error("Не найден файл: " + VOTE_CONFIG_YAML);
             return null;
         }
-        VoteMode voteMode = voteConfig.getVoteMode();
 
-        KeepDistance keepDistance = new KeepDistance(voteMode, memberConfig);
-        List<ModelKeepDistance> keepDistances = keepDistance.init();
+        MemberRanks memberRanks = fileToObject(MEMBER_RANKS_JSON, MemberRanks.class);
+        if (memberRanks == null) {
+            log.error("Не найден файл: " + MEMBER_RANKS_JSON);
+            return null;
+        }
 
-        for (ModelKeepDistance distance : keepDistances) {
-            if (distance.getMemberRank() == 1) {
-                int diffCount = subtractExact(distance.getMemberCount(), distance.getCompetitorCount());
+        //if (nullOrEmpty(memberRanks.getMemberRanks())) return null;
+
+        for (MemberRank memberRank : memberRanks.getMemberRanks()) {
+            if (memberRank.getRank() == 1) {
+                int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());
                 stringBuilder
-                        .append(distance.getTimeStamp())
+                        .append(memberRanks.getTimeStamp())
                         .append("\n")
                         .append("Участник: ")
                         .append("\n")
-                        .append(distance.getMember())
+                        .append(memberRank.getMember())
                         .append("\n")
                         .append("занимает ")
-                        .append(distance.getMemberRank())
+                        .append(memberRank.getRank())
                         .append("-е место с ")
-                        .append(distance.getMemberCount())
+                        .append(memberRank.getCount())
                         .append(" голосов, опережая конкурента ")
                         .append("\n")
-                        .append(distance.getCompetitor())
+                        .append(memberRank.getCompetitor())
                         .append("\n")
                         .append("на ")
                         .append(diffCount)
@@ -94,21 +83,21 @@ public class CommandResult extends CommandsImpl {
                         .append("\n");
 
             } else {
-                int diffCount = subtractExact(distance.getCompetitorCount(), distance.getMemberCount());
+                int diffCount = subtractExact(memberRank.getCompetitorCount(), memberRank.getCount());
                 stringBuilder
-                        .append(distance.getTimeStamp())
+                        .append(memberRanks.getTimeStamp())
                         .append("\n")
                         .append("Участник: ")
                         .append("\n")
-                        .append(distance.getMember())
+                        .append(memberRank.getMember())
                         .append("\n")
                         .append("занимает ")
-                        .append(distance.getMemberRank())
+                        .append(memberRank.getRank())
                         .append("-е место с ")
-                        .append(distance.getMemberCount())
+                        .append(memberRank.getCount())
                         .append(" голосов, отставая от конкурента ")
                         .append("\n")
-                        .append(distance.getCompetitor())
+                        .append(memberRank.getCompetitor())
                         .append("\n")
                         .append(" на ")
                         .append(diffCount)
@@ -120,10 +109,7 @@ public class CommandResult extends CommandsImpl {
         return stringBuilder;
     }
 
-    private ResultVote getResultVote() {
-        String substringAfterSpace = firstSubstringAfterSpace(data);
-        if (isBlankString(substringAfterSpace)) return null;
-
+    private StringBuilder getResultById(String substringAfterSpace) {
         VotingPage votingPage = fileToObject(PAGE_AFTER_VOTING_JSON, VotingPage.class);
         if (votingPage == null) return null;
         timestamp = votingPage.getTimeStamp();
@@ -136,7 +122,21 @@ public class CommandResult extends CommandsImpl {
                 .filter(participantVote -> isMemberId(substringAfterSpace, participantVote))
                 .forEach(participantVote -> fillResultVote(resultVote, participantVote));
 
-        return resultVote;
+
+        StringBuilder stringBuilder = new StringBuilder();
+        if (resultVote == null || resultVote.getTitle() == null) {
+            if (nullOrEmpty(singleton(stringBuilder))) {
+                return stringBuilder.append("Искомый участник не найден!");
+            }
+        }
+
+        return stringBuilder
+                .append(timestamp)
+                .append("\n")
+                .append(resultVote.getTitle())
+                .append("\n")
+                .append(resultVote.getCount())
+                .append("\n");
     }
 
     private void fillResultVote(ResultVote resultVote, Member member) {

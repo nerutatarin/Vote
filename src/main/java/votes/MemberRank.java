@@ -1,22 +1,20 @@
 package votes;
 
-import java.util.Date;
-
-public class ModelKeepDistance {
-    private Date timeStamp;
+public class MemberRank {
     private String member;
-    private int memberRank;
-    private int memberCount;
+    private int rank;
+    private int count;
     private String competitor;
+    private int diff;
     private int competitorRank;
     private int competitorCount;
 
-    public Date getTimeStamp() {
-        return timeStamp;
+    public int getDiff() {
+        return diff;
     }
 
-    public void setTimeStamp(Date timeStamp) {
-        this.timeStamp = timeStamp;
+    public void setDiff(int diff) {
+        this.diff = diff;
     }
 
     public String getMember() {
@@ -27,20 +25,20 @@ public class ModelKeepDistance {
         this.member = member;
     }
 
-    public int getMemberCount() {
-        return memberCount;
+    public int getCount() {
+        return count;
     }
 
-    public void setMemberCount(int memberCount) {
-        this.memberCount = memberCount;
+    public void setCount(int count) {
+        this.count = count;
     }
 
-    public int getMemberRank() {
-        return memberRank;
+    public int getRank() {
+        return rank;
     }
 
-    public void setMemberRank(int memberRank) {
-        this.memberRank = memberRank;
+    public void setRank(int rank) {
+        this.rank = rank;
     }
 
     public String getCompetitor() {
@@ -69,12 +67,12 @@ public class ModelKeepDistance {
 
     @Override
     public String toString() {
-        return "ModelKeepDistance{" +
-                "timeStamp=" + timeStamp +
-                ", member='" + member + '\'' +
-                ", memberRank=" + memberRank +
-                ", memberCount=" + memberCount +
+        return "MemberRank{" +
+                "member='" + member + '\'' +
+                ", rank=" + rank +
+                ", count=" + count +
                 ", competitor='" + competitor + '\'' +
+                ", diff=" + diff +
                 ", competitorRank=" + competitorRank +
                 ", competitorCount=" + competitorCount +
                 '}';

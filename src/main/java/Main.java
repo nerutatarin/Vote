@@ -9,8 +9,9 @@ import service.configurations.VoteMode;
 import service.telegrambot.TelegramBot;
 import service.webdriver.Browsers;
 import service.webdriver.browsers.Firefox;
-import votes.KeepDistance;
-import votes.ModelKeepDistance;
+import votes.MemberRanks;
+import votes.Ranker;
+import votes.MemberRank;
 import votes.kp.VoteKP;
 
 import java.util.List;
@@ -49,20 +50,19 @@ public class Main {
 
         telegramBotInit();
 
-        shuduledRun(memberConfig, voteConfig, voteMode);
+        scheduledRun(memberConfig, voteConfig, voteMode);
     }
 
-    private static void shuduledRun(MemberConfig memberConfig, VoteConfig voteConfig, VoteMode voteMode) {
+    private static void scheduledRun(MemberConfig memberConfig, VoteConfig voteConfig, VoteMode voteMode) {
         ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
         service.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-                log.info("shuduledRun!");
+                log.info("scheduledRun!");
                 singleVoteInit(voteConfig.getVoteMode().getVoteCount());
                 keepDistance(memberConfig, voteMode);
             }
         }, 0, 1, TimeUnit.HOURS);
-        service.shutdown();
     }
 
     public static void singleVoteInit(int count) {
@@ -83,18 +83,18 @@ public class Main {
 
         if (!keepDistanceEnabled) return;
 
-        KeepDistance keepDistance = new KeepDistance(voteMode, memberConfig);
-        List<ModelKeepDistance> keepDistances = keepDistance.init();
+        Ranker ranker = new Ranker(voteMode, memberConfig);
+        MemberRanks memberRanks = ranker.init();
 
-        for (ModelKeepDistance distance : keepDistances) {
-            if (distance.getMemberRank() == 1) {
-                int diffCount = subtractExact(distance.getMemberCount(), distance.getCompetitorCount());
+        for (MemberRank memberRank : memberRanks.getMemberRanks()) {
+            if (memberRank.getRank() == 1) {
+                int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());
 
                 if (diffCount >= voteMode.getDistanceCount()) return;
 
                 singleVoteInit(diffCount);
             } else {
-                int diffCount = subtractExact(distance.getCompetitorCount(), distance.getMemberCount());
+                int diffCount = subtractExact(memberRank.getCompetitorCount(), memberRank.getCount());
                 int count = sum(diffCount, voteMode.getDistanceCount());
 
                 singleVoteInit(count);
