@@ -67,9 +67,6 @@ public abstract class ParserPageImpl {
 
         List<Member> memberList = new ArrayList<>();
         if (nullOrEmpty(elements)) return memberList;
-        //memberList = elements.stream().map(this::getMember).collect(toList());
-
-
         for (Element element : elements) {
             memberList.add(getMember(element));
         }

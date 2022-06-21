@@ -10,7 +10,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class JsonMapper {
      * @return
      */
     public static <T> List<T> fileToListObject(String fileName, Class<T> type) {
-        return fileToListObject(fileName, ArrayList.class, type);
+        return fileToListObject(fileName, List.class, type);
     }
 
     /**
@@ -118,7 +117,7 @@ public class JsonMapper {
      * @param fileName
      * @param <T>
      */
-    public static <T> void objectListToFilePretty(List<T> object, String fileName) {
+    public static void objectListToFilePretty(List<?> object, String fileName) {
         if (object == null || object.size() == 0) return;
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
         try (FileWriter file = new FileWriter(JSON_PATH + fileName)) {

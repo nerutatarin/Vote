@@ -8,7 +8,8 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import service.telegrambot.configurations.TelegramConfig;
-import service.telegrambot.handlers.RoutingUpdate;
+import service.telegrambot.handlers.Handler;
+import service.telegrambot.handlers.RouterFactory;
 
 public class TelegramBot extends TelegramLongPollingBot {
     private static final Logger log = Logger.getLogger(TelegramBot.class);
@@ -30,8 +31,9 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     public void onUpdateReceived(Update update) {
-        RoutingUpdate routingUpdate = new RoutingUpdate();
-        SendMessage sendMessage = routingUpdate.routing(update);
+        Handler handler = RouterFactory.getInstance(update);
+        SendMessage sendMessage = handler.getMessage(update);
+        
         executeMessage(sendMessage);
     }
 

@@ -1,12 +1,13 @@
 package service.configurations;
 
+import utils.yaml.YamlParser;
+
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.toMap;
 import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
-import static utils.yaml.YamlParser.yamlParser;
 
 public class MemberConfig {
 
@@ -28,7 +29,7 @@ public class MemberConfig {
     }
 
     public MemberConfig parse() {
-        return yamlParser(getClass(), MEMBER_CONFIG_YAML);
+        return YamlParser.parse(getClass(), MEMBER_CONFIG_YAML);
     }
 
     @Override

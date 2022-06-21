@@ -9,7 +9,7 @@ import static utils.Thesaurus.DirectoriesName.CONFIG_PATH;
 
 public class YamlParser {
 
-    public static <T> T yamlParser(Class<T> clazz, String configName) {
+    public static <T> T parse(Class<T> clazz, String configName) {
         if (configName == null || configName.isEmpty()) return null;
 
         InputStream is = YamlParser.class.getClassLoader().getResourceAsStream(CONFIG_PATH + configName);

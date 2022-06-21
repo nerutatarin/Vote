@@ -1,7 +1,8 @@
 package service.configurations;
 
+import utils.yaml.YamlParser;
+
 import static utils.Thesaurus.FilesNameYaml.VOTE_CONFIG_YAML;
-import static utils.yaml.YamlParser.yamlParser;
 
 public class VoteConfig {
 
@@ -16,7 +17,7 @@ public class VoteConfig {
     }
 
     public VoteConfig parse() {
-        return yamlParser(getClass(), VOTE_CONFIG_YAML);
+        return YamlParser.parse(getClass(), VOTE_CONFIG_YAML);
     }
 
     @Override

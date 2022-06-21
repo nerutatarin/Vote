@@ -4,9 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static utils.Thesaurus.FilesNameYaml.BROWSER_CONFIG_YAML;
-import static utils.yaml.YamlParser.yamlParser;
 
-public class BrowserConfig {
+public class BrowserConfig extends Config {
 
     private ProxySettings proxySettings;
 
@@ -28,7 +27,13 @@ public class BrowserConfig {
         this.browsers = browsers;
     }
 
-    public BrowserConfig parse() {
-        return yamlParser(getClass(), BROWSER_CONFIG_YAML);
+    @Override
+    protected <T extends Config> Class<T> getConfigClass() {
+        return (Class<T>) getClass();
+    }
+
+    @Override
+    protected String getResource() {
+        return BROWSER_CONFIG_YAML;
     }
 }

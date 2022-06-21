@@ -1,7 +1,8 @@
 package service.telegrambot.configurations;
 
+import utils.yaml.YamlParser;
+
 import static utils.Thesaurus.FilesNameYaml.TELEGRAM_CONFIG_YAML;
-import static utils.yaml.YamlParser.yamlParser;
 
 public class TelegramConfig {
     private String name;
@@ -24,7 +25,7 @@ public class TelegramConfig {
     }
 
     public TelegramConfig parse() {
-        return yamlParser(getClass(), TELEGRAM_CONFIG_YAML);
+        return YamlParser.parse(getClass(), TELEGRAM_CONFIG_YAML);
     }
 
     @Override

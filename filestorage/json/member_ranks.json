@@ -1,27 +1,27 @@
 {
-  "timeStamp" : 1655813205200,
+  "timeStamp" : 1655827940628,
   "memberRanks" : [ {
     "member" : "МЗ РБ ГБУЗ Республиканская клиническая инфекционная больница",
     "rank" : 1,
-    "count" : 12740,
+    "count" : 12741,
     "competitor" : "МЗ РБ ГАУЗ Республиканский клинический онкологический диспансер",
-    "diff" : 1847,
+    "diff" : 1848,
     "competitorRank" : 2,
     "competitorCount" : 10893
   }, {
     "member" : "ГБУЗ РБ Родильный дом № 3 г. Уфа",
     "rank" : 1,
-    "count" : 4425,
+    "count" : 4426,
     "competitor" : "ГБУЗ Республиканская клиническая больница имени Г.Г.Куватова",
-    "diff" : 2425,
+    "diff" : 2426,
     "competitorRank" : 2,
     "competitorCount" : 2000
   }, {
     "member" : "ГБУЗ РБ Детская поликлиника № 4 г. Уфа",
     "rank" : 1,
-    "count" : 5966,
+    "count" : 5967,
     "competitor" : "ГБУЗ РБ Детская поликлиника № 2 г. Уфа",
-    "diff" : 4080,
+    "diff" : 4081,
     "competitorRank" : 2,
     "competitorCount" : 1886
   } ]
