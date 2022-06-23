@@ -1,7 +1,5 @@
 package service.configurations;
 
-import utils.yaml.YamlParser;
-
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +7,7 @@ import java.util.Map;
 import static java.util.stream.Collectors.toMap;
 import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
 
-public class MemberConfig {
+public class MemberConfig extends Config {
 
     private List<Member> members;
 
@@ -28,10 +26,6 @@ public class MemberConfig {
         this.members = members;
     }
 
-    public MemberConfig parse() {
-        return YamlParser.parse(getClass(), MEMBER_CONFIG_YAML);
-    }
-
     @Override
     public String toString() {
         return "MemberConfig{" +
@@ -39,44 +33,13 @@ public class MemberConfig {
                 '}';
     }
 
-    public static class Member {
+    @Override
+    protected <T extends Config> Class<T> getConfigClass() {
+        return (Class<T>) getClass();
+    }
 
-        private String title;
-        private String nomination;
-        private boolean allow;
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getNomination() {
-            return nomination;
-        }
-
-        public void setNomination(String nomination) {
-            this.nomination = nomination;
-        }
-
-        public boolean getAllow() {
-            return allow;
-        }
-
-        public void setAllow(boolean allow) {
-            this.allow = allow;
-        }
-
-        @Override
-        public String toString() {
-            return "Member{" +
-                    "title='" + title + '\'' +
-                    ", nomination='" + nomination + '\'' +
-                    ", allow=" + allow +
-                    '}';
-        }
-
+    @Override
+    protected String getResource() {
+        return MEMBER_CONFIG_YAML;
     }
 }

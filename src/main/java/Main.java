@@ -9,7 +9,6 @@ import service.configurations.VoteMode;
 import service.telegrambot.TelegramBot;
 import service.webdriver.Browsers;
 import service.webdriver.browsers.Firefox;
-import utils.yaml.YamlParser;
 import votes.MemberRank;
 import votes.MemberRanks;
 import votes.Ranker;
@@ -24,13 +23,13 @@ import java.util.concurrent.TimeUnit;
 import static java.lang.Integer.sum;
 import static java.lang.Math.subtractExact;
 import static java.util.Arrays.asList;
-import static utils.Thesaurus.FilesNameYaml.BROWSER_CONFIG_YAML;
 
 public class Main {
     private static final Logger log = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
-        BrowserConfig browserConfig = YamlParser.parse(BrowserConfig.class, BROWSER_CONFIG_YAML);
+        BrowserConfig browserConfig = new BrowserConfig().parse();
+
         if (browserConfig == null) {
             log.error("Конфиг браузеров не найден: browserConfig = " + browserConfig);
             return;

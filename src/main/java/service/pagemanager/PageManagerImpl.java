@@ -13,6 +13,7 @@ import service.webdriver.model.Process;
 import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
+import utils.yaml.YamlParser;
 import votes.kp.PageManagerKP;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static utils.Thesaurus.FilesNameJson.COOKIE_AFTER_VOTING_JSON;
 import static utils.Thesaurus.FilesNameJson.COOKIE_BEFORE_VOTING_JSON;
+import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
 import static utils.Utils.nullOrEmpty;
 import static utils.jackson.JsonMapper.objectToFilePretty;
 
@@ -51,7 +53,7 @@ public abstract class PageManagerImpl implements PageManager {
     }
 
     private MemberConfig getMemberConfig() {
-        return new MemberConfig().parse();
+        return YamlParser.parse(MemberConfig.class, MEMBER_CONFIG_YAML);
     }
 
     public void votePage(String baseUrl) {

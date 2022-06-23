@@ -56,8 +56,6 @@ public class CommandResult extends CommandsImpl {
             return null;
         }
 
-        //if (nullOrEmpty(memberRanks.getMemberRanks())) return null;
-
         for (MemberRank memberRank : memberRanks.getMemberRanks()) {
             if (memberRank.getRank() == 1) {
                 int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());

@@ -10,6 +10,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import service.telegrambot.configurations.TelegramConfig;
 import service.telegrambot.handlers.Handler;
 import service.telegrambot.handlers.RouterFactory;
+import utils.yaml.YamlParser;
+
+import static utils.Thesaurus.FilesNameYaml.TELEGRAM_CONFIG_YAML;
 
 public class TelegramBot extends TelegramLongPollingBot {
     private static final Logger log = Logger.getLogger(TelegramBot.class);
@@ -46,6 +49,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     }
 
     private TelegramConfig getConfig() {
-        return new TelegramConfig().parse();
+        return YamlParser.parse(TelegramConfig.class, TELEGRAM_CONFIG_YAML);
     }
 }

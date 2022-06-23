@@ -1,10 +1,10 @@
 package service.telegrambot.configurations;
 
-import utils.yaml.YamlParser;
+import service.configurations.Config;
 
 import static utils.Thesaurus.FilesNameYaml.TELEGRAM_CONFIG_YAML;
 
-public class TelegramConfig {
+public class TelegramConfig extends Config {
     private String name;
     private String token;
 
@@ -24,15 +24,21 @@ public class TelegramConfig {
         this.token = token;
     }
 
-    public TelegramConfig parse() {
-        return YamlParser.parse(getClass(), TELEGRAM_CONFIG_YAML);
-    }
-
     @Override
     public String toString() {
         return "TelegramConfig{" +
                 "name='" + name + '\'' +
                 ", token='" + token + '\'' +
                 '}';
+    }
+
+    @Override
+    protected <T extends Config> Class<T> getConfigClass() {
+        return (Class<T>) getClass();
+    }
+
+    @Override
+    protected String getResource() {
+        return TELEGRAM_CONFIG_YAML;
     }
 }
