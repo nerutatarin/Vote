@@ -1,6 +1,6 @@
 voteMode:
   voteCount: 1
-  distanceCount: 100
+  distanceCount: 2000
   threadEnabled: false
   threadCount: 1
   keepDistanceEnabled: true

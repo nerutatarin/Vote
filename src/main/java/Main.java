@@ -60,7 +60,7 @@ public class Main {
             @Override
             public void run() {
                 log.info("scheduledRun!");
-                singleVoteInit(voteConfig.getVoteMode().getVoteCount());
+                //singleVoteInit(voteConfig.getVoteMode().getVoteCount());
                 keepDistance(memberConfig, voteMode);
             }
         }, 0, 1, TimeUnit.HOURS);
@@ -92,12 +92,13 @@ public class Main {
                 int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());
 
                 if (diffCount >= voteMode.getDistanceCount()) return;
-
-                singleVoteInit(diffCount);
+                int count = subtractExact(voteMode.getDistanceCount(), diffCount);
+                log.info("Занимаем первое место, но дистанция меньше 2000, накручиваем " + count + " голосов");
+                singleVoteInit(count);
             } else {
                 int diffCount = subtractExact(memberRank.getCompetitorCount(), memberRank.getCount());
                 int count = sum(diffCount, voteMode.getDistanceCount());
-
+                log.info("Занимаем " + memberRank.getRank() + " место с " + memberRank.getCount() + " голосов");
                 singleVoteInit(count);
             }
         }
