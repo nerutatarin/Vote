@@ -73,6 +73,7 @@ public class Thesaurus {
         public static final String TELEGRAM_CONFIG_YAML = "telegram_config.yaml";
         public static final String BROWSER_CONFIG_YAML = "browser_config.yaml";
         public static final String MEMBER_CONFIG_YAML = "member_config.yaml";
+        public static final String TELEGRAM_USERS_CONFIG_YAML = "telegram_users_config.yaml";
     }
 
 }

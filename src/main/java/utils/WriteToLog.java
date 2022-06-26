@@ -49,6 +49,14 @@ public class WriteToLog {
         write(messageString);
     }
 
+    public void writeLog(String text) {
+        getMessageString()
+                .append(" ")
+                .append(text)
+                .append("\n");
+        write(messageString);
+    }
+
     private StringBuilder getMessageString() {
         return messageString.append(getTimeStamp());
     }

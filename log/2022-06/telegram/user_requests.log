@@ -1,0 +1,7 @@
+26-06-2022 21:48:35 chatId: 1051811573 data=/start telegramUserName: zaripov_Ilnaz firstName: Ильназ
+26-06-2022 21:48:38 chatId: 1051811573 data=/start telegramUserName: zaripov_Ilnaz firstName: Ильназ
+26-06-2022 21:48:39 chatId: 1051811573 data=/status - Статус сервера
+/vote - Проголосовать(дефолт)
+/members - Список участников
+/nominations - Список номинаций
+/result - Результат голосования. Принимает аргумент id участника. Без аргумента возвращает результат по участникам из конфига telegramUserName: Ne_ru_bot firstName: Neru_bot

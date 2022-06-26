@@ -51,7 +51,7 @@ public class Main {
 
         telegramBotInit();
 
-        scheduledRun(memberConfig, voteConfig, voteMode);
+        //scheduledRun(memberConfig, voteConfig, voteMode);
     }
 
     private static void scheduledRun(MemberConfig memberConfig, VoteConfig voteConfig, VoteMode voteMode) {

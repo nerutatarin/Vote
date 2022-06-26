@@ -36,7 +36,6 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         Handler handler = RouterFactory.getInstance(update);
         SendMessage sendMessage = handler.getMessage(update);
-        
         executeMessage(sendMessage);
     }
 
