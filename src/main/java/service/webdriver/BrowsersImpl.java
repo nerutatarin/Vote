@@ -10,7 +10,7 @@ import service.configurations.BrowserConfig;
 import service.configurations.Browsers;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
-import service.proxy.ProxyFactory;
+import service.proxy.ProxiesFactory;
 import service.webdriver.model.Process;
 import utils.ProcessKiller;
 
@@ -94,8 +94,8 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
 
     protected Proxy getProxy() {
         ProxySettings proxySettings = getProxySettings();
-        ProxyFactory proxyFactory = new ProxyFactory(proxySettings, browserName);
-        return proxyFactory.getProxy(process);
+        service.proxy.Proxy proxy = ProxiesFactory.getInstance(proxySettings);
+        return proxy.getProxy(browserName);
     }
 
     public void webDriverClose() {

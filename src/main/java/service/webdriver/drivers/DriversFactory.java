@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import service.webdriver.BrowsersImpl;
 
-public class DriversFactory extends BrowsersImpl {
+public abstract class DriversFactory extends BrowsersImpl {
     public WebDriver getBrowsersFactory(String browserName) {
         switch (browserName) {
             case ("chrome"):
@@ -30,7 +30,5 @@ public class DriversFactory extends BrowsersImpl {
         return getOptions();
     }
 
-    protected <T> T getOptions() {
-        return null;
-    }
+    protected abstract <T> T getOptions();
 }

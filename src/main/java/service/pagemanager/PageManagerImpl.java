@@ -7,13 +7,18 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import service.configurations.MemberConfig;
+import service.configurations.VoteConfig;
+import service.configurations.VoteMode;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.VotingPage;
 import service.webdriver.model.Process;
 import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
+import utils.jackson.JsonMapper;
 import utils.yaml.YamlParser;
+import votes.MemberRanks;
+import votes.Ranker;
 import votes.kp.PageManagerKP;
 
 import java.util.ArrayList;
@@ -25,8 +30,7 @@ import static org.apache.log4j.Logger.getLogger;
 import static org.jsoup.Jsoup.parse;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
-import static utils.Thesaurus.FilesNameJson.COOKIE_AFTER_VOTING_JSON;
-import static utils.Thesaurus.FilesNameJson.COOKIE_BEFORE_VOTING_JSON;
+import static utils.Thesaurus.FilesNameJson.*;
 import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
 import static utils.Utils.nullOrEmpty;
 import static utils.jackson.JsonMapper.objectToFilePretty;
@@ -124,6 +128,8 @@ public abstract class PageManagerImpl implements PageManager {
 
         if (nullOrEmpty(memberList)) return;
 
+        writeMemberRanks();
+
         for (Member member : memberList) {
 
             if (nullOrEmpty(inputs)) return;
@@ -140,6 +146,19 @@ public abstract class PageManagerImpl implements PageManager {
                 writeToLog.ipCountryCount(ip, country, count);
             }
         }
+    }
+
+    private void writeMemberRanks() {
+        VoteConfig voteConfig = new VoteConfig().parse();
+        if (voteConfig == null) {
+            log.error("Конфиг голосования не найден: voteConfig = " + voteConfig);
+            return;
+        }
+        VoteMode voteMode = voteConfig.getVoteMode();
+
+        Ranker ranker = new Ranker(voteMode, memberConfig);
+        MemberRanks memberRanks = ranker.init();
+        JsonMapper.objectToFilePretty(memberRanks, MEMBER_RANKS_JSON);
     }
 
     protected abstract VotingPage getPageAfterVoting(Document pageSource);

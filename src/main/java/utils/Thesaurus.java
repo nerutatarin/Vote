@@ -34,6 +34,12 @@ public class Thesaurus {
         public static final String MSEDGE_DRIVER_KEY = "webdriver.edge.driver";
         public static final String MSEDGE_DRIVER_VALUE = "msedgedriver";
 
+        public static final String SAFARI = "Safari";
+        public static final String SAFARI_DRIVER_KEY = "webdriver.safari.driver";
+        public static final String SAFARI_DRIVER_VALUE = "safaridriver";
+
+        public static final String IE = "internet explorer";
+
         public static final Map<String, String> DRIVERS_MAP = new HashMap<>();
 
         static {
@@ -58,6 +64,7 @@ public class Thesaurus {
         public static final String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json/";
 
         public static final String CONFIG_PATH = "configurations/";
+        public static final String UA_PATH = "src/main/resources/useragents/";
     }
 
     public static class FilesNameJson {
@@ -74,6 +81,14 @@ public class Thesaurus {
         public static final String BROWSER_CONFIG_YAML = "browser_config.yaml";
         public static final String MEMBER_CONFIG_YAML = "member_config.yaml";
         public static final String TELEGRAM_USERS_CONFIG_YAML = "telegram_users_config.yaml";
+    }
+
+    public static class UserAgentsFiles {
+        public static final String FIREFOX_UA = "firefox_ua.txt";
+        public static final String CHROME_UA = "chrome_ua.txt";
+        public static final String OPERA_UA = "opera_ua.txt";
+        public static final String SAFARI_UA = "safari_ua.txt";
+        public static final String IE_UA = "ie_ua.txt";
     }
 
 }

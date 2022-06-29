@@ -10,37 +10,52 @@ import service.configurations.BrowserConfig;
 import service.configurations.Browsers;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
-import service.pagemanager.model.Member;
-import service.pagemanager.model.VotingPage;
 import service.retrofit.api.myip.IpSeeipService;
 import service.retrofit.api.myip.response.IPAddressInfo;
 import service.telegrambot.TelegramBot;
 import service.webdriver.browsers.Firefox;
 import service.webdriver.model.Process;
+import utils.RandomUserAgent;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
-import utils.jackson.JsonMapper;
 import votes.kp.PageManagerKP;
 
-import java.util.Collection;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
+import static java.nio.file.Files.readAllLines;
+import static java.nio.file.Paths.get;
 import static utils.Thesaurus.DirectoriesName.DEFAULT_BASE_FILE_STORAGE_PATH;
+import static utils.Thesaurus.DirectoriesName.UA_PATH;
+import static utils.Thesaurus.Drivers.FIREFOX;
+import static utils.Thesaurus.UserAgentsFiles.FIREFOX_UA;
 
 public class Tests {
     private static final Logger log = Logger.getLogger(Tests.class);
     private static String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json";
+    private static Map<String, String[]> uaMap = new HashMap<String, String[]>();
 
     public static void main(String[] args) {
-        VotingPage votingPage = JsonMapper.fileToObject("page_vote", VotingPage.class);
-        Map<String, List<Member>> participantsMap = votingPage.getMembers();
 
-        List<Member> result = participantsMap.values().stream().flatMap(Collection::stream).collect(Collectors.toList());
+        String userAgent = RandomUserAgent.getRandomUserAgent();
+        System.out.println(userAgent);
 
-        System.out.println(result);
+    }
+
+    private static void reader() {
+        try {
+            List<String> lines = readAllLines(get(UA_PATH + FIREFOX_UA), UTF_8);
+
+            lines.stream().map(line -> new String[]{line + ","}).forEach(value -> uaMap.put(FIREFOX, value));
+
+            System.out.println();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void TelegramBotInit() {

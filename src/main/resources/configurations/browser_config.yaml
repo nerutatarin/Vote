@@ -1,7 +1,7 @@
 proxySettings:
   proxyEnabled: false
-  torProxy: true
-  webProxy: false
+  torProxy: false
+  webProxy: true
 browsers:
   chromium:
     enable: false

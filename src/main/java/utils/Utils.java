@@ -1,6 +1,8 @@
 package utils;
 
 import org.jetbrains.annotations.NotNull;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -184,4 +186,9 @@ public class Utils {
     public static boolean nullOrEmpty(Map<?, ?> map) {
         return map == null || map.isEmpty();
     }
+
+    public static String getUserAgent(WebDriver driver){
+        return (String) ((JavascriptExecutor) driver).executeScript("return navigator.userAgent;");
+    }
+
 }

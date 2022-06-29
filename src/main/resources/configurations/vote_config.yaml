@@ -1,5 +1,5 @@
 voteMode:
-  voteCount: 1
+  voteCount: 10000
   distanceCount: 2000
   threadEnabled: false
   threadCount: 1
