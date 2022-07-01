@@ -24,13 +24,13 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
 
     protected final BrowserConfig browserConfig;
     protected final String browserName;
-    protected boolean isProxy;
+    protected boolean noProxy;
     protected WebDriver webDriver;
     protected Process process;
 
     public BrowsersImpl() {
         this.browserConfig = getBrowserConfig();
-        this.isProxy = getProxySettings().getProxyEnabled();
+        this.noProxy = getProxySettings().getNoProxy();
         this.process = new Process();
         this.browserName = getBrowserName();
         killAllRunningProcesses();
@@ -78,7 +78,7 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
     public Process getProcess() {
         process.setBrowserName(browserName);
         process.setDriverName(getDriverName());
-        process.setProxy(isProxy);
+        process.setNoProxy(noProxy);
         return process;
     }
 
@@ -92,7 +92,7 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
         return ((RemoteWebDriver) webDriver).getCapabilities();
     }
 
-    protected Proxy getProxy() {
+    protected Proxy getNoProxy() {
         ProxySettings proxySettings = getProxySettings();
         service.proxy.Proxy proxy = ProxiesFactory.getInstance(proxySettings);
         return proxy.getProxy(browserName);

@@ -2,10 +2,10 @@ package service.proxy;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.Proxy;
-import service.webdriver.model.Process;
 import service.configurations.ProxySettings;
 import service.retrofit.api.freeproxy.FreeProxyService;
 import service.retrofit.api.freeproxy.response.FreeProxyMedium;
+import service.webdriver.model.Process;
 
 import static org.apache.log4j.Logger.getLogger;
 import static utils.Thesaurus.ProxySettings.PROXY_IP_ADDRESS;
@@ -24,7 +24,7 @@ public class ProxyFactory {
     }
 
     public Proxy getProxy(Process process) {
-        if (!proxySettings.getProxyEnabled()) {
+        if (!proxySettings.getNoProxy()) {
             noProxy();
         } else {
             if (proxySettings.getWebProxy()) {

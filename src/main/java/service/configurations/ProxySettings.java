@@ -1,16 +1,16 @@
 package service.configurations;
 
 public class ProxySettings {
-    private boolean proxyEnabled;
+    private boolean noProxy;
     private boolean torProxy;
     private boolean webProxy;
 
-    public boolean getProxyEnabled() {
-        return proxyEnabled;
+    public boolean getNoProxy() {
+        return noProxy;
     }
 
-    public void setProxyEnabled(boolean proxyEnabled) {
-        this.proxyEnabled = proxyEnabled;
+    public void setNoProxy(boolean noProxy) {
+        this.noProxy = noProxy;
     }
 
     public boolean getTorProxy() {
@@ -32,7 +32,7 @@ public class ProxySettings {
     @Override
     public String toString() {
         return "ProxySettings{" +
-                "proxyEnabled=" + proxyEnabled +
+                "noProxy=" + noProxy +
                 ", torProxy=" + torProxy +
                 ", webProxy=" + webProxy +
                 '}';

@@ -46,7 +46,7 @@ public class RandomUserAgent {
         }
 
         if (browser == null) {
-            browser = CHROME;
+            browser = FIREFOX;
         }
 
         String[] userAgents = uaMap.get(browser);

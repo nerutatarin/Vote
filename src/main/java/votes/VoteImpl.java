@@ -88,7 +88,7 @@ public abstract class VoteImpl extends Thread implements Vote {
 
     @Nullable
     protected IPAddress getIpAddress(WebDriver webDriver) {
-        if (browser.getProcess().getProxy()) {
+        if (browser.getProcess().getNoProxy()) {
             IPAddressGetter ipAddressGetter = new IPAddressGetterByJson(webDriver);
             IPAddress = ipAddressGetter.getIpAddress();
         }

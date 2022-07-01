@@ -22,17 +22,11 @@ public class ProxiesFactory {
 
     private static String getModeProxy(ProxySettings proxySettings) {
 
-        if (proxySettings.getProxyEnabled()) {
+        if (proxySettings.getNoProxy()) return NO_PROXY.getValue();
 
-            if (proxySettings.getTorProxy()) {
-                return TOR_PROXY.getValue();
-            }
+        if (proxySettings.getTorProxy()) return TOR_PROXY.getValue();
 
-            if (proxySettings.getWebProxy()) {
-                return WEB_PROXY.getValue();
-            }
-
-        }
+        if (proxySettings.getWebProxy()) return WEB_PROXY.getValue();
 
         return NO_PROXY.getValue();
     }

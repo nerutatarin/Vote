@@ -46,6 +46,6 @@ public class Opera extends DriversFactory {
         options.setAcceptInsecureCerts(browserOptions.isAcceptInsecureCerts());
         options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
 
-        options.setProxy(getProxy());
+        options.setProxy(getNoProxy());
     }
 }

@@ -8,7 +8,7 @@ public class Process {
     private String host;
     private int port;
     private String type;
-    private boolean proxy;
+    private boolean noProxy;
 
     public String getHost() {
         return host;
@@ -66,11 +66,11 @@ public class Process {
         this.browserName = browserName;
     }
 
-    public boolean getProxy() {
-        return proxy;
+    public boolean getNoProxy() {
+        return noProxy;
     }
 
-    public void setProxy(Boolean proxy) {
-        this.proxy = proxy;
+    public void setNoProxy(Boolean noProxy) {
+        this.noProxy = noProxy;
     }
 }

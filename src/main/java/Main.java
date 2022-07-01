@@ -49,7 +49,7 @@ public class Main {
         }
         VoteMode voteMode = voteConfig.getVoteMode();
 
-        telegramBotInit();
+        //telegramBotInit();
         singleVoteInit(voteConfig.getVoteMode().getVoteCount());
         //scheduledRun(memberConfig, voteConfig, voteMode);
     }

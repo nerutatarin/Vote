@@ -44,6 +44,6 @@ public class Firefox extends DriversFactory {
         options.setPageLoadStrategy(PageLoadStrategy.valueOf(browserOptions.getPageLoadStrategy()));
 
         options.setHeadless(browserOptions.isHeadless());
-        options.setProxy(getProxy());
+        options.setProxy(getNoProxy());
     }
 }
