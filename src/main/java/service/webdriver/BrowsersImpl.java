@@ -86,7 +86,7 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
         return getBrowsers().get(browserName).getName();
     }
 
-    protected abstract <T> T getOptions();
+    protected abstract <T> Capabilities getOptions();
 
     public Capabilities getCapabilities() {
         return ((RemoteWebDriver) webDriver).getCapabilities();

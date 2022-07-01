@@ -3,6 +3,8 @@ package service.proxy;
 import org.apache.log4j.Logger;
 import service.retrofit.api.freeproxy.FreeProxyService;
 import service.retrofit.api.freeproxy.response.FreeProxyMedium;
+import service.retrofit.api.htmlweb.HtmlWebService;
+import service.retrofit.api.htmlweb.response.WebProxies;
 
 import static org.apache.log4j.Logger.getLogger;
 
@@ -30,5 +32,10 @@ public class WebProxy implements Proxy{
         FreeProxyService freeProxyService = new FreeProxyService();
         FreeProxyMedium proxyMedium = freeProxyService.getProxyMedium();
         return proxyMedium.getAlive() ? proxyMedium : getWebProxy();
+    }
+    private WebProxies getProxyList() {
+        HtmlWebService htmlWebService = new HtmlWebService();
+        WebProxies proxyList = htmlWebService.getProxyList();
+        return proxyList;
     }
 }

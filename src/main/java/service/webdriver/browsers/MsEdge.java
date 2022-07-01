@@ -1,5 +1,6 @@
 package service.webdriver.browsers;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.edge.EdgeOptions;
 import service.configurations.Options;
@@ -12,7 +13,7 @@ import java.util.Collections;
 public class MsEdge extends DriversFactory {
 
     @Override
-    protected EdgeOptions getOptions() {
+    protected Capabilities getOptions() {
         EdgeOptions options = new EdgeOptions();
         //options.addArguments("--enable-automation");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));

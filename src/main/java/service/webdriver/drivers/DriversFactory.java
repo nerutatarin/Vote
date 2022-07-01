@@ -12,23 +12,19 @@ public abstract class DriversFactory extends BrowsersImpl {
     public WebDriver getBrowsersFactory(String browserName) {
         switch (browserName) {
             case ("chrome"):
-                return new ChromeDriver(capabilities());
+                return new ChromeDriver(getOptions());
             case ("chromium"):
-                return new ChromeDriver(capabilities());
+                return new ChromeDriver(getOptions());
             case ("firefox"):
-                return new FirefoxDriver(capabilities());
+                return new FirefoxDriver(getOptions());
             case ("msedge"):
-                return new EdgeDriver(capabilities());
+                return new EdgeDriver(getOptions());
             case ("opera"):
-                return new OperaDriver(capabilities());
+                return new OperaDriver(getOptions());
             default:
-                return new FirefoxDriver(capabilities());
+                return new FirefoxDriver(getOptions());
         }
     }
 
-    private Capabilities capabilities() {
-        return getOptions();
-    }
-
-    protected abstract <T> T getOptions();
+    protected abstract Capabilities getOptions();
 }

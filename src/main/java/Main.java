@@ -49,8 +49,12 @@ public class Main {
         }
         VoteMode voteMode = voteConfig.getVoteMode();
 
+        //List<String> enabledBrowsers = browserConfig.getEnabledBrowsers();
+
         telegramBotInit();
-        singleVoteInit(voteConfig.getVoteMode().getVoteCount());
+        threadVoteInit(browserConfig, voteMode);
+                
+        //singleVoteInit(voteConfig.getVoteMode().getVoteCount());
         //scheduledRun(memberConfig, voteConfig, voteMode);
     }
 
@@ -104,10 +108,18 @@ public class Main {
         }
     }
 
-    private static void threadVoteInit(int voteCount, int threadCount) {
+    private static void threadVoteInit(BrowserConfig browserConfig, VoteMode voteMode) {
+
+        List<String> enabledBrowsers = browserConfig.getEnabledBrowsers();
+
+        int count = voteMode.getVoteCount();
+        int threadCount = voteMode.getThreadCount();
+
         for (int i = 0; i < threadCount; i++) {
+            
             List<Browsers> browsers = asList(new Firefox());
-            browsers.forEach(browser -> new VoteKP(browser, voteCount).start());
+            
+            browsers.forEach(browser -> new VoteKP(browser, count).start());
         }
     }
 }

@@ -1,5 +1,6 @@
 package service.webdriver.browsers;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
@@ -13,8 +14,9 @@ import java.time.Duration;
 public class Firefox extends DriversFactory {
 
     @Override
-    protected FirefoxOptions getOptions() {
+    protected Capabilities getOptions() {
         FirefoxOptions options = new FirefoxOptions();
+
         options.setProfile(new FirefoxProfile());
 
         options.addArguments("-private");
@@ -29,6 +31,7 @@ public class Firefox extends DriversFactory {
         options.addPreference("toolkit.startup.max_resumed_crashes", "-1");
 
         mainOptions(options);
+
         return options;
     }
 

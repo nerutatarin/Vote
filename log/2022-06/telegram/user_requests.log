@@ -5,3 +5,17 @@
 /members - Список участников
 /nominations - Список номинаций
 /result - Результат голосования. Принимает аргумент id участника. Без аргумента возвращает результат по участникам из конфига telegramUserName: Ne_ru_bot firstName: Neru_bot
+29-06-2022 11:44:21 chatId: 1051811573 data=/start telegramUserName: zaripov_Ilnaz firstName: Ильназ
+29-06-2022 11:44:25 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Ильназ
+29-06-2022 12:45:15 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Ильназ
+29-06-2022 12:45:45 chatId: 1051811573 data=/result 19 telegramUserName: zaripov_Ilnaz firstName: Ильназ
+29-06-2022 12:45:57 chatId: 1051811573 data=/status - Статус сервера
+/vote - Проголосовать(дефолт)
+/members - Список участников
+/nominations - Список номинаций
+/result - Результат голосования. Принимает аргумент id участника. Без аргумента возвращает результат по участникам из конфига telegramUserName: Ne_ru_bot firstName: Neru_bot
+29-06-2022 13:20:02 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Ильназ
+29-06-2022 13:20:23 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Ильназ
+29-06-2022 13:20:32 chatId: 1051811573 data=/result 19 telegramUserName: zaripov_Ilnaz firstName: Ильназ
+29-06-2022 13:21:00 chatId: 1051811573 data=/result 20 telegramUserName: zaripov_Ilnaz firstName: Ильназ
+30-06-2022 10:15:18 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Ильназ

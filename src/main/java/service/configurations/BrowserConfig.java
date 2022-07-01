@@ -1,7 +1,9 @@
 package service.configurations;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static utils.Thesaurus.FilesNameYaml.BROWSER_CONFIG_YAML;
 
@@ -35,5 +37,12 @@ public class BrowserConfig extends Config {
     @Override
     protected String getResource() {
         return BROWSER_CONFIG_YAML;
+    }
+
+    public List<String> getEnabledBrowsers() {
+        return browsers.entrySet().stream()
+                .filter(browsersEntry -> browsersEntry.getValue().isEnable())
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 }

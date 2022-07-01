@@ -1,5 +1,6 @@
 package service.webdriver.browsers;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,7 +12,7 @@ import java.time.Duration;
 public class Chrome extends DriversFactory {
 
     @Override
-    protected ChromeOptions getOptions() {
+    protected Capabilities getOptions() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--enable-automation");
         //options.addArguments("--headless");

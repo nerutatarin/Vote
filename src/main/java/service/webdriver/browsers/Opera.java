@@ -1,5 +1,6 @@
 package service.webdriver.browsers;
 
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.opera.OperaOptions;
 import service.configurations.Options;
@@ -12,7 +13,7 @@ import java.util.Collections;
 public class Opera extends DriversFactory {
 
     @Override
-    protected OperaOptions getOptions() {
+    protected Capabilities getOptions() {
         OperaOptions options = new OperaOptions();
         //options.addArguments("--enable-automation");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
