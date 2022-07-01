@@ -32,6 +32,7 @@ import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static utils.Thesaurus.FilesNameJson.*;
 import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
+import static utils.Utils.getUserAgent;
 import static utils.Utils.nullOrEmpty;
 import static utils.jackson.JsonMapper.objectToFilePretty;
 
@@ -66,6 +67,8 @@ public abstract class PageManagerImpl implements PageManager {
         int timeout = 30;
         wait = new WebDriverWait(webDriver, ofSeconds(timeout));
         webDriver.get(baseUrl);
+
+        log.info(browserName + " UserAgent = " + getUserAgent(webDriver));
 
         saveCookie(COOKIE_AFTER_VOTING_JSON);
     }

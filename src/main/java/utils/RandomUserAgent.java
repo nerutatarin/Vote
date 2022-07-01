@@ -15,7 +15,7 @@ import static utils.Thesaurus.UserAgentsFiles.*;
 
 public class RandomUserAgent {
 
-    private static Map<String, String[]> uaMap = new HashMap<String, String[]>();
+    private static Map<String, List<String>> uaMap = new HashMap<>();
     private static Map<String, Double> freqMap = new HashMap<String, Double>();
 
     static {
@@ -33,7 +33,6 @@ public class RandomUserAgent {
     }
 
     public static String getRandomUserAgent() {
-
         double rand = Math.random() * 100;
         String browser = null;
         double count = 0.0;
@@ -49,19 +48,13 @@ public class RandomUserAgent {
             browser = FIREFOX;
         }
 
-        String[] userAgents = uaMap.get(browser);
-        return userAgents[(int) Math.floor(Math.random() * userAgents.length)];
+        List<String> userAgents = uaMap.get(browser);
+        return userAgents.get((int) Math.floor(Math.random() * userAgents.size()));
     }
 
-    private static String[] reader(String fileName) {
+    private static List<String> reader(String fileName) {
         try {
-            List<String> lines = readAllLines(get(UA_PATH + fileName), UTF_8);
-            String[] value = new String[0];
-
-            for (String line : lines) {
-                value = new String[]{line};
-            }
-            return value;
+            return readAllLines(get(UA_PATH + fileName), UTF_8);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
