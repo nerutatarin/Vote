@@ -3,6 +3,9 @@ package example;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -15,12 +18,12 @@ import service.retrofit.api.myip.response.IPAddressInfo;
 import service.telegrambot.TelegramBot;
 import service.webdriver.browsers.Firefox;
 import service.webdriver.model.Process;
-import utils.RandomUserAgent;
 import utils.ipaddress.IPAddressGetter;
 import utils.ipaddress.IPAddressGetterByJson;
 import utils.ipaddress.model.IPAddress;
 import votes.kp.PageManagerKP;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -38,12 +41,34 @@ public class Tests {
     private static final Logger log = Logger.getLogger(Tests.class);
     private static String JSON_PATH = DEFAULT_BASE_FILE_STORAGE_PATH + "json";
     private static Map<String, String[]> uaMap = new HashMap<String, String[]>();
+    private static ChromeDriverService service;
 
     public static void main(String[] args) {
+        RemoteWebDriver driver = null;
+        try {
+            createAndStartService();
+            driver = createDriver();
+            driver.get("ya.ru");
+        } catch (IOException e) {
+            driver.quit();
+            stopService();
+        }
+    }
 
-        String userAgent = RandomUserAgent.getRandomUserAgent();
-        System.out.println(userAgent);
+    private static void createAndStartService() throws IOException {
+        service = new ChromeDriverService.Builder()
+                .usingDriverExecutable(new File("src/resources/unix/chromedriver"))
+                .usingAnyFreePort()
+                .build();
+        service.start();
+    }
 
+    private static void stopService() {
+        service.stop();
+    }
+
+    private static RemoteWebDriver  createDriver() {
+        return new RemoteWebDriver(service.getUrl(), new ChromeOptions());
     }
 
     private static void reader() {
@@ -67,7 +92,7 @@ public class Tests {
         }
     }
 
-    private static void voteTest(){
+    private static void voteTest() {
         WebDriver webDriver = WebDriverManager.firefoxdriver().create();
         try {
             Process process = new Process();

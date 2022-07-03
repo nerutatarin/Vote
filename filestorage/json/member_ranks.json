@@ -1,12 +1,12 @@
 {
-  "timeStamp" : 1656659468694,
+  "timeStamp" : 1656865345915,
   "memberRanks" : [ {
     "member" : "МЗ РБ ГБУЗ Республиканская клиническая инфекционная больница",
     "rank" : 1,
-    "count" : 13146,
+    "count" : 13750,
     "competitor" : "Республиканский ожоговый центр ГБУЗ РБ ГКБ N18 г.Уфы",
-    "diff" : 1618,
+    "diff" : 2000,
     "competitorRank" : 2,
-    "competitorCount" : 11528
+    "competitorCount" : 11750
   } ]
 }

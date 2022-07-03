@@ -63,7 +63,8 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
     @Override
     public WebDriver getWebDriver() {
         log.info(browserName + " Инициализация драйвера...");
-        WebDriverManager().setup();
+        //WebDriverManager().setup();
+        System.setProperty("webdriver.chrome.driver", "/home/zaripov/IdeaProjects/Vote/src/resources/unix/chromedriver");
 
         webDriver = getBrowsersFactory(browserName);
         return webDriver;

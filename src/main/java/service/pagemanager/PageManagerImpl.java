@@ -68,6 +68,7 @@ public abstract class PageManagerImpl implements PageManager {
         wait = new WebDriverWait(webDriver, ofSeconds(timeout));
         webDriver.get(baseUrl);
 
+        sleep();
         log.info(browserName + " UserAgent = " + getUserAgent(webDriver));
 
         saveCookie(COOKIE_AFTER_VOTING_JSON);

@@ -8,6 +8,7 @@ import service.configurations.VoteConfig;
 import service.configurations.VoteMode;
 import service.telegrambot.TelegramBot;
 import service.webdriver.Browsers;
+import service.webdriver.browsers.Chrome;
 import service.webdriver.browsers.Firefox;
 import votes.MemberRank;
 import votes.MemberRanks;
@@ -49,9 +50,9 @@ public class Main {
         }
         VoteMode voteMode = voteConfig.getVoteMode();
 
-        //telegramBotInit();
-        singleVoteInit(voteConfig.getVoteMode().getVoteCount());
-        //scheduledRun(memberConfig, voteConfig, voteMode);
+        telegramBotInit();
+        //singleVoteInit(voteConfig.getVoteMode().getVoteCount());
+        scheduledRun(memberConfig, voteConfig, voteMode);
     }
 
     private static void scheduledRun(MemberConfig memberConfig, VoteConfig voteConfig, VoteMode voteMode) {
@@ -60,14 +61,14 @@ public class Main {
             @Override
             public void run() {
                 log.info("scheduledRun!");
-                //singleVoteInit(voteConfig.getVoteMode().getVoteCount());
-                keepDistance(memberConfig, voteMode);
+                int count = keepDistance(memberConfig, voteMode);
+                singleVoteInit(count);
             }
         }, 0, 1, TimeUnit.HOURS);
     }
 
     public static void singleVoteInit(int count) {
-        new VoteKP(new Firefox(), count).start();
+        new VoteKP(new Chrome(), count).start();
     }
 
     private static void telegramBotInit() {
@@ -79,10 +80,10 @@ public class Main {
         }
     }
 
-    private static void keepDistance(MemberConfig memberConfig, VoteMode voteMode) {
+    private static int keepDistance(MemberConfig memberConfig, VoteMode voteMode) {
         boolean keepDistanceEnabled = voteMode.isKeepDistanceEnabled();
 
-        if (!keepDistanceEnabled) return;
+        if (!keepDistanceEnabled) return 0;
 
         Ranker ranker = new Ranker(voteMode, memberConfig);
         MemberRanks memberRanks = ranker.init();
@@ -91,17 +92,18 @@ public class Main {
             if (memberRank.getRank() == 1) {
                 int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());
 
-                if (diffCount >= voteMode.getDistanceCount()) return;
+                if (diffCount >= voteMode.getDistanceCount()) return diffCount;
                 int count = subtractExact(voteMode.getDistanceCount(), diffCount);
                 log.info("Занимаем первое место, но дистанция меньше 2000, накручиваем " + count + " голосов");
-                singleVoteInit(count);
+                return count;
             } else {
                 int diffCount = subtractExact(memberRank.getCompetitorCount(), memberRank.getCount());
                 int count = sum(diffCount, voteMode.getDistanceCount());
                 log.info("Занимаем " + memberRank.getRank() + " место с " + memberRank.getCount() + " голосов");
-                singleVoteInit(count);
+                return count;
             }
         }
+        return 0;
     }
 
     private static void threadVoteInit(int voteCount, int threadCount) {
