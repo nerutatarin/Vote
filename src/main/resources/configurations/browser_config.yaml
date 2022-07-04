@@ -4,7 +4,7 @@ proxySettings:
   webProxy: false
 browsers:
   chromium:
-    enable: false
+    enable: true
     key: "webdriver.chrome.driver"
     name: "chromedriver"
     options:
