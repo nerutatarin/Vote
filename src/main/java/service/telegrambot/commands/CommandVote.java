@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 import service.webdriver.browsers.Chrome;
 import votes.kp.VoteKP;
 
+import static java.lang.Thread.sleep;
+
 public class CommandVote extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandVote.class);
 
@@ -15,7 +17,16 @@ public class CommandVote extends CommandsImpl {
     private StringBuilder getStringBuilder() {
         new VoteKP(new Chrome(), 1).start();
 
-        StringBuilder stringBuilder = new StringBuilder();
-        return stringBuilder.append("Проголосовано!");
+        sleep();
+
+        return new StringBuilder().append("Проголосовано!");
+    }
+
+    private static void sleep() {
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

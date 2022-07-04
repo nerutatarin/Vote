@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.sum;
 import static java.lang.Math.subtractExact;
+import static java.lang.Thread.sleep;
 import static java.util.Arrays.asList;
 
 public class Main {
@@ -61,6 +62,12 @@ public class Main {
             @Override
             public void run() {
                 log.info("scheduledRun!");
+                singleVoteInit(1);
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 int count = keepDistance(memberConfig, voteMode);
                 singleVoteInit(count);
             }
