@@ -1,7 +1,7 @@
 package service.telegrambot.commands;
 
 import org.apache.log4j.Logger;
-import service.webdriver.browsers.Chromium;
+import service.webdriver.browsers.Chrome;
 import votes.kp.VoteKP;
 
 public class CommandVote extends CommandsImpl {
@@ -13,7 +13,7 @@ public class CommandVote extends CommandsImpl {
     }
 
     private StringBuilder getStringBuilder() {
-        new VoteKP(new Chromium(), 1).start();
+        new VoteKP(new Chrome(), 1).start();
 
         sleep();
 
