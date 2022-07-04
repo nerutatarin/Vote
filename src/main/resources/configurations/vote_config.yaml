@@ -8,9 +8,9 @@ voteMode:
     chromium:
       enable: false
     chrome:
-      enable: false
-    firefox:
       enable: true
+    firefox:
+      enable: false
     msedge:
       enable: false
     opera:

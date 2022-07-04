@@ -92,7 +92,8 @@ public class Main {
             if (memberRank.getRank() == 1) {
                 int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());
 
-                if (diffCount >= voteMode.getDistanceCount()) return diffCount;
+                if (diffCount >= voteMode.getDistanceCount()) return 0;
+
                 int count = subtractExact(voteMode.getDistanceCount(), diffCount);
                 log.info("Занимаем первое место, но дистанция меньше 2000, накручиваем " + count + " голосов");
                 return count;

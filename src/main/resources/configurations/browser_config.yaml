@@ -28,7 +28,7 @@ browsers:
       scriptTimeout: 30
       acceptInsecureCerts: true
   firefox:
-    enable: true
+    enable: false
     key: "webdriver.gecko.driver"
     name: "geckodriver"
     options:
