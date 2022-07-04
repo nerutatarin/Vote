@@ -4,7 +4,7 @@ proxySettings:
   webProxy: false
 browsers:
   chromium:
-    enable: true
+    enable: false
     key: "webdriver.chrome.driver"
     name: "chromedriver"
     options:
@@ -16,7 +16,7 @@ browsers:
       scriptTimeout: 30
       acceptInsecureCerts: true
   chrome:
-    enable: false
+    enable: true
     key: "webdriver.chrome.driver"
     name: "chromedriver"
     options:

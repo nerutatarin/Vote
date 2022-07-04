@@ -64,7 +64,7 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
     public WebDriver getWebDriver() {
         log.info(browserName + " Инициализация драйвера...");
         //WebDriverManager().setup();
-        System.setProperty("webdriver.chrome.driver", "/home/zaripov/IdeaProjects/Vote/src/resources/unix/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/unix/chromedriver");
 
         webDriver = getBrowsersFactory(browserName);
         if (webDriver == null) log.error(browserName + " не удалось иницилизировать драйвер");
