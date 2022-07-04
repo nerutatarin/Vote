@@ -8,7 +8,7 @@ import service.configurations.VoteConfig;
 import service.configurations.VoteMode;
 import service.telegrambot.TelegramBot;
 import service.webdriver.Browsers;
-import service.webdriver.browsers.Chrome;
+import service.webdriver.browsers.Chromium;
 import service.webdriver.browsers.Firefox;
 import votes.MemberRank;
 import votes.MemberRanks;
@@ -29,6 +29,8 @@ public class Main {
     private static final Logger log = Logger.getLogger(Main.class);
 
     public static void main(String[] args) {
+        // TODO: 04.07.2022 с этим надо чтото делать, так не пойдет
+
         BrowserConfig browserConfig = new BrowserConfig().parse();
 
         if (browserConfig == null) {
@@ -51,7 +53,6 @@ public class Main {
         VoteMode voteMode = voteConfig.getVoteMode();
 
         telegramBotInit();
-        //singleVoteInit(voteConfig.getVoteMode().getVoteCount());
         scheduledRun(memberConfig, voteConfig, voteMode);
     }
 
@@ -74,7 +75,8 @@ public class Main {
     }
 
     public static void singleVoteInit(int count) {
-        new VoteKP(new Chrome(), count).start();
+        // TODO: 04.07.2022 доделать выбор браузера из конфига
+        new VoteKP(new Chromium(), count).start();
     }
 
     private static void telegramBotInit() {

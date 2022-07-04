@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import static utils.Thesaurus.DirectoriesName.JSON_PATH;
+import static utils.Utils.createDirectoryIfNoExistInWorkDir;
 
 public class JsonMapper {
 
@@ -101,6 +102,9 @@ public class JsonMapper {
      * @param <T>
      */
     public static <T> void objectToFilePretty(T object, String fileName) {
+        // TODO: 04.07.2022 проверка каталогов
+        createDirectoryIfNoExistInWorkDir(JSON_PATH);
+
         if (object == null) return;
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
         try (FileWriter file = new FileWriter(JSON_PATH + fileName)) {
@@ -115,7 +119,6 @@ public class JsonMapper {
      *
      * @param object
      * @param fileName
-     * @param <T>
      */
     public static void objectListToFilePretty(List<?> object, String fileName) {
         if (object == null || object.size() == 0) return;

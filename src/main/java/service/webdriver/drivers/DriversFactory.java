@@ -10,6 +10,7 @@ import service.webdriver.BrowsersImpl;
 
 public abstract class DriversFactory extends BrowsersImpl {
 
+    // TODO: 04.07.2022 переработать фабрику, пиздец говнище
     public WebDriver getBrowsersFactory(String browserName) {
         switch (browserName) {
             case ("chrome"):
