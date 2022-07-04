@@ -23,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.sum;
 import static java.lang.Math.subtractExact;
-import static java.lang.Thread.sleep;
 import static java.util.Arrays.asList;
 
 public class Main {

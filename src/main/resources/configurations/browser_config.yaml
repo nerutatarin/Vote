@@ -16,7 +16,7 @@ browsers:
       scriptTimeout: 30
       acceptInsecureCerts: true
   chrome:
-    enable: true
+    enable: false
     key: "webdriver.chrome.driver"
     name: "chromedriver"
     options:

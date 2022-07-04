@@ -15,21 +15,26 @@ public class Chromium extends DriversFactory {
     @Override
     protected ChromeOptions getOptions() {
         ChromeOptions options = new ChromeOptions();
+
+        String userAgent = RandomUserAgent.getRandomUserAgent();
+        options.addArguments("user-agent=" + userAgent);
+
         //options.addArguments("--enable-automation");
+        //options.addArguments("--headless");
+        //options.addArguments("start-maximized");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-update");
+        options.addArguments("--incognito");
+        options.addArguments("--disable-gpu");
+        options.addArguments("--ignore-ssl-errors");
+        options.addArguments("--disable-blink-features=AutomationControlled");
+        options.addArguments("window-size=1200x600");
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
         options.setExperimentalOption("useAutomationExtension", false);
-        // Fixing 255 Error crashes
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
-        // Changing the user agent / browser fingerprint
-        String userAgent = RandomUserAgent.getRandomUserAgent();
-        options.addArguments("--user-agent=" + userAgent);
-        options.addArguments("--window-size=1920,1080");
-        // Options to trick bot detection
-        options.addArguments("--disable-blink-features=AutomationControlled");
-        // Other
-        options.addArguments("--disable-infobars");
-        options.addArguments("--incognito");
+        //options.addArguments("--disable-extensions");
+        //options.addArguments("--dns-prefetch-disable");
+        //options.addArguments("--disable-popup-blocking");
+        //options.addArguments("--enable-precise-memory-info");
 
         mainOptions(options);
         return options;
