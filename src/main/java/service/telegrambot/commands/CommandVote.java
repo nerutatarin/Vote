@@ -1,10 +1,8 @@
 package service.telegrambot.commands;
 
 import org.apache.log4j.Logger;
-import service.webdriver.browsers.Chrome;
+import service.webdriver.browsers.Chromium;
 import votes.kp.VoteKP;
-
-import static java.lang.Thread.sleep;
 
 public class CommandVote extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandVote.class);
@@ -15,7 +13,7 @@ public class CommandVote extends CommandsImpl {
     }
 
     private StringBuilder getStringBuilder() {
-        new VoteKP(new Chrome(), 1).start();
+        new VoteKP(new Chromium(), 1).start();
 
         sleep();
 

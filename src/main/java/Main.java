@@ -8,7 +8,7 @@ import service.configurations.VoteConfig;
 import service.configurations.VoteMode;
 import service.telegrambot.TelegramBot;
 import service.webdriver.Browsers;
-import service.webdriver.browsers.Chrome;
+import service.webdriver.browsers.Chromium;
 import service.webdriver.browsers.Firefox;
 import votes.MemberRank;
 import votes.MemberRanks;
@@ -74,7 +74,7 @@ public class Main {
     }
 
     public static void singleVoteInit(int count) {
-        new VoteKP(new Chrome(), count).start();
+        new VoteKP(new Chromium(), count).start();
     }
 
     private static void telegramBotInit() {
