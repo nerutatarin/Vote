@@ -1,11 +1,11 @@
 {
-  "timeStamp" : 1657545105636,
+  "timeStamp" : 1657549286895,
   "memberRanks" : [ {
     "member" : "ГБУЗ РБ Детская поликлиника № 4 г. Уфа",
     "rank" : 1,
-    "count" : 6096,
+    "count" : 6104,
     "competitor" : "ГБУЗ РБ Детская поликлиника № 2 г. Уфа",
-    "diff" : 3936,
+    "diff" : 3944,
     "competitorRank" : 2,
     "competitorCount" : 2160
   } ]

@@ -65,7 +65,7 @@ public class Main {
         boolean isThread = voteConfig.getVoteMode().isThreadEnabled();
         List<Browser> browsers = voteConfig.getBrowsersInstance();
 
-        new VoteKP(browsers, count, memberConfig).vote(isThread);
+        new VoteKP(browsers, memberConfig).vote(count, isThread);
     }
 
     private static int keepDistance() {
@@ -102,7 +102,7 @@ public class Main {
             List<Browser> browsers = voteConfig.getBrowsersInstance();
             boolean isThread = voteConfig.getVoteMode().isThreadEnabled();
 
-            browsers.forEach(browser -> new VoteKP(browsers, voteCount, members).vote(isThread));
+            browsers.forEach(browser -> new VoteKP(browsers, members).vote(voteCount, isThread));
         }
     }
 }

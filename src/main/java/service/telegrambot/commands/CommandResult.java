@@ -1,6 +1,8 @@
 package service.telegrambot.commands;
 
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import service.memberRank.MemberRank;
 import service.memberRank.MemberRanks;
 import service.pagemanager.model.Member;
@@ -10,8 +12,10 @@ import utils.Utils;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Collections.singleton;
+import static java.util.stream.Collectors.toSet;
 import static service.telegrambot.commands.CommandsEnum.COMMAND_RESULT;
 import static utils.Thesaurus.FilesNameJson.MEMBER_RANKS_JSON;
 import static utils.Thesaurus.FilesNameJson.PAGE_AFTER_VOTING_JSON;
@@ -40,20 +44,42 @@ public class CommandResult extends CommandsImpl {
     protected StringBuilder getResultDefault() {
         StringBuilder stringBuilder = new StringBuilder();
 
+        MemberRanks memberRanks = getMemberRanks();
+        if (memberRanks == null) return null;
+
+        int userRule = getUser().getRule();
+
+        Set<String> memberTitles = getMemberTitles(userRule);
+
+        Date memberRanksTimeStamp = memberRanks.getTimeStamp();
+        for (MemberRank memberRank : memberRanks.getMemberRanks()) {
+            if (memberTitles.contains(memberRank.getMember())) {
+                stringBuilder.append("Результат голосования на ")
+                        .append(formatDateWithPattern(memberRanksTimeStamp, PATTERN_DDMMYYYYHHMMSS))
+                        .append("\n")
+                        .append(memberRank);
+            } else {
+                stringBuilder.append("Результат голосования отсутствует, выполните команду /vote");
+            }
+        }
+
+        return stringBuilder;
+    }
+
+    @Nullable
+    private MemberRanks getMemberRanks() {
         MemberRanks memberRanks = fileToObject(MEMBER_RANKS_JSON, MemberRanks.class);
         if (memberRanks == null) {
             log.error("Не найден файл: " + MEMBER_RANKS_JSON);
             return null;
         }
-        Date memberRanksTimeStamp = memberRanks.getTimeStamp();
-        for (MemberRank memberRank : memberRanks.getMemberRanks()) {
-           stringBuilder.append("Результат голосования на ")
-                   .append(formatDateWithPattern(memberRanksTimeStamp, PATTERN_DDMMYYYYHHMMSS))
-                   .append("\n")
-                   .append(memberRank.toString());
-        }
+        return memberRanks;
+    }
 
-        return stringBuilder;
+    @NotNull
+    private Set<String> getMemberTitles(int userRule) {
+        List<service.configurations.Member> members = memberConfig.getMemberByRule(userRule);
+        return members.stream().map(service.configurations.Member::getTitle).collect(toSet());
     }
 
     private StringBuilder getResultById(String substringAfterSpace) {

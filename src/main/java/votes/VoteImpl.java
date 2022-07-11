@@ -22,7 +22,6 @@ import java.util.List;
 public abstract class VoteImpl extends Thread implements Vote {
     private static final Logger log = Logger.getLogger(VoteImpl.class);
 
-    protected int count;
     protected PageManager pageManager;
     protected List<Browser> browsers;
     protected Browser browser;
@@ -30,20 +29,20 @@ public abstract class VoteImpl extends Thread implements Vote {
     protected String browserName;
     protected List<Member> members;
     protected MemberConfig memberConfig;
+    private int count;
 
-    public VoteImpl(List<Browser> browsers, int count, List<Member> members) {
+    public VoteImpl(List<Browser> browsers, List<Member> members) {
         this.browsers = browsers;
-        this.count = count;
         this.members = members;
     }
 
-    public VoteImpl(List<Browser> browsers, int count, MemberConfig memberConfig) {
+    public VoteImpl(List<Browser> browsers, MemberConfig memberConfig) {
         this.browsers = browsers;
-        this.count = count;
         this.memberConfig = memberConfig;
     }
 
-    public void vote(Boolean isThread) {
+    public void vote(int count, Boolean isThread) {
+        this.count = count;
         if (isThread) {
             start();
         } else {

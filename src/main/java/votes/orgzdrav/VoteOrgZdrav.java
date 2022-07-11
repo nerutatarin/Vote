@@ -11,12 +11,12 @@ import java.util.List;
 
 public class VoteOrgZdrav extends VoteImpl {
 
-    public VoteOrgZdrav(List<Browser> browsers, int count, List<Member> members) {
-        super(browsers, count, members);
+    public VoteOrgZdrav(List<Browser> browsers, List<Member> members) {
+        super(browsers, members);
     }
 
-    public VoteOrgZdrav(List<Browser> browsers, int count, MemberConfig memberConfig) {
-        super(browsers, count, memberConfig);
+    public VoteOrgZdrav(List<Browser> browsers, MemberConfig memberConfig) {
+        super(browsers, memberConfig);
     }
 
     @Override

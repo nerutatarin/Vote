@@ -73,7 +73,7 @@ public abstract class CommandsImpl implements Commands {
         int voteCount = getVoteMode().getVoteCount();
         boolean isThread = getVoteMode().isThreadEnabled();
         List<Browser> browsers = voteConfig.getBrowsersInstance();
-        new VoteKP(browsers, voteCount, members).vote(isThread);
+        new VoteKP(browsers, members).vote(voteCount, isThread);
     }
 
     private VoteMode getVoteMode() {

@@ -10,13 +10,12 @@ import votes.VoteImpl;
 import java.util.List;
 
 public class VoteKP extends VoteImpl {
-
-    public VoteKP(List<Browser> browsers, int count, List<Member> members) {
-        super(browsers, count, members);
+    public VoteKP(List<Browser> browsers, List<Member> members) {
+        super(browsers, members);
     }
 
-    public VoteKP(List<Browser> browsers, int count, MemberConfig memberConfig) {
-        super(browsers, count, memberConfig);
+    public VoteKP(List<Browser> browsers, MemberConfig memberConfig) {
+        super(browsers, memberConfig);
     }
 
     @Override
