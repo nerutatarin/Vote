@@ -15,8 +15,8 @@ import service.webdriver.model.Process;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.toMap;
 import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
@@ -56,10 +56,12 @@ public class PageManagerKP extends PageManagerImpl {
     }
 
     protected Map<String, String> getAllowMembers() {
-        if (members.isEmpty()) return memberConfig.getAllowMembers();
+        if (members == null || members.isEmpty()) {
+            return memberConfig.getAllowMembers();
+        }
 
         return members.stream()
-                .collect(toMap(service.configurations.Member::getNomination, service.configurations.Member::getTitle, (a, b) -> b, LinkedHashMap::new));
+                .collect(Collectors.toMap(service.configurations.Member::getNomination, service.configurations.Member::getTitle, (a, b) -> b, LinkedHashMap::new));
     }
 
     private void getInputsForAllowMembers(List<Member> members) {

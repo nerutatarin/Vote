@@ -29,7 +29,7 @@ public class Main {
         initConfigs();
         initTelegramBot();
 
-        //scheduledRun(memberConfig, voteConfig, voteMode);
+        scheduledRun();
     }
 
     private static void initConfigs() {
@@ -55,7 +55,9 @@ public class Main {
                 log.info("Планировщик запущен! Период = " + hours);
                 singleVoteInit(1);
                 sleep(10000);
+                log.info("Проверка дистанции...");
                 int count = keepDistance();
+                log.info("Проверка дистанции завершена.");
                 singleVoteInit(count);
             }
         }, 0, 1, hours);

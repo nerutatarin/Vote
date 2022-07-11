@@ -112,8 +112,9 @@ public class JsonMapper {
         ObjectWriter objectWriter = new ObjectMapper().writerWithDefaultPrettyPrinter();
         try (FileWriter file = new FileWriter(JSON_PATH + fileName)) {
             objectWriter.writeValue(file, object);
+            log.info("Успешное сохранение объекта " + object.getClass().getSimpleName() + " в " + fileName);
         } catch (IOException e) {
-            log.info("Не удалось сохранить объект " + object.getClass().getSimpleName() + " в " + fileName  + "...");
+            log.info("Не удалось сохранить объект " + object.getClass().getSimpleName() + " в " + fileName);
             e.printStackTrace();
         }
     }

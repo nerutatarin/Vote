@@ -49,6 +49,7 @@ public abstract class PageManagerImpl implements PageManager {
         this.webDriver = webDriver;
         this.process = process;
         this.browserName = process.getBrowserName();
+        this.memberConfig = getMemberConfig();
         this.members = members;
     }
 
