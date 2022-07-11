@@ -1,0 +1,16 @@
+18-06-2022 12:03:56 null
+18-06-2022 12:05:12 null
+18-06-2022 12:18:28 null
+18-06-2022 12:40:10 Ошибка десериализации файла cookie_before_voting.json в объект class service.pagemanager.model.VotingPage
+18-06-2022 12:48:32 Ошибка десериализации файла cookie_before_voting.json в объект class service.pagemanager.model.VotingPage
+18-06-2022 15:47:07 java.io.IOException: Stream closed
+19-06-2022 16:55:59 Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+19-06-2022 16:58:58 Could not start a new session. Possible causes are invalid address of the remote server or browser start-up failure.
+26-06-2022 21:35:14 TimedPromise timed out after 30000 ms
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'HOME_1', ip: '192.168.88.253', os.name: 'Windows 10', os.arch: 'amd64', os.version: '10.0', java.version: '1.8.0_231'
+Driver info: org.openqa.selenium.firefox.FirefoxDriver
+Command: [13820d9d-1cf5-40bc-951f-e4eef604777a, get {url=https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022}]
+Capabilities {acceptInsecureCerts: true, browserName: firefox, browserVersion: 99.0.1, moz:accessibilityChecks: false, moz:buildID: 20220411174855, moz:debuggerAddress: localhost:53282, moz:geckodriverVersion: 0.31.0, moz:headless: true, moz:processID: 13632, moz:profile: C:\Users\admin\AppData\Loca..., moz:shutdownTimeout: 60000, moz:useNonSpecCompliantPointerOrigin: false, moz:webdriverClick: true, pageLoadStrategy: eager, platformName: WINDOWS, platformVersion: 10.0, proxy: Proxy(manual, socks=127.0.0..., se:cdp: ws://localhost:53282/devtoo..., se:cdpVersion: 85.0, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify}
+Session ID: 13820d9d-1cf5-40bc-951f-e4eef604777a
+30-06-2022 19:39:36 null
