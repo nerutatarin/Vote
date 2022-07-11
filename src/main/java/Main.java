@@ -3,11 +3,11 @@ import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 import service.configurations.*;
+import service.memberRank.MemberRank;
+import service.memberRank.MemberRanks;
+import service.memberRank.Ranker;
 import service.telegrambot.TelegramBot;
 import service.webdriver.Browser;
-import votes.MemberRank;
-import votes.MemberRanks;
-import votes.Ranker;
 import votes.kp.VoteKP;
 
 import java.util.List;

@@ -9,6 +9,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import service.configurations.MemberConfig;
 import service.configurations.VoteConfig;
 import service.configurations.VoteMode;
+import service.memberRank.MemberRanks;
+import service.memberRank.Ranker;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.VotingPage;
 import service.webdriver.model.Process;
@@ -16,8 +18,6 @@ import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
 import utils.jackson.JsonMapper;
-import votes.MemberRanks;
-import votes.Ranker;
 import votes.kp.PageManagerKP;
 
 import java.util.ArrayList;

@@ -13,6 +13,7 @@ import service.configurations.ProxySettings;
 import service.exception.BrowserNotFoundException;
 import service.proxy.ProxiesFactory;
 import service.webdriver.model.Process;
+import utils.OSValidator;
 import utils.ProcessKiller;
 
 import java.util.Map;
@@ -66,8 +67,11 @@ public abstract class BrowserImpl implements service.webdriver.Browser {
         log.info(browserName + " Инициализация драйвера...");
 
         // TODO: 04.07.2022 динамический выбор драйвера
-        WebDriverManager().setup();
-        //System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/unix/chromedriver");
+        if (OSValidator.isWindows()) {
+            WebDriverManager().setup();
+        } else {
+            System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/unix/chromedriver");
+        }
 
         try {
             webDriver = getBrowsersFactory(browserName);

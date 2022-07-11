@@ -1,12 +1,12 @@
 package service.telegrambot.commands;
 
 import org.apache.log4j.Logger;
+import service.memberRank.MemberRank;
+import service.memberRank.MemberRanks;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.VotingPage;
 import utils.Utils;
-import votes.MemberRank;
-import votes.MemberRanks;
 
 import java.util.Date;
 import java.util.List;

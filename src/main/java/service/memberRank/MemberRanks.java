@@ -1,4 +1,4 @@
-package votes;
+package service.memberRank;
 
 import java.util.ArrayList;
 import java.util.Date;

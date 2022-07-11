@@ -1,4 +1,4 @@
-package votes;
+package service.memberRank;
 
 public class MemberRank {
     private String member;

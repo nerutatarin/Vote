@@ -1,4 +1,4 @@
-package votes;
+package service.memberRank;
 
 import org.apache.log4j.Logger;
 import service.configurations.VoteMode;
