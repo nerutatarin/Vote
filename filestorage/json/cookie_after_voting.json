@@ -3,34 +3,34 @@
   "value" : "1",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657543342000,
+  "expiry" : 1657545161000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "uua",
-  "value" : "1f2abacbaa0f37607313762fec1d3fac",
+  "value" : "e3d7b80a1ba23979b7d7d766b60d66c6",
   "path" : "/best/",
   "domain" : "www.ufa.kp.ru",
-  "expiry" : 1657629683000,
+  "expiry" : 1657631502000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "_ga_R0LEF5ZFCF",
-  "value" : "GS1.1.1657543282.1.0.1657543282.0",
+  "value" : "GS1.1.1657545101.1.0.1657545101.0",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1720615282000,
+  "expiry" : 1720617101000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "_ym_d",
-  "value" : "1657543283",
+  "value" : "1657545101",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1689079282000,
+  "expiry" : 1689081101000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
@@ -39,16 +39,7 @@
   "value" : "1",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657543342000,
-  "sameSite" : null,
-  "secure" : false,
-  "httpOnly" : false
-}, {
-  "name" : "_ga_8MQ0FGXD1P",
-  "value" : "GS1.1.1657543282.1.0.1657543282.0",
-  "path" : "/",
-  "domain" : ".kp.ru",
-  "expiry" : 1720615282000,
+  "expiry" : 1657545161000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
@@ -57,25 +48,34 @@
   "value" : "b",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1657545082000,
+  "expiry" : 1657546901000,
+  "sameSite" : null,
+  "secure" : false,
+  "httpOnly" : false
+}, {
+  "name" : "_ga_8MQ0FGXD1P",
+  "value" : "GS1.1.1657545100.1.0.1657545100.0",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720617100000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "_gid",
-  "value" : "GA1.3.1606994218.1657543283",
+  "value" : "GA1.3.1673578249.1657545101",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657629682000,
+  "expiry" : 1657631501000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "_ym_uid",
-  "value" : "1657543283981482167",
+  "value" : "1657545101158493262",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1689079282000,
+  "expiry" : 1689081101000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
@@ -84,34 +84,34 @@
   "value" : "2",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1657615282000,
+  "expiry" : 1657617101000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "_ga",
-  "value" : "GA1.3.1600179633.1657543282",
+  "value" : "GA1.3.1971341018.1657545101",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1720615282000,
-  "sameSite" : null,
-  "secure" : false,
-  "httpOnly" : false
-}, {
-  "name" : "_ga",
-  "value" : "GA1.1.1600179633.1657543282",
-  "path" : "/",
-  "domain" : ".kp.ru",
-  "expiry" : 1720615282000,
+  "expiry" : 1720617101000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "_ga_BJV4WPQPYC",
-  "value" : "GS1.1.1657543282.1.0.1657543282.0",
+  "value" : "GS1.1.1657545101.1.0.1657545101.0",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1720615282000,
+  "expiry" : 1720617101000,
+  "sameSite" : null,
+  "secure" : false,
+  "httpOnly" : false
+}, {
+  "name" : "_ga",
+  "value" : "GA1.1.1971341018.1657545101",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720617101000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
@@ -120,16 +120,16 @@
   "value" : "1",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657543342000,
+  "expiry" : 1657545161000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
 }, {
   "name" : "_ga_R7DD899R0W",
-  "value" : "GS1.1.1657543282.1.0.1657543282.0",
+  "value" : "GS1.1.1657545101.1.0.1657545101.0",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1720615282000,
+  "expiry" : 1720617101000,
   "sameSite" : null,
   "secure" : false,
   "httpOnly" : false
