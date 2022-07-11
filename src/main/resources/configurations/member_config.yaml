@@ -4,10 +4,10 @@ members:
     nomination: "2. Лучший специализированный медицинский центр"
     rule: 1,10
   - title: "ГБУЗ РБ Детская поликлиника № 4 г. Уфа"
-    allow: false
+    allow: true
     nomination: "14. Лучшая детская поликлиника"
     rule: 1,11
   - title: "ГБУЗ РБ Родильный дом № 3 г. Уфа"
-    allow: false
+    allow: true
     nomination: "5. Лучший роддом Башкирии"
     rule: 1,12
