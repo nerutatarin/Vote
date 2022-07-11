@@ -16,13 +16,13 @@ import utils.Utils;
 import utils.WriteToLog;
 import utils.ipaddress.model.IPAddress;
 import utils.jackson.JsonMapper;
-import utils.yaml.YamlParser;
 import votes.MemberRanks;
 import votes.Ranker;
 import votes.kp.PageManagerKP;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import static java.time.Duration.ofSeconds;
@@ -31,9 +31,7 @@ import static org.jsoup.Jsoup.parse;
 import static org.openqa.selenium.By.id;
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static utils.Thesaurus.FilesNameJson.*;
-import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
-import static utils.Utils.getUserAgent;
-import static utils.Utils.nullOrEmpty;
+import static utils.Utils.*;
 import static utils.jackson.JsonMapper.objectToFilePretty;
 
 public abstract class PageManagerImpl implements PageManager {
@@ -43,22 +41,27 @@ public abstract class PageManagerImpl implements PageManager {
     protected WebDriver webDriver;
     protected Process process;
     protected String browserName;
-    protected MemberConfig memberConfig;
+    protected List<service.configurations.Member> members;
     protected List<String> inputs = new ArrayList<>();
+    protected MemberConfig memberConfig;
 
-    public PageManagerImpl(WebDriver webDriver) {
+    public PageManagerImpl(WebDriver webDriver, Process process, List<service.configurations.Member> members) {
         this.webDriver = webDriver;
+        this.process = process;
+        this.browserName = process.getBrowserName();
+        this.members = members;
     }
 
     public PageManagerImpl(WebDriver webDriver, Process process) {
         this.webDriver = webDriver;
         this.process = process;
-        browserName = process.getBrowserName();
-        memberConfig = getMemberConfig();
+        this.browserName = process.getBrowserName();
+        this.memberConfig = getMemberConfig();
+        this.members = new ArrayList<>();
     }
 
     private MemberConfig getMemberConfig() {
-        return YamlParser.parse(MemberConfig.class, MEMBER_CONFIG_YAML);
+        return new MemberConfig().parse();
     }
 
     public void votePage(String baseUrl) {
@@ -68,7 +71,7 @@ public abstract class PageManagerImpl implements PageManager {
         wait = new WebDriverWait(webDriver, ofSeconds(timeout));
         webDriver.get(baseUrl);
 
-        sleep();
+        sleep(2000);
         log.info(browserName + " UserAgent = " + getUserAgent(webDriver));
 
         saveCookie(COOKIE_AFTER_VOTING_JSON);
@@ -99,22 +102,16 @@ public abstract class PageManagerImpl implements PageManager {
         webElement.click();
         log.info(browserName + " Кнопка голосования нажата: ");
 
-        sleep();
+        sleep(2000);
 
         saveCookie(COOKIE_BEFORE_VOTING_JSON);
     }
 
     protected abstract By getButtonLocator();
 
-    private void sleep() {
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException("Во время паузы произошла ошибка: " + e.getMessage());
-        }
-    }
-
     private void saveCookie(String fileName) {
+        log.info(browserName + " " + "Пытаемся получить куки...");
+
         Set<Cookie> cookies = webDriver.manage().getCookies();
         if (cookies.size() == 0) {
             log.info(browserName + " " + "Не удалось получить куки!");
@@ -154,16 +151,15 @@ public abstract class PageManagerImpl implements PageManager {
 
     private void writeMemberRanks() {
         VoteConfig voteConfig = new VoteConfig().parse();
-        if (voteConfig == null) {
-            log.error("Конфиг голосования не найден: voteConfig = " + voteConfig);
-            return;
-        }
+
         VoteMode voteMode = voteConfig.getVoteMode();
 
-        Ranker ranker = new Ranker(voteMode, memberConfig);
+        Ranker ranker = new Ranker(voteMode, getAllowMembers());
         MemberRanks memberRanks = ranker.init();
         JsonMapper.objectToFilePretty(memberRanks, MEMBER_RANKS_JSON);
     }
+
+    protected abstract Map<String, String> getAllowMembers();
 
     protected abstract VotingPage getPageAfterVoting(Document pageSource);
 

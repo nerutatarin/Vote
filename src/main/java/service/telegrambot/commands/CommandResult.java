@@ -1,8 +1,6 @@
 package service.telegrambot.commands;
 
 import org.apache.log4j.Logger;
-import service.configurations.MemberConfig;
-import service.configurations.VoteConfig;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.ResultVote;
 import service.pagemanager.model.VotingPage;
@@ -13,13 +11,12 @@ import votes.MemberRanks;
 import java.util.Date;
 import java.util.List;
 
-import static java.lang.Math.subtractExact;
 import static java.util.Collections.singleton;
 import static service.telegrambot.commands.CommandsEnum.COMMAND_RESULT;
 import static utils.Thesaurus.FilesNameJson.MEMBER_RANKS_JSON;
 import static utils.Thesaurus.FilesNameJson.PAGE_AFTER_VOTING_JSON;
-import static utils.Thesaurus.FilesNameYaml.MEMBER_CONFIG_YAML;
-import static utils.Thesaurus.FilesNameYaml.VOTE_CONFIG_YAML;
+import static utils.TimeUtils.PATTERN_DDMMYYYYHHMMSS;
+import static utils.TimeUtils.formatDateWithPattern;
 import static utils.Utils.*;
 import static utils.jackson.JsonMapper.fileToObject;
 
@@ -35,75 +32,27 @@ public class CommandResult extends CommandsImpl {
         return getResultById(substringAfterSpace);
     }
 
-    private StringBuilder getResultDefault() {
+    @Override
+    protected Logger getLog() {
+        return log;
+    }
+
+    protected StringBuilder getResultDefault() {
         StringBuilder stringBuilder = new StringBuilder();
-
-        MemberConfig memberConfig = new MemberConfig().parse();
-        if (memberConfig == null) {
-            log.error("Не найден файл: " + MEMBER_CONFIG_YAML);
-            return null;
-        }
-
-        VoteConfig voteConfig = new VoteConfig().parse();
-        if (voteConfig == null) {
-            log.error("Не найден файл: " + VOTE_CONFIG_YAML);
-            return null;
-        }
 
         MemberRanks memberRanks = fileToObject(MEMBER_RANKS_JSON, MemberRanks.class);
         if (memberRanks == null) {
             log.error("Не найден файл: " + MEMBER_RANKS_JSON);
             return null;
         }
-
+        Date memberRanksTimeStamp = memberRanks.getTimeStamp();
         for (MemberRank memberRank : memberRanks.getMemberRanks()) {
-            if (memberRank.getRank() == 1) {
-                int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());
-                stringBuilder
-                        .append(memberRanks.getTimeStamp())
-                        .append("\n")
-                        .append("Участник: ")
-                        .append("\n")
-                        .append(memberRank.getMember())
-                        .append("\n")
-                        .append("занимает ")
-                        .append(memberRank.getRank())
-                        .append("-е место с ")
-                        .append(memberRank.getCount())
-                        .append(" голосов, опережая конкурента ")
-                        .append("\n")
-                        .append(memberRank.getCompetitor())
-                        .append("\n")
-                        .append("на ")
-                        .append(diffCount)
-                        .append(" голосов ")
-                        .append("\n")
-                        .append("\n");
-
-            } else {
-                int diffCount = subtractExact(memberRank.getCompetitorCount(), memberRank.getCount());
-                stringBuilder
-                        .append(memberRanks.getTimeStamp())
-                        .append("\n")
-                        .append("Участник: ")
-                        .append("\n")
-                        .append(memberRank.getMember())
-                        .append("\n")
-                        .append("занимает ")
-                        .append(memberRank.getRank())
-                        .append("-е место с ")
-                        .append(memberRank.getCount())
-                        .append(" голосов, отставая от конкурента ")
-                        .append("\n")
-                        .append(memberRank.getCompetitor())
-                        .append("\n")
-                        .append(" на ")
-                        .append(diffCount)
-                        .append(" голосов ")
-                        .append("\n")
-                        .append("\n");
-            }
+           stringBuilder.append("Результат голосования на ")
+                   .append(formatDateWithPattern(memberRanksTimeStamp, PATTERN_DDMMYYYYHHMMSS))
+                   .append("\n")
+                   .append(memberRank.toString());
         }
+
         return stringBuilder;
     }
 
@@ -122,10 +71,8 @@ public class CommandResult extends CommandsImpl {
 
 
         StringBuilder stringBuilder = new StringBuilder();
-        if (resultVote == null || resultVote.getTitle() == null) {
-            if (nullOrEmpty(singleton(stringBuilder))) {
-                return stringBuilder.append("Искомый участник не найден!");
-            }
+        if (resultVote.getTitle() == null || nullOrEmpty(singleton(stringBuilder))) {
+            return stringBuilder.append("Искомый участник не найден!");
         }
 
         return stringBuilder

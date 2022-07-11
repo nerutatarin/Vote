@@ -6,8 +6,8 @@ import java.util.List;
 
 public class MemberRanks {
     private Date timeStamp;
-
     private List<MemberRank> memberRanks = new ArrayList<>();
+
     public MemberRanks() {
         this.timeStamp = new Date();
     }

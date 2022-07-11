@@ -15,11 +15,10 @@ public class TelegramUsers extends Config{
         this.telegramUsers = telegramUsers;
     }
 
-    @Override
-    public String toString() {
-        return "TelegramUsers{" +
-                "telegramUsers=" + telegramUsers +
-                '}';
+    public boolean isAllowUser(String userId) {
+        return getTelegramUsers()
+                .stream()
+                .anyMatch(user -> userId.equals(user.getTelegramId()));
     }
 
     @Override
@@ -30,5 +29,12 @@ public class TelegramUsers extends Config{
     @Override
     protected String getResource() {
         return TELEGRAM_USERS_CONFIG_YAML;
+    }
+
+    @Override
+    public String toString() {
+        return "TelegramUsers{" +
+                "telegramUsers=" + telegramUsers +
+                '}';
     }
 }

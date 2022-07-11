@@ -6,22 +6,24 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
-import service.webdriver.BrowsersImpl;
+import service.webdriver.BrowserImpl;
 
-public abstract class DriversFactory extends BrowsersImpl {
+import static utils.Thesaurus.Drivers.*;
+
+public abstract class DriversFactory extends BrowserImpl {
 
     // TODO: 04.07.2022 переработать фабрику, пиздец говнище
     public WebDriver getBrowsersFactory(String browserName) {
         switch (browserName) {
-            case ("chrome"):
+            case (CHROME):
                 return new ChromeDriver(capabilities());
-            case ("chromium"):
+            case (CHROMIUM):
                 return new ChromeDriver(capabilities());
-            case ("firefox"):
+            case (FIREFOX):
                 return new FirefoxDriver(capabilities());
-            case ("msedge"):
+            case (MSEDGE):
                 return new EdgeDriver(capabilities());
-            case ("opera"):
+            case (OPERA):
                 return new OperaDriver(capabilities());
             default:
                 return new FirefoxDriver(capabilities());

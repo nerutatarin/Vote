@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.apache.log4j.Logger;
 
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -13,11 +14,12 @@ import java.io.Reader;
 import java.util.Collection;
 import java.util.List;
 
+import static org.apache.log4j.Logger.getLogger;
 import static utils.Thesaurus.DirectoriesName.JSON_PATH;
 import static utils.Utils.createDirectoryIfNoExistInWorkDir;
 
 public class JsonMapper {
-
+    private static final Logger log = getLogger(JsonMapper.class);
 
     /**
      * Десериализуем файл в объект
@@ -103,6 +105,7 @@ public class JsonMapper {
      */
     public static <T> void objectToFilePretty(T object, String fileName) {
         // TODO: 04.07.2022 проверка каталогов
+        log.info("Сохраняем объект " + object.getClass().getSimpleName() + " в " + fileName  + "...");
         createDirectoryIfNoExistInWorkDir(JSON_PATH);
 
         if (object == null) return;
@@ -110,6 +113,7 @@ public class JsonMapper {
         try (FileWriter file = new FileWriter(JSON_PATH + fileName)) {
             objectWriter.writeValue(file, object);
         } catch (IOException e) {
+            log.info("Не удалось сохранить объект " + object.getClass().getSimpleName() + " в " + fileName  + "...");
             e.printStackTrace();
         }
     }

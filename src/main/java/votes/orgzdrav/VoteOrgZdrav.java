@@ -1,7 +1,9 @@
 package votes.orgzdrav;
 
 import org.openqa.selenium.WebDriver;
-import service.webdriver.Browsers;
+import service.configurations.Member;
+import service.configurations.MemberConfig;
+import service.webdriver.Browser;
 import service.webdriver.model.Process;
 import votes.VoteImpl;
 
@@ -9,19 +11,12 @@ import java.util.List;
 
 public class VoteOrgZdrav extends VoteImpl {
 
-    public VoteOrgZdrav() {
+    public VoteOrgZdrav(List<Browser> browsers, int count, List<Member> members) {
+        super(browsers, count, members);
     }
 
-    public VoteOrgZdrav(Browsers browser) {
-        super(browser);
-    }
-
-    public VoteOrgZdrav(List<Browsers> browsers, int count) {
-        super(browsers, count);
-    }
-
-    public VoteOrgZdrav(Browsers browser, int count) {
-        super(browser, count);
+    public VoteOrgZdrav(List<Browser> browsers, int count, MemberConfig memberConfig) {
+        super(browsers, count, memberConfig);
     }
 
     @Override

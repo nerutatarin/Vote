@@ -1,16 +1,19 @@
 package utils;
 
+import org.apache.log4j.Logger;
 import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import service.exception.VoteServiceException;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static org.apache.log4j.Logger.getLogger;
 
 public class Utils {
+    private static final Logger log = getLogger(Utils.class);
+
     private static final String UTF8_BOM = "\uFEFF";
     private static final String DEFAULT_DELIM = ", ";
 
@@ -113,16 +116,6 @@ public class Utils {
     }
 
     /**
-     * Проверяет, является ли строка пустой, состоящей из пробельных символов или null.
-     *
-     * @param value проверяемая строка
-     * @return true если пустая, состоит из пробельных символов или null
-     */
-    public static boolean isBlankString(String value) {
-        return value == null || value.trim().length() == 0;
-    }
-
-    /**
      * Вызывается {@link #toString(Collection, String, String)} с
      * параметром emptyValue="", delim={@link #DEFAULT_DELIM}.
      *
@@ -150,6 +143,79 @@ public class Utils {
             return result.toString();
         }
         return emptyValue;
+    }
+
+    /**
+     * Проверяет, является ли строка пустой, состоящей из пробельных символов или null.
+     *
+     * @param value проверяемая строка
+     * @return true если пустая, состоит из пробельных символов или null
+     */
+    public static boolean isBlankString(String value) {
+        return value == null || value.trim().length() == 0;
+    }
+
+    /**
+     * Проверяет, является ли строка пустой, состоящей из пробельных символов или null.
+     *
+     * @param value проверяемая строка
+     * @return false - если пустая, состоит из пробельных символов или null
+     */
+    public static boolean notBlankString(String value) {
+        return !isBlankString(value);
+    }
+
+    /**
+     * Проверяет, является ли строка пустой или null.
+     * @param value проверяемая строка
+     * @return true - если пустая или null
+     */
+    public static boolean isEmptyString( String value )
+    {
+        return value == null || value.isEmpty();
+    }
+
+    /**
+     * Проверяет, является ли строка пустой или null.
+     * @param value проверяемая строка
+     * @return false если пустая или null
+     */
+    public static boolean notEmptyString( String value )
+    {
+        return ! isEmptyString(value);
+    }
+
+    /**
+     * Преобразует строку с разделителями - запятыми или точками с запятой к списку Integer.
+     *
+     * @param valuesStr
+     * @return
+     */
+    public static List<Integer> toIntegerList(String valuesStr) {
+        return toIntegerList(valuesStr, ",;");
+    }
+
+    /**
+     * Преобразует строку с произвольными разделителями - символами в delims в список Integer.
+     *
+     * @param valuesStr
+     * @param delims
+     * @return
+     */
+    public static List<Integer> toIntegerList(String valuesStr, String delims) {
+        List<Integer> result = new ArrayList<>();
+
+        if (notBlankString(valuesStr)) {
+            StringTokenizer st = new StringTokenizer(valuesStr.trim(), delims);
+            while (st.hasMoreTokens()) {
+                try {
+                    result.add(new Integer(st.nextToken().trim()));
+                } catch (Exception ignore) {
+                }
+            }
+        }
+
+        return result;
     }
 
     private static void addObjectToList(StringBuilder result, Object next, String delim) {
@@ -187,8 +253,26 @@ public class Utils {
         return map == null || map.isEmpty();
     }
 
-    public static String getUserAgent(WebDriver driver){
+    public static String getUserAgent(WebDriver driver) {
         return (String) ((JavascriptExecutor) driver).executeScript("return navigator.userAgent;");
     }
 
+    public static <T> T requireNonNull(T value, String errorMessage) {
+        if (value == null) throw new VoteServiceException(errorMessage);
+        return value;
+    }
+
+    public static <T extends Collection<?>> Collection<?> requireNonEmpty(List<?> value, String errorMessage) {
+        if (value.isEmpty()) throw new VoteServiceException(errorMessage);
+        return value;
+    }
+
+    public static void sleep(int millis) {
+        try {
+            log.info("Ожидаем " + millis/1000 + " сек...");
+            Thread.sleep(millis);
+        } catch (InterruptedException e) {
+            throw new RuntimeException("Во время паузы произошла ошибка: " + e.getMessage());
+        }
+    }
 }

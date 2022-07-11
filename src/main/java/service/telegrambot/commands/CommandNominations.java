@@ -10,6 +10,11 @@ public class CommandNominations extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandNominations.class);
 
     @Override
+    protected Logger getLog() {
+        return log;
+    }
+
+    @Override
     protected StringBuilder replyMessageMake() {
         return getStringBuilder();
     }

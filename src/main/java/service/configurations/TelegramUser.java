@@ -5,6 +5,7 @@ public class TelegramUser {
     private String telegramUserName;
     private String title;
     private String phone;
+    private int rule;
 
     public String getTelegramId() {
         return telegramId;
@@ -38,13 +39,22 @@ public class TelegramUser {
         this.phone = phone;
     }
 
+    public int getRule() {
+        return rule;
+    }
+
+    public void setRule(int rule) {
+        this.rule = rule;
+    }
+
     @Override
     public String toString() {
         return "TelegramUser{" +
-                "telegramId=" + telegramId +
+                "telegramId='" + telegramId + '\'' +
                 ", telegramUserName='" + telegramUserName + '\'' +
                 ", title='" + title + '\'' +
                 ", phone='" + phone + '\'' +
+                ", rule=" + rule +
                 '}';
     }
 }

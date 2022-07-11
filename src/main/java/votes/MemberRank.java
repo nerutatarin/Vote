@@ -67,14 +67,33 @@ public class MemberRank {
 
     @Override
     public String toString() {
-        return "MemberRank{" +
-                "member='" + member + '\'' +
-                ", rank=" + rank +
-                ", count=" + count +
-                ", competitor='" + competitor + '\'' +
-                ", diff=" + diff +
-                ", competitorRank=" + competitorRank +
-                ", competitorCount=" + competitorCount +
-                '}';
+        if (rank == 1) {
+            return buildMessage("опережая конкурента ");
+        } else {
+            return buildMessage("отставая от конкурента ");
+        }
+    }
+
+    private String buildMessage(String text) {
+        return new StringBuilder()
+                .append("Участник: ")
+                .append("\n")
+                .append(member)
+                .append("\n")
+                .append("занимает ")
+                .append(rank)
+                .append("-е место с ")
+                .append(count)
+                .append(" голосов, ")
+                .append(text)
+                .append("\n")
+                .append(competitor)
+                .append("\n")
+                .append("на ")
+                .append(diff)
+                .append(" голосов ")
+                .append("\n")
+                .append("\n")
+                .toString();
     }
 }

@@ -1,9 +1,14 @@
 package service.configurations;
 
+import java.util.List;
+
+import static utils.Utils.toIntegerList;
+
 public class Member {
     private String title;
     private String nomination;
     private boolean allow;
+    private String rule;
 
     public String getTitle() {
         return title;
@@ -21,12 +26,24 @@ public class Member {
         this.nomination = nomination;
     }
 
-    public boolean getAllow() {
+    public boolean isAllow() {
         return allow;
     }
 
     public void setAllow(boolean allow) {
         this.allow = allow;
+    }
+
+    public String getRule() {
+        return rule;
+    }
+
+    public void setRule(String rule) {
+        this.rule = rule;
+    }
+
+    public List<Integer> getRuleSet() {
+        return toIntegerList(rule);
     }
 
     @Override
@@ -35,6 +52,7 @@ public class Member {
                 "title='" + title + '\'' +
                 ", nomination='" + nomination + '\'' +
                 ", allow=" + allow +
+                ", rule='" + rule + '\'' +
                 '}';
     }
 }

@@ -2,98 +2,79 @@ import org.apache.log4j.Logger;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import service.configurations.BrowserConfig;
-import service.configurations.MemberConfig;
-import service.configurations.VoteConfig;
-import service.configurations.VoteMode;
+import service.configurations.*;
 import service.telegrambot.TelegramBot;
-import service.webdriver.Browsers;
-import service.webdriver.browsers.Chromium;
-import service.webdriver.browsers.Firefox;
+import service.webdriver.Browser;
 import votes.MemberRank;
 import votes.MemberRanks;
 import votes.Ranker;
 import votes.kp.VoteKP;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.sum;
 import static java.lang.Math.subtractExact;
-import static java.util.Arrays.asList;
+import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
+import static java.util.concurrent.TimeUnit.HOURS;
+import static utils.Utils.sleep;
 
 public class Main {
     private static final Logger log = Logger.getLogger(Main.class);
+    private static BrowsersConfig browsersConfig;
+    private static MemberConfig memberConfig;
+    private static VoteConfig voteConfig;
 
     public static void main(String[] args) {
-        // TODO: 04.07.2022 с этим надо чтото делать, так не пойдет
+        initConfigs();
+        initTelegramBot();
 
-        BrowserConfig browserConfig = new BrowserConfig().parse();
-
-        if (browserConfig == null) {
-            log.error("Конфиг браузеров не найден: browserConfig = " + browserConfig);
-            return;
-        }
-        Map<String, service.configurations.Browsers> browsers = browserConfig.getBrowsers();
-
-        MemberConfig memberConfig = new MemberConfig().parse();
-        if (memberConfig == null) {
-            log.error("Конфиг участников голосования не найден: memberConfig = " + memberConfig);
-            return;
-        }
-
-        VoteConfig voteConfig = new VoteConfig().parse();
-        if (voteConfig == null) {
-            log.error("Конфиг голосования не найден: voteConfig = " + voteConfig);
-            return;
-        }
-        VoteMode voteMode = voteConfig.getVoteMode();
-
-        telegramBotInit();
-        scheduledRun(memberConfig, voteConfig, voteMode);
+        //scheduledRun(memberConfig, voteConfig, voteMode);
     }
 
-    private static void scheduledRun(MemberConfig memberConfig, VoteConfig voteConfig, VoteMode voteMode) {
-        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
-        service.scheduleAtFixedRate(new Runnable() {
-            @Override
-            public void run() {
-                log.info("scheduledRun!");
-                singleVoteInit(1);
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-                int count = keepDistance(memberConfig, voteMode);
-                singleVoteInit(count);
-            }
-        }, 0, 1, TimeUnit.HOURS);
+    private static void initConfigs() {
+        browsersConfig = new BrowsersConfig().parse();
+        memberConfig = new MemberConfig().parse();
+        voteConfig = new VoteConfig().parse();
     }
 
-    public static void singleVoteInit(int count) {
-        // TODO: 04.07.2022 доделать выбор браузера из конфига
-        new VoteKP(new Chromium(), count).start();
-    }
-
-    private static void telegramBotInit() {
+    private static void initTelegramBot() {
         try {
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
             telegramBotsApi.registerBot(new TelegramBot());
         } catch (TelegramApiException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Запуск телеграмм бота завершился с ошибкой: " + e.getMessage());
         }
     }
 
-    private static int keepDistance(MemberConfig memberConfig, VoteMode voteMode) {
+    private static void scheduledRun() {
+        TimeUnit hours = HOURS;
+        newSingleThreadScheduledExecutor().scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                log.info("Планировщик запущен! Период = " + hours);
+                singleVoteInit(1);
+                sleep(10000);
+                int count = keepDistance();
+                singleVoteInit(count);
+            }
+        }, 0, 1, hours);
+    }
+
+    public static void singleVoteInit(int count) {
+        boolean isThread = voteConfig.getVoteMode().isThreadEnabled();
+        List<Browser> browsers = voteConfig.getBrowsersInstance();
+
+        new VoteKP(browsers, count, memberConfig).vote(isThread);
+    }
+
+    private static int keepDistance() {
+        VoteMode voteMode = voteConfig.getVoteMode();
         boolean keepDistanceEnabled = voteMode.isKeepDistanceEnabled();
 
         if (!keepDistanceEnabled) return 0;
 
-        Ranker ranker = new Ranker(voteMode, memberConfig);
+        Ranker ranker = new Ranker(voteMode, memberConfig.getAllowMembers());
         MemberRanks memberRanks = ranker.init();
 
         for (MemberRank memberRank : memberRanks.getMemberRanks()) {
@@ -117,8 +98,11 @@ public class Main {
 
     private static void threadVoteInit(int voteCount, int threadCount) {
         for (int i = 0; i < threadCount; i++) {
-            List<Browsers> browsers = asList(new Firefox());
-            browsers.forEach(browser -> new VoteKP(browser, voteCount).start());
+            List<Member> members = memberConfig.getMembers();
+            List<Browser> browsers = voteConfig.getBrowsersInstance();
+            boolean isThread = voteConfig.getVoteMode().isThreadEnabled();
+
+            browsers.forEach(browser -> new VoteKP(browsers, voteCount, members).vote(isThread));
         }
     }
 }

@@ -6,6 +6,11 @@ public class CommandStart extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandStatus.class);
 
     @Override
+    protected Logger getLog() {
+        return log;
+    }
+
+    @Override
     protected StringBuilder replyMessageMake() {
         return new StringBuilder()
                 .append("/status - Статус сервера")

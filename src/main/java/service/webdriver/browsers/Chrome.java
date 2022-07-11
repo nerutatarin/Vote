@@ -1,5 +1,6 @@
 package service.webdriver.browsers;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,7 +11,10 @@ import utils.RandomUserAgent;
 import java.time.Duration;
 import java.util.Collections;
 
+import static org.apache.log4j.Logger.getLogger;
+
 public class Chrome extends DriversFactory {
+    private static final Logger log = getLogger(Chrome.class);
 
     @Override
     protected ChromeOptions getOptions() {
@@ -37,6 +41,7 @@ public class Chrome extends DriversFactory {
         //options.addArguments("--enable-precise-memory-info");
 
         mainOptions(options);
+        log.info(browserName + " опции браузера установлены");
         return options;
     }
 

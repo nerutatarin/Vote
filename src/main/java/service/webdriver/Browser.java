@@ -4,7 +4,7 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.WebDriver;
 import service.webdriver.model.Process;
 
-public interface Browsers {
+public interface Browser {
 
     WebDriver getWebDriver();
 

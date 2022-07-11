@@ -6,10 +6,11 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import service.configurations.BrowserConfig;
-import service.configurations.Browsers;
+import service.configurations.Browser;
+import service.configurations.BrowsersConfig;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
+import service.exception.BrowserNotFoundException;
 import service.proxy.ProxiesFactory;
 import service.webdriver.model.Process;
 import utils.ProcessKiller;
@@ -19,40 +20,40 @@ import java.util.Map;
 import static jdk.nashorn.internal.objects.NativeString.toLowerCase;
 import static org.apache.log4j.Logger.getLogger;
 
-public abstract class BrowsersImpl implements service.webdriver.Browsers {
-    private static final Logger log = getLogger(BrowsersImpl.class);
+public abstract class BrowserImpl implements service.webdriver.Browser {
+    private static final Logger log = getLogger(BrowserImpl.class);
 
-    protected final BrowserConfig browserConfig;
+    protected final BrowsersConfig browsersConfig;
     protected final String browserName;
     protected boolean noProxy;
     protected WebDriver webDriver;
     protected Process process;
 
-    public BrowsersImpl() {
-        this.browserConfig = getBrowserConfig();
+    public BrowserImpl() {
+        this.browsersConfig = getBrowserConfig();
         this.noProxy = getProxySettings().getNoProxy();
         this.process = new Process();
         this.browserName = getBrowserName();
         killAllRunningProcesses();
     }
 
-    private BrowserConfig getBrowserConfig() {
-        return new BrowserConfig().parse();
+    private BrowsersConfig getBrowserConfig() {
+        return new BrowsersConfig().parse();
     }
 
     protected ProxySettings getProxySettings() {
-        return browserConfig.getProxySettings();
+        return browsersConfig.getProxySettings();
     }
 
     public String getBrowserName() {
         return toLowerCase(this.getClass().getSimpleName());
     }
 
-    protected Map<String, Browsers> getBrowsers() {
-        return browserConfig.getBrowsers();
+    protected Map<String, Browser> getBrowsers() {
+        return browsersConfig.getBrowserMap();
     }
 
-    protected Browsers getBrowser() {
+    protected Browser getBrowser() {
         return getBrowsers().get(getBrowserName());
     }
 
@@ -65,11 +66,16 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
         log.info(browserName + " Инициализация драйвера...");
 
         // TODO: 04.07.2022 динамический выбор драйвера
-        //WebDriverManager().setup();
-        System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/unix/chromedriver");
+        WebDriverManager().setup();
+        //System.setProperty("webdriver.chrome.driver", "src/main/resources/drivers/unix/chromedriver");
 
-        webDriver = getBrowsersFactory(browserName);
-        if (webDriver == null) log.error(browserName + " не удалось иницилизировать драйвер");
+        try {
+            webDriver = getBrowsersFactory(browserName);
+        } catch (Exception e) {
+            if (webDriver == null) log.error(browserName + " не удалось иницилизировать драйвер");
+            throw new BrowserNotFoundException();
+        }
+
         return webDriver;
     }
 
@@ -87,7 +93,7 @@ public abstract class BrowsersImpl implements service.webdriver.Browsers {
     }
 
     private String getDriverName() {
-        return getBrowsers().get(browserName).getName();
+        return getBrowsers().get(browserName).getDriver().getName();
     }
 
     protected abstract <T> T getOptions();

@@ -1,8 +1,5 @@
 package service.configurations;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class VoteMode {
 
     private int voteCount;
@@ -10,7 +7,6 @@ public class VoteMode {
     private boolean threadEnabled;
     private int threadCount;
     private boolean keepDistanceEnabled;
-    private Map<String, Browsers> browsers = new LinkedHashMap<>();
 
     public int getVoteCount() {
         return voteCount;
@@ -52,14 +48,6 @@ public class VoteMode {
         this.keepDistanceEnabled = keepDistanceEnabled;
     }
 
-    public Map<String, Browsers> getBrowsers() {
-        return browsers;
-    }
-
-    public void setBrowsers(Map<String, Browsers> browsers) {
-        this.browsers = browsers;
-    }
-
     @Override
     public String toString() {
         return "VoteMode{" +
@@ -68,7 +56,6 @@ public class VoteMode {
                 ", threadEnabled=" + threadEnabled +
                 ", threadCount=" + threadCount +
                 ", keepDistanceEnabled=" + keepDistanceEnabled +
-                ", browsers=" + browsers +
                 '}';
     }
 }

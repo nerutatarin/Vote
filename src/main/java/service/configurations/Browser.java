@@ -1,13 +1,9 @@
 package service.configurations;
 
-public class Browsers {
-
+public class Browser {
     private boolean enable;
-
-    private String key;
-
     private String name;
-
+    private Driver driver;
     private Options options;
 
     public boolean isEnable() {
@@ -18,20 +14,20 @@ public class Browsers {
         this.enable = enable;
     }
 
-    public String getKey() {
-        return key;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Driver getDriver() {
+        return driver;
+    }
+
+    public void setDriver(Driver driver) {
+        this.driver = driver;
     }
 
     public Options getOptions() {
@@ -44,10 +40,10 @@ public class Browsers {
 
     @Override
     public String toString() {
-        return "Browsers{" +
-                "isEnable=" + enable +
-                ", key='" + key + '\'' +
+        return "Browser{" +
+                "enable=" + enable +
                 ", name='" + name + '\'' +
+                ", driver=" + driver +
                 ", options=" + options +
                 '}';
     }

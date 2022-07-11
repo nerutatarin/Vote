@@ -12,15 +12,17 @@ import service.pagemanager.parserpage.ParserPageBeforeVoting;
 import service.pagemanager.parserpage.ParserPageImpl;
 import service.webdriver.model.Process;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import static java.util.stream.Collectors.toMap;
 import static org.openqa.selenium.By.id;
 
 public class PageManagerKP extends PageManagerImpl {
 
-    public PageManagerKP(WebDriver webDriver) {
-        super(webDriver);
+    public PageManagerKP(WebDriver webDriver, Process process, List<service.configurations.Member> members) {
+        super(webDriver, process, members);
     }
 
     public PageManagerKP(WebDriver webDriver, Process process) {
@@ -38,7 +40,7 @@ public class PageManagerKP extends PageManagerImpl {
         VotingPage votingPage = getPageBeforeVoting(getPageSource());
         if (votingPage == null) return;
 
-        votingPage.getMembers().forEach(this::isAllowNomination);;
+        votingPage.getMembers().forEach(this::isAllowNomination);
     }
 
     @Override
@@ -47,27 +49,30 @@ public class PageManagerKP extends PageManagerImpl {
         return parserPage.getPageVoteMap(pageSource);
     }
 
-    @Override
-    protected VotingPage getPageAfterVoting(Document pageSource) {
-        ParserPageImpl parserPage = new ParserPageAfterVoting();
-        return parserPage.getPageVoteMap(pageSource);
-    }
-
     private void isAllowNomination(String nomination, List<Member> members) {
         if (getAllowMembers().containsKey(nomination)) {
-            getInputsForAllowParticipants(members);
+            getInputsForAllowMembers(members);
         }
     }
 
-    private void getInputsForAllowParticipants(List<Member> members) {
+    protected Map<String, String> getAllowMembers() {
+        if (members.isEmpty()) return memberConfig.getAllowMembers();
+
+        return members.stream()
+                .collect(toMap(service.configurations.Member::getNomination, service.configurations.Member::getTitle, (a, b) -> b, LinkedHashMap::new));
+    }
+
+    private void getInputsForAllowMembers(List<Member> members) {
         members.stream()
                 .filter(member -> getAllowMembers().containsValue(member.getTitle()))
                 .map(service.pagemanager.model.Member::getInput)
                 .forEach(inputs::add);
     }
 
-    private Map<String, String> getAllowMembers() {
-        return memberConfig.getAllowMembers();
+    @Override
+    protected VotingPage getPageAfterVoting(Document pageSource) {
+        ParserPageImpl parserPage = new ParserPageAfterVoting();
+        return parserPage.getPageVoteMap(pageSource);
     }
 
     @Override

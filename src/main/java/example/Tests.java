@@ -9,8 +9,8 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import service.configurations.BrowserConfig;
-import service.configurations.Browsers;
+import service.configurations.Browser;
+import service.configurations.BrowsersConfig;
 import service.configurations.Options;
 import service.configurations.ProxySettings;
 import service.retrofit.api.myip.IpSeeipService;
@@ -109,19 +109,19 @@ public class Tests {
     }
 
     public static WebDriver getWebDriverNoProxy() {
-        service.webdriver.Browsers browser = new Firefox();
+        service.webdriver.Browser browser = new Firefox();
         return browser.getWebDriver();
     }
 
     public static WebDriver getWebDriverProxy() {
-        service.webdriver.Browsers browser = new Firefox();
+        service.webdriver.Browser browser = new Firefox();
         return browser.getWebDriver();
     }
 
     private static void yamlParserTest() {
-        BrowserConfig browserConfig = new BrowserConfig().parse();
-        Map<String, Browsers> browsersType = browserConfig.getBrowsers();
-        Browsers firefox = browsersType.get("firefox");
+        BrowsersConfig browsersConfig = new BrowsersConfig().parse();
+        Map<String, Browser> browsersType = browsersConfig.getBrowserMap();
+        Browser firefox = browsersType.get("firefox");
         System.out.println(firefox.getName());
 
         Options options = firefox.getOptions();
@@ -130,7 +130,7 @@ public class Tests {
         boolean isHeadless = options.isHeadless();
         System.out.println(isHeadless);
 
-        ProxySettings proxySettings = browserConfig.getProxySettings();
+        ProxySettings proxySettings = browsersConfig.getProxySettings();
         System.out.println(proxySettings);
     }
 

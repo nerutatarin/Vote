@@ -2,11 +2,13 @@ proxySettings:
   noProxy: true
   torProxy: false
   webProxy: false
-browsers:
+browserMap:
   chromium:
     enable: true
-    key: "webdriver.chrome.driver"
-    name: "chromedriver"
+    name: "chromium"
+    driver:
+      key: "webdriver.chrome.driver"
+      name: "chromedriver"
     options:
       headless: true
       logLevel: "off"
@@ -17,8 +19,10 @@ browsers:
       acceptInsecureCerts: true
   chrome:
     enable: false
-    key: "webdriver.chrome.driver"
-    name: "chromedriver"
+    name: "chrome"
+    driver:
+      key: "webdriver.chrome.driver"
+      name: "chromedriver"
     options:
       headless: true
       logLevel: "off"
@@ -29,8 +33,10 @@ browsers:
       acceptInsecureCerts: true
   firefox:
     enable: false
-    key: "webdriver.gecko.driver"
-    name: "geckodriver"
+    name: "firefox"
+    driver:
+      key: "webdriver.gecko.driver"
+      name: "geckodriver"
     options:
       headless: true
       logLevel: "fatal"
@@ -41,8 +47,10 @@ browsers:
       acceptInsecureCerts: true
   msedge:
     enable: false
-    key: "webdriver.edge.driver"
-    name: "msedgedriver"
+    name: "msedge"
+    driver:
+      key: "webdriver.edge.driver"
+      name: "msedgedriver"
     options:
       headless: true
       pageLoadStrategy: "eager"
@@ -52,8 +60,10 @@ browsers:
       acceptInsecureCerts: true
   opera:
     enable: false
-    key: "webdriver.opera.driver"
-    name: "operadriver"
+    name: "opera"
+    driver:
+      key: "webdriver.opera.driver"
+      name: "operadriver"
     options:
       headless: true
       pageLoadStrategy: "eager"

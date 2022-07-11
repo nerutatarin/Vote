@@ -7,6 +7,11 @@ public class CommandStatus extends CommandsImpl {
     private final String STATUS_OK = "OK";
 
     @Override
+    protected Logger getLog() {
+        return log;
+    }
+
+    @Override
     protected StringBuilder replyMessageMake() {
         return new StringBuilder().append(STATUS_OK);
     }

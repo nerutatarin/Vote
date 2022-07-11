@@ -4,14 +4,72 @@ voteMode:
   threadEnabled: false
   threadCount: 1
   keepDistanceEnabled: true
-  browsers:
-    chromium:
-      enable: false
-    chrome:
-      enable: true
-    firefox:
-      enable: false
-    msedge:
-      enable: false
-    opera:
-      enable: false
+browserMap:
+  chromium:
+    enable: true
+    name: "chromium"
+    driver:
+      key: "webdriver.chrome.driver"
+      name: "chromedriver"
+    options:
+      headless: true
+      logLevel: "off"
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
+  chrome:
+    enable: false
+    name: "chrome"
+    driver:
+      key: "webdriver.chrome.driver"
+      name: "chromedriver"
+    options:
+      headless: true
+      logLevel: "off"
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
+  firefox:
+    enable: false
+    name: "firefox"
+    driver:
+      key: "webdriver.gecko.driver"
+      name: "geckodriver"
+    options:
+      headless: true
+      logLevel: "fatal"
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
+  msedge:
+    enable: false
+    name: "msedge"
+    driver:
+      key: "webdriver.edge.driver"
+      name: "msedgedriver"
+    options:
+      headless: true
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true
+  opera:
+    enable: false
+    name: "opera"
+    driver:
+      key: "webdriver.opera.driver"
+      name: "operadriver"
+    options:
+      headless: true
+      pageLoadStrategy: "eager"
+      pageLoadTimeout: 30
+      implicitWaitTimeout: 30
+      scriptTimeout: 30
+      acceptInsecureCerts: true

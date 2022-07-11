@@ -26,6 +26,10 @@ public class Thesaurus {
         public static final String CHROME_DRIVER_KEY = "webdriver.chrome.driver";
         public static final String CHROME_DRIVER_VALUE = "chromedriver";
 
+        public static final String CHROMIUM = "chromium";
+        public static final String CHROMIUM_DRIVER_KEY = "webdriver.chrome.driver";
+        public static final String CHROMIUM_DRIVER_VALUE = "chromedriver";
+
         public static final String OPERA = "opera";
         public static final String OPERA_DRIVER_KEY = "webdriver.opera.driver";
         public static final String OPERA_DRIVER_VALUE = "operadriver";
@@ -78,7 +82,7 @@ public class Thesaurus {
     public static class FilesNameYaml {
         public static final String VOTE_CONFIG_YAML = "vote_config.yaml";
         public static final String TELEGRAM_CONFIG_YAML = "telegram_config.yaml";
-        public static final String BROWSER_CONFIG_YAML = "browser_config.yaml";
+        public static final String BROWSER_CONFIG_YAML = "browsers_config.yaml";
         public static final String MEMBER_CONFIG_YAML = "member_config.yaml";
         public static final String TELEGRAM_USERS_CONFIG_YAML = "telegram_users_config.yaml";
     }

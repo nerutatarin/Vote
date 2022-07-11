@@ -1,8 +1,9 @@
 package service.telegrambot.commands;
 
 import org.apache.log4j.Logger;
-import service.webdriver.browsers.Chromium;
-import votes.kp.VoteKP;
+import service.configurations.Member;
+
+import java.util.List;
 
 public class CommandVote extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandVote.class);
@@ -12,19 +13,23 @@ public class CommandVote extends CommandsImpl {
         return getStringBuilder();
     }
 
-    private StringBuilder getStringBuilder() {
-        new VoteKP(new Chromium(), 1).start();
-
-        sleep();
-
-        return new StringBuilder().append("Проголосовано!");
+    @Override
+    protected Logger getLog() {
+        return log;
     }
 
-    private static void sleep() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+    private StringBuilder getStringBuilder() {
+
+        if (!isAllowUser()) return new StringBuilder().append("Для Вас эта функция не доступна");
+
+        int userRule = getUser().getRule();
+        List<Member> members = memberConfig.getMemberByRule(userRule);
+
+        List<Member> memberList = getMember(userRule, members);
+
+        initVote(memberList);
+
+        CommandResult commandResult = new CommandResult();
+        return commandResult.getResultDefault();
     }
 }

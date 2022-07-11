@@ -2,21 +2,23 @@ package service.webdriver;
 
 import service.webdriver.browsers.*;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
+import static utils.Thesaurus.Drivers.*;
+
 public class BrowserFactory {
-    private static final Map<String, Browsers> browsersFactory = new HashMap<>();
+    private static final Map<String, Browser> browsersFactory = new LinkedHashMap<>();
 
     static {
-        browsersFactory.put("chrome", new Chrome());
-        browsersFactory.put("chromium", new Chromium());
-        browsersFactory.put("firefox", new Firefox());
-        browsersFactory.put("msedge", new MsEdge());
-        browsersFactory.put("opera", new Opera());
+        browsersFactory.put(CHROMIUM, new Chromium());
+        browsersFactory.put(CHROME, new Chrome());
+        browsersFactory.put(FIREFOX, new Firefox());
+        browsersFactory.put(MSEDGE, new MsEdge());
+        browsersFactory.put(OPERA, new Opera());
     }
 
-    public static Browsers getInstance(String text) {
+    public static Browser getInstance(String text) {
         return browsersFactory.get(text);
     }
 }

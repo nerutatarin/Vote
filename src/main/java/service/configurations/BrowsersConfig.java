@@ -5,11 +5,11 @@ import java.util.Map;
 
 import static utils.Thesaurus.FilesNameYaml.BROWSER_CONFIG_YAML;
 
-public class BrowserConfig extends Config {
+public class BrowsersConfig extends Config {
 
     private ProxySettings proxySettings;
 
-    private Map<String, Browsers> browsers = new LinkedHashMap<>();
+    private Map<String, Browser> browserMap = new LinkedHashMap<>();
 
     public ProxySettings getProxySettings() {
         return proxySettings;
@@ -19,12 +19,12 @@ public class BrowserConfig extends Config {
         this.proxySettings = proxySettings;
     }
 
-    public Map<String, Browsers> getBrowsers() {
-        return browsers;
+    public Map<String, Browser> getBrowserMap() {
+        return browserMap;
     }
 
-    public void setBrowsers(Map<String, Browsers> browsers) {
-        this.browsers = browsers;
+    public void setBrowserMap(Map<String, Browser> browserMap) {
+        this.browserMap = browserMap;
     }
 
     @Override

@@ -13,6 +13,11 @@ public class CommandMembers extends CommandsImpl {
     private static final Logger log = Logger.getLogger(CommandStatus.class);
 
     @Override
+    protected Logger getLog() {
+        return log;
+    }
+
+    @Override
     protected StringBuilder replyMessageMake() {
         return getStringBuilder();
     }

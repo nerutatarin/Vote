@@ -1,36 +1,37 @@
 package votes;
 
 import org.apache.log4j.Logger;
-import service.configurations.MemberConfig;
 import service.configurations.VoteMode;
 import service.pagemanager.model.Member;
 import service.pagemanager.model.VotingPage;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import static java.lang.Math.subtractExact;
 import static java.util.Comparator.comparingInt;
 import static java.util.stream.Collectors.toList;
 import static utils.Thesaurus.FilesNameJson.MEMBER_RANKS_JSON;
 import static utils.Thesaurus.FilesNameJson.PAGE_AFTER_VOTING_JSON;
-import static utils.jackson.JsonMapper.*;
+import static utils.jackson.JsonMapper.fileToObject;
+import static utils.jackson.JsonMapper.objectToFilePretty;
 
 public class Ranker {
     private static final Logger log = Logger.getLogger(Ranker.class);
 
     private final VoteMode voteCount;
     private VotingPage votingPage;
-    private MemberConfig memberConfig;
+    private  Map<String, String> allowMembers;
     private Date timeStamp;
 
-    public Ranker(VoteMode voteCount, MemberConfig memberConfig) {
+    public Ranker(VoteMode voteCount,  Map<String, String> allowMembers) {
         this.voteCount = voteCount;
-        this.memberConfig = memberConfig;
+        this.allowMembers = allowMembers;
     }
 
     public MemberRanks init() {
-        Map<String, String> allowMembers = memberConfig.getAllowMembers();
 
         this.votingPage = getVotingPage();
         if (votingPage == null) return null;
@@ -50,11 +51,14 @@ public class Ranker {
     }
 
     private Map<String, List<Member>> getSortedMemberList(Map<String, List<Member>> members, Map<String, String> allowMembers) {
-        return members
-                .keySet()
-                .stream()
-                .filter(allowMembers::containsKey)
-                .collect(Collectors.toMap(key -> key, key -> sortByCount(members.get(key)), (a, b) -> b, LinkedHashMap::new));
+        LinkedHashMap<String, List<Member>> map = new LinkedHashMap<>();
+        for (String key : members
+                .keySet()) {
+            if (allowMembers.containsKey(key)) {
+                map.put(key, sortByCount(members.get(key)));
+            }
+        }
+        return map;
     }
 
     private List<Member> sortByCount(List<Member> memberList) {
