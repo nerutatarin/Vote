@@ -1,0 +1,136 @@
+[ {
+  "name" : "_gat_UA-23870775-1",
+  "value" : "1",
+  "path" : "/",
+  "domain" : ".ufa.kp.ru",
+  "expiry" : 1657542807000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "uua",
+  "value" : "e77927a24549a482485ee6bb77c184b4",
+  "path" : "/best/",
+  "domain" : "www.ufa.kp.ru",
+  "expiry" : 1657629148000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga_R0LEF5ZFCF",
+  "value" : "GS1.1.1657542747.1.0.1657542747.0",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720614747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ym_d",
+  "value" : "1657542748",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1689078747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_gat_UA-23870775-5",
+  "value" : "1",
+  "path" : "/",
+  "domain" : ".ufa.kp.ru",
+  "expiry" : 1657542807000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ym_visorc",
+  "value" : "b",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1657544548000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga_8MQ0FGXD1P",
+  "value" : "GS1.1.1657542747.1.0.1657542747.0",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720614747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_gid",
+  "value" : "GA1.3.1442928504.1657542748",
+  "path" : "/",
+  "domain" : ".ufa.kp.ru",
+  "expiry" : 1657629147000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ym_uid",
+  "value" : "1657542748948933444",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1689078747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ym_isad",
+  "value" : "2",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1657614747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga_BJV4WPQPYC",
+  "value" : "GS1.1.1657542747.1.0.1657542747.0",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720614747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga",
+  "value" : "GA1.3.601375258.1657542748",
+  "path" : "/",
+  "domain" : ".ufa.kp.ru",
+  "expiry" : 1720614747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga",
+  "value" : "GA1.1.601375258.1657542748",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720614747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_gat_UA-5200037-1",
+  "value" : "1",
+  "path" : "/",
+  "domain" : ".ufa.kp.ru",
+  "expiry" : 1657542807000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga_R7DD899R0W",
+  "value" : "GS1.1.1657542747.1.0.1657542747.0",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720614747000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+} ]
