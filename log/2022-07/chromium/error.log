@@ -25,3 +25,65 @@
 11-07-2022 19:50:18 null
 11-07-2022 19:51:26 null
 11-07-2022 19:52:13 null
+12-07-2022 08:11:05 timeout: Timed out receiving message from renderer: 27,077
+  (Session info: headless chrome=103.0.5060.53)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [500932dd4cbb5ed89c079566acae562c, get {url=https://www.ufa.kp.ru/best/msk/oprosy/ufa_klinikagoda2022}]
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.BCZPcc}, goog:chromeOptions: {debuggerAddress: localhost:42885}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:42885/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 500932dd4cbb5ed89c079566acae562c
+12-07-2022 09:12:36 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.j8czaj}, goog:chromeOptions: {debuggerAddress: localhost:39979}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:39979/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 73ec6c944a9dd1c6854a8b657081c643
+12-07-2022 22:39:36 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.YQ2Hrx}, goog:chromeOptions: {debuggerAddress: localhost:34315}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:34315/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9cb9fc86d17d8c38a63991abb603a794
+12-07-2022 23:39:36 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.V6BB6g}, goog:chromeOptions: {debuggerAddress: localhost:35387}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:35387/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 44d5e04bdab3a853cd5cb59ac9a8237f
+13-07-2022 00:39:36 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.cw4u9a}, goog:chromeOptions: {debuggerAddress: localhost:34247}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:34247/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 9e8bcafb1beb022b911296c606c7e374
+13-07-2022 06:39:37 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.oQu8WR}, goog:chromeOptions: {debuggerAddress: localhost:35335}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:35335/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 076227885c46a463011ee9607e5eb077
+13-07-2022 07:41:36 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.KEwxI7}, goog:chromeOptions: {debuggerAddress: localhost:33335}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:33335/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 263615bb97ca6713f67f9f0004ea639d
+13-07-2022 14:39:36 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.9JvHQJ}, goog:chromeOptions: {debuggerAddress: localhost:34979}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:34979/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: 3595e0e7f58d261b11285a0c06394127
+13-07-2022 15:39:36 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.af6577}, goog:chromeOptions: {debuggerAddress: localhost:33145}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:33145/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: f2d027e5bb12e7ef7464f1aed44edbc0
+13-07-2022 16:39:35 Expected condition failed: waiting for title to be "Клиника года - 2022. Уфа.". Current title: "502 Bad Gateway" (tried for 30 second(s) with 500 milliseconds interval)
+Build info: version: '4.2.1', revision: 'ac4d0fdd4a'
+System info: host: 'test3-vm', ip: '127.0.1.1', os.name: 'Linux', os.arch: 'amd64', os.version: '5.15.0-33-generic', java.version: '1.8.0_312'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: true, browserName: chrome, browserVersion: 103.0.5060.53, chrome: {chromedriverVersion: 102.0.5005.61 (0e59bcc00cc4..., userDataDir: /tmp/.com.google.Chrome.q7rxZd}, goog:chromeOptions: {debuggerAddress: localhost:33557}, networkConnectionEnabled: false, pageLoadStrategy: eager, platformName: LINUX, proxy: Proxy(manual), se:cdp: ws://localhost:33557/devtoo..., se:cdpVersion: 103.0.5060.53, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 30000, pageLoad: 30000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:virtualAuthenticators: true}
+Session ID: a1b2aa5e5e7acad14b6bc5f8773ac848

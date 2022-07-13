@@ -3,43 +3,34 @@
   "value" : "1",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657551692000,
+  "expiry" : 1657716137000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "uua",
-  "value" : "d2029a25b3b845b76a65f70ae6fe085a",
+  "value" : "21fa2be5ea4a40704cf829f710bcae1a",
   "path" : "/best/",
   "domain" : "www.ufa.kp.ru",
-  "expiry" : 1657638036000,
-  "sameSite" : null,
-  "httpOnly" : false,
-  "secure" : false
-}, {
-  "name" : "e59840102a460cb1cfdad220bc0f679c",
-  "value" : "1",
-  "path" : "/best/msk/oprosy/",
-  "domain" : "www.ufa.kp.ru",
-  "expiry" : 1657573155000,
+  "expiry" : 1657802483000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "_ga_R0LEF5ZFCF",
-  "value" : "GS1.1.1657551632.1.1.1657551635.0",
+  "value" : "GS1.1.1657716077.1.1.1657716081.0",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1720623635000,
+  "expiry" : 1720788081000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "_ym_d",
-  "value" : "1657551633",
+  "value" : "1657716077",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1689087632000,
+  "expiry" : 1689252077000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
@@ -48,7 +39,16 @@
   "value" : "1",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657551692000,
+  "expiry" : 1657716137000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga_8MQ0FGXD1P",
+  "value" : "GS1.1.1657716076.1.1.1657716081.0",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720788081000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
@@ -57,34 +57,34 @@
   "value" : "b",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1657553435000,
-  "sameSite" : null,
-  "httpOnly" : false,
-  "secure" : false
-}, {
-  "name" : "_ga_8MQ0FGXD1P",
-  "value" : "GS1.1.1657551632.1.1.1657551635.0",
-  "path" : "/",
-  "domain" : ".kp.ru",
-  "expiry" : 1720623635000,
+  "expiry" : 1657717882000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "_gid",
-  "value" : "GA1.3.1330797452.1657551633",
+  "value" : "GA1.3.682527576.1657716077",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657638035000,
+  "expiry" : 1657802481000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "_ym_uid",
-  "value" : "1657551633953222671",
+  "value" : "1657716077778131045",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1689087632000,
+  "expiry" : 1689252077000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "9ed30aa43aa7ac967a28381616a58866",
+  "value" : "1",
+  "path" : "/best/msk/oprosy/",
+  "domain" : "www.ufa.kp.ru",
+  "expiry" : 1657745950000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
@@ -93,34 +93,34 @@
   "value" : "2",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1657623632000,
+  "expiry" : 1657788077000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "_ga_BJV4WPQPYC",
-  "value" : "GS1.1.1657551632.1.1.1657551635.0",
+  "value" : "GS1.1.1657716076.1.1.1657716081.0",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1720623635000,
+  "expiry" : 1720788081000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "_ga",
-  "value" : "GA1.3.2109969543.1657551633",
+  "value" : "GA1.1.459685121.1657716077",
+  "path" : "/",
+  "domain" : ".kp.ru",
+  "expiry" : 1720788081000,
+  "sameSite" : null,
+  "httpOnly" : false,
+  "secure" : false
+}, {
+  "name" : "_ga",
+  "value" : "GA1.3.459685121.1657716077",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1720623635000,
-  "sameSite" : null,
-  "httpOnly" : false,
-  "secure" : false
-}, {
-  "name" : "_ga",
-  "value" : "GA1.1.2109969543.1657551633",
-  "path" : "/",
-  "domain" : ".kp.ru",
-  "expiry" : 1720623635000,
+  "expiry" : 1720788081000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
@@ -129,16 +129,16 @@
   "value" : "1",
   "path" : "/",
   "domain" : ".ufa.kp.ru",
-  "expiry" : 1657551692000,
+  "expiry" : 1657716136000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
 }, {
   "name" : "_ga_R7DD899R0W",
-  "value" : "GS1.1.1657551632.1.1.1657551635.0",
+  "value" : "GS1.1.1657716076.1.1.1657716081.0",
   "path" : "/",
   "domain" : ".kp.ru",
-  "expiry" : 1720623635000,
+  "expiry" : 1720788081000,
   "sameSite" : null,
   "httpOnly" : false,
   "secure" : false
