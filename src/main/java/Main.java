@@ -10,11 +10,14 @@ import service.telegrambot.TelegramBot;
 import service.webdriver.Browser;
 import votes.kp.VoteKP;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Integer.sum;
 import static java.lang.Math.subtractExact;
+import static java.util.Collections.singletonList;
 import static java.util.concurrent.Executors.newSingleThreadScheduledExecutor;
 import static java.util.concurrent.TimeUnit.HOURS;
 import static utils.Utils.sleep;
@@ -56,9 +59,7 @@ public class Main {
                 singleVoteInit(1);
                 sleep(10000);
                 log.info("Проверка дистанции...");
-                int count = keepDistance();
-                log.info("Проверка дистанции завершена.");
-                singleVoteInit(count);
+                keepDistance();
             }
         }, 0, 1, hours);
     }
@@ -70,32 +71,41 @@ public class Main {
         new VoteKP(browsers, memberConfig).vote(count, isThread);
     }
 
-    private static int keepDistance() {
+    private static void keepDistance() {
         VoteMode voteMode = voteConfig.getVoteMode();
         boolean keepDistanceEnabled = voteMode.isKeepDistanceEnabled();
 
-        if (!keepDistanceEnabled) return 0;
+        if (!keepDistanceEnabled) return;
 
-        Ranker ranker = new Ranker(voteMode, memberConfig.getAllowMembers());
+        Map<String, String> allowMembers = memberConfig.getAllowMembers();
+        Ranker ranker = new Ranker(voteMode, allowMembers);
         MemberRanks memberRanks = ranker.init();
 
+        Map<Member, Integer> memberIntegerMap = new HashMap<>();
         for (MemberRank memberRank : memberRanks.getMemberRanks()) {
+            Member member = memberConfig.getMemberByMemberTitle(memberRank.getMember());
             if (memberRank.getRank() == 1) {
                 int diffCount = subtractExact(memberRank.getCount(), memberRank.getCompetitorCount());
 
-                if (diffCount >= voteMode.getDistanceCount()) return 0;
+                if (diffCount >= voteMode.getDistanceCount()) continue;
 
                 int count = subtractExact(voteMode.getDistanceCount(), diffCount);
                 log.info("Занимаем первое место, но дистанция меньше 2000, накручиваем " + count + " голосов");
-                return count;
+
+                memberIntegerMap.put(member, count);
             } else {
                 int diffCount = subtractExact(memberRank.getCompetitorCount(), memberRank.getCount());
                 int count = sum(diffCount, voteMode.getDistanceCount());
                 log.info("Занимаем " + memberRank.getRank() + " место с " + memberRank.getCount() + " голосов");
-                return count;
+
+                memberIntegerMap.put(member, count);
             }
         }
-        return 0;
+
+        log.info("Проверка дистанции завершена.");
+        List<Browser> browsers = voteConfig.getBrowsersInstance();
+
+        memberIntegerMap.forEach((member, count) -> new VoteKP(browsers, singletonList(member)).vote(count, true));
     }
 
     private static void threadVoteInit(int voteCount, int threadCount) {

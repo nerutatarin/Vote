@@ -32,6 +32,10 @@ public class MemberConfig extends Config {
                 .collect(toList());
     }
 
+    public Member getMemberByMemberTitle(String memberTitle) {
+        return members.stream().filter(member -> member.getTitle().contains(memberTitle)).findFirst().orElse(null);
+    }
+
     @Override
     public String toString() {
         return "MemberConfig{" +
