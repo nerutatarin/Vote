@@ -1,5 +1,6 @@
 package utils.jackson;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -133,5 +134,17 @@ public class JsonMapper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String toJson(Object object) {
+        if (object == null) return null;
+
+        ObjectWriter objectWriter = new ObjectMapper().writer();
+        try {
+            return objectWriter.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

@@ -170,3 +170,18 @@
 13-07-2022 10:55:50 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Zaripov
 13-07-2022 14:00:49 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Zaripov
 13-07-2022 17:23:34 chatId: 1051811573 data=/result telegramUserName: zaripov_Ilnaz firstName: Zaripov
+13-07-2022 20:32:25 {
+  "text" : "/start",
+  "telegramUser" : {
+    "title" : null,
+    "phone" : null,
+    "telegramId" : "1051811573",
+    "telegramUserName" : "zaripov_Ilnaz",
+    "telegramFirstName" : "Zaripov",
+    "rule" : 0
+  }
+}
+13-07-2022 20:33:55 {"text":"/start","telegramUser":{"title":null,"phone":null,"telegramId":"1051811573","telegramUserName":"zaripov_Ilnaz","telegramFirstName":"Zaripov","rule":0}}
+13-07-2022 20:34:29 {"text":"/blockedusers","telegramUser":{"title":null,"phone":null,"telegramId":"1051811573","telegramUserName":"zaripov_Ilnaz","telegramFirstName":"Zaripov","rule":0}}
+13-07-2022 20:36:35 {"text":"/blockedusers","telegramUser":{"title":null,"phone":null,"telegramId":"1051811573","telegramUserName":"zaripov_Ilnaz","telegramFirstName":"Zaripov","rule":0}}
+13-07-2022 20:38:29 {"text":"/blockedusers","telegramUser":{"title":null,"phone":null,"telegramId":"1051811573","telegramUserName":"zaripov_Ilnaz","telegramFirstName":"Zaripov","rule":0}}

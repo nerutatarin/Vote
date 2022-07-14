@@ -17,6 +17,7 @@ public class CommandsFactory {
         commandFactory.put(COMMAND_VOTE.getValue(), new CommandVote());
         commandFactory.put(COMMAND_NOMINATIONS.getValue(), new CommandNominations());
         commandFactory.put(COMMAND_DEFAULT.getValue(), new CommandDefault());
+        commandFactory.put(COMMAND_BLOCKED_USERS.getValue(), new CommandBlockedUsers());
     }
 
     public static Commands getInstance(String data) {

@@ -7,7 +7,7 @@ public enum CommandsEnum {
     COMMAND_RESULT("/result"),
     COMMAND_VOTE("/vote"),
     COMMAND_NOMINATIONS("/nominations"),
-    COMMAND_ADDUSER("/add"),
+    COMMAND_BLOCKED_USERS("/blockedusers"),
     COMMAND_DEFAULT("");
     private final String value;
 

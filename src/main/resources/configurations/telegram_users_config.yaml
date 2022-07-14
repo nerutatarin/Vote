@@ -3,24 +3,29 @@ telegramUsers:
     phone: "+79373234416"
     telegramId: "1051811573"
     telegramUserName: "zaripov_Ilnaz"
+    telegramFirstName: ""
     rule: 1
   - title: "Ольга"
     phone: "+79373234417"
     telegramId: "992200503"
-    telegramUserName:
+    telegramUserName: ""
+    telegramFirstName: ""
     rule: 1
   - title: "Азат"
     phone: "+79177733144"
     telegramId: "410832168"
     telegramUserName: "Mukhametzyanov_AM"
+    telegramFirstName: ""
     rule: 10
   - title: "Зухра"
     phone: "+79173478783"
     telegramId: "406962010"
     telegramUserName: ""
+    telegramFirstName: ""
     rule: 12
   - title: "Алена"
     phone: "+79378457773"
     telegramId: "1608863626"
     telegramUserName: ""
+    telegramFirstName: ""
     rule: 11

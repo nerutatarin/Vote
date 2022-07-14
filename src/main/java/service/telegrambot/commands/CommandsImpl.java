@@ -39,8 +39,8 @@ public abstract class CommandsImpl implements Commands {
         return sendMessage;
     }
 
-    private String validReplyMessage(StringBuilder stringBuild) {
-        return stringBuild == null ? getErrorMessage() : stringBuild.toString();
+    private String validReplyMessage(StringBuilder replyMessage) {
+        return replyMessage == null ? getErrorMessage() : replyMessage.toString();
     }
 
     protected abstract StringBuilder replyMessageMake();

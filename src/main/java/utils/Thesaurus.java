@@ -77,6 +77,7 @@ public class Thesaurus {
         public static final String COOKIE_AFTER_VOTING_JSON = "cookie_after_voting.json";
         public static final String COOKIE_BEFORE_VOTING_JSON = "cookie_before_voting.json";
         public static final String MEMBER_RANKS_JSON = "member_ranks.json";
+        public static final String BLOCKED_USERS_JSON = "blocked_users.json";
     }
 
     public static class FilesNameYaml {

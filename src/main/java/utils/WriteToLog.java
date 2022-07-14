@@ -50,15 +50,13 @@ public class WriteToLog {
     }
 
     public void writeLog(String text) {
-        getMessageString()
-                .append(" ")
-                .append(text)
-                .append("\n");
+        getMessageString().append(text).append("\n");
+
         write(messageString);
     }
 
     private StringBuilder getMessageString() {
-        return messageString.append(getTimeStamp());
+        return messageString.append(getTimeStamp()).append(" ");
     }
 
     private void write(StringBuilder messageString) {
